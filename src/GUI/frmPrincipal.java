@@ -53,7 +53,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         btnPersonas.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         btnPersonas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/personas32.png"))); // NOI18N
-        btnPersonas.setText("Pacientes");
+        btnPersonas.setText("Pacientess");
         btnPersonas.setToolTipText("Menu de Personas");
         btnPersonas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
