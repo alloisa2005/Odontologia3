@@ -72,7 +72,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Imagenes/personas32.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Pacientess"/>
+        <Property name="text" type="java.lang.String" value="Pacientes"/>
         <Property name="toolTipText" type="java.lang.String" value="Menu de Personas"/>
       </Properties>
       <Events>
