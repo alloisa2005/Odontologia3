@@ -45,6 +45,14 @@ public class Medico implements Serializable {
     private Date fch_ingreso;
     private boolean activo;
     private byte[] foto;
+
+    public List<Cita> getCitas() {
+        return citas;
+    }
+
+    public void setCitas(List<Cita> citas) {
+        this.citas = citas;
+    }
     
     public String getId() {
         return id;

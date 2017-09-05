@@ -74,6 +74,11 @@ public class frmAgenda extends javax.swing.JDialog {
         setTitle("Agenda de Médico");
 
         cmbMedicos.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        cmbMedicos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbMedicosActionPerformed(evt);
+            }
+        });
 
         jCalendario.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         jCalendario.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
@@ -336,6 +341,15 @@ public class frmAgenda extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void cmbMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMedicosActionPerformed
+        
+        Medico medico = (Medico) cmbMedicos.getSelectedItem();
+        
+        
+    }//GEN-LAST:event_cmbMedicosActionPerformed
+
+    
+    
     /**
      * @param args the command line arguments
      */
