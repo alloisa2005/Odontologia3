@@ -5,6 +5,7 @@
  */
 package Controladores;
 
+import IO.Cita;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -35,10 +36,15 @@ public class Conexion {
         private static final Procedimientos pro = new Procedimientos();
         private static final Consultas con = new Consultas();
         private static final Pagos pagos = new Pagos();
+        private static final Citas citas = new Citas();
     }
     
     public EntityManager getConexion(){
         return ConexionHolder.em;
+    }
+    
+    public Citas getCitas(){
+        return ConexionHolder.citas;
     }
     
     public Roles getRoles(){

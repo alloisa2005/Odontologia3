@@ -28,6 +28,9 @@ public class Cita implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date fecha;
     private String descripcion;
+    private String hora;
+    private String minuto;
+    
     @ManyToOne
     private Medico medico;
     
@@ -55,6 +58,22 @@ public class Cita implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public String getMinuto() {
+        return minuto;
+    }
+
+    public void setMinuto(String minuto) {
+        this.minuto = minuto;
+    }
+    
     public Medico getMedico() {
         return medico;
     }
