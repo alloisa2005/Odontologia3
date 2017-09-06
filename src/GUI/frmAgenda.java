@@ -6,9 +6,14 @@
 package GUI;
 
 import Controladores.Conexion;
+import IO.Cita;
 import IO.Medico;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -17,12 +22,18 @@ import javax.swing.DefaultComboBoxModel;
 public class frmAgenda extends javax.swing.JDialog {
 
     DefaultComboBoxModel modeloMedicos = new DefaultComboBoxModel();
+    DefaultListModel modeloCitas = new DefaultListModel();
+    Date fchHoy = new Date(); 
+    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     
     public frmAgenda(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
         CargarComboMedicos();
+        
+        dteFechaCita.setDate(fchHoy);
+        
     }
 
     public void CargarComboMedicos(){
@@ -273,18 +284,18 @@ public class frmAgenda extends javax.swing.JDialog {
     private void jCalendarioPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendarioPropertyChange
 
         //System.out.println(evt.getPropertyName());
-//        if(evt.getPropertyName().equals("calendar")){
-//            modeloCitas.clear();
-//            Medico medico = (Medico) lstMedicos.getSelectedItem();
-//
-//            String fchStr = df.format(jCalendario.getDate());
-//            Iterator<Cita> listaCitas = Conexion.getInstance().getCitas().listaDeCitasXFecha(fchStr, medico.getCedula()).iterator();
-//            while (listaCitas.hasNext()) {
-//                modeloCitas.addElement(listaCitas.next());
-//            }
-//            lstCitas.setModel(modeloCitas);
-//            dteFechaCita.setDate(jCalendario.getDate());
-//        }
+        if(evt.getPropertyName().equals("calendar")){
+            modeloCitas.clear();
+            Medico medico = (Medico) cmbMedicos.getSelectedItem();
+
+            String fchStr = df.format(jCalendario.getDate());
+            Iterator<Cita> listaCitas = Conexion.getInstance().getCitas().listaDeCitasXFecha(jCalendario.getDate(), medico.getId()).iterator();
+            while (listaCitas.hasNext()) {
+                modeloCitas.addElement(listaCitas.next());
+            }
+            lstCitas.setModel(modeloCitas);
+            dteFechaCita.setDate(jCalendario.getDate());
+        }
     }//GEN-LAST:event_jCalendarioPropertyChange
 
     private void lstCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstCitasMouseClicked
@@ -330,7 +341,23 @@ public class frmAgenda extends javax.swing.JDialog {
     }//GEN-LAST:event_txtDescripcionKeyTyped
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+        
+        if(cmbMedicos.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(this, "Seleccione Médico", "Nueva Cita", JOptionPane.ERROR_MESSAGE);
+        }else{
+            Cita c = new Cita();
+            Medico medico = (Medico) cmbMedicos.getSelectedItem();
+
+            c.setDescripcion(txtDescripcion.getText());
+            c.setFecha(dteFechaCita.getDate());
+            c.setMedico(medico);
+            c.setHora(cmbHora.getSelectedItem().toString());
+            c.setMinuto(cmbMinuto.getSelectedItem().toString());
+
+            Conexion.getInstance().Guardar(c);        
+
+            CitasXFecha(medico, dteFechaCita.getDate());
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnMoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoverActionPerformed
@@ -344,11 +371,28 @@ public class frmAgenda extends javax.swing.JDialog {
     private void cmbMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMedicosActionPerformed
         
         Medico medico = (Medico) cmbMedicos.getSelectedItem();
-        
+        CitasXFecha(medico, fchHoy);
+        dteFechaCita.setDate(fchHoy);
         
     }//GEN-LAST:event_cmbMedicosActionPerformed
 
-    
+    public void CitasXFecha(Medico medico, Date fch){
+                
+        modeloCitas.clear();
+
+        Iterator<Cita> it = medico.getCitas().iterator();                
+
+        while (it.hasNext()) {
+            Cita next = it.next();            
+
+            if(next.getFecha().equals(fch)){
+                modeloCitas.addElement(next);
+            }
+        }
+
+        lstCitas.setModel(modeloCitas);
+        
+    }
     
     /**
      * @param args the command line arguments

@@ -103,8 +103,8 @@ public class Cita implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "IO.Cita[ id=" + id + " ]";
+    public String toString() {                        
+        return hora + ':' + minuto + '-' + descripcion;
     }
     
 }
