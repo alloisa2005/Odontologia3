@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.Iterator;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -29,6 +30,8 @@ public class frmAgenda extends javax.swing.JDialog {
     public frmAgenda(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/molar.png")).getImage()); 
         
         CargarComboMedicos();
         
@@ -345,18 +348,24 @@ public class frmAgenda extends javax.swing.JDialog {
         if(cmbMedicos.getSelectedIndex() == 0){
             JOptionPane.showMessageDialog(this, "Seleccione Médico", "Nueva Cita", JOptionPane.ERROR_MESSAGE);
         }else{
-            Cita c = new Cita();
-            Medico medico = (Medico) cmbMedicos.getSelectedItem();
+            if(txtDescripcion.getText().equals("")){
+                JOptionPane.showMessageDialog(this, "Ingrese descripción", "Nueva Cita", JOptionPane.ERROR_MESSAGE);
+            }else{
+                Cita c = new Cita();
+                Medico medico = (Medico) cmbMedicos.getSelectedItem();
 
-            c.setDescripcion(txtDescripcion.getText());
-            c.setFecha(dteFechaCita.getDate());
-            c.setMedico(medico);
-            c.setHora(cmbHora.getSelectedItem().toString());
-            c.setMinuto(cmbMinuto.getSelectedItem().toString());
+                c.setDescripcion(txtDescripcion.getText());
+                c.setFecha(dteFechaCita.getDate());
+                c.setMedico(medico);
+                c.setHora(cmbHora.getSelectedItem().toString());
+                c.setMinuto(cmbMinuto.getSelectedItem().toString());
 
-            Conexion.getInstance().Guardar(c);        
+                Conexion.getInstance().Guardar(c);        
 
-            CitasXFecha(medico, dteFechaCita.getDate());
+                CitasXFecha(medico, dteFechaCita.getDate());
+                
+                txtDescripcion.setText("");
+            }
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -371,12 +380,14 @@ public class frmAgenda extends javax.swing.JDialog {
     private void cmbMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMedicosActionPerformed
         
         Medico medico = (Medico) cmbMedicos.getSelectedItem();
+        Conexion.getInstance().Combinar(medico);
+        
         CitasXFecha(medico, fchHoy);
         dteFechaCita.setDate(fchHoy);
         
     }//GEN-LAST:event_cmbMedicosActionPerformed
 
-    public void CitasXFecha(Medico medico, Date fch){
+    public void CitasXFecha(Medico medico, Date fch){               
                 
         modeloCitas.clear();
 
