@@ -30,4 +30,21 @@ public class Citas {
         }
         return lista;
     }
+    
+    public Cita unaCita(String fecha, String hora, String minuto, String medicoCedula) {
+        Cita cita = null;                
+        
+        Conexion.getInstance().getConexion().getTransaction().begin();
+        String query = "SELECT * FROM CITA where fecha='" + fecha + "' and hora='" + hora + "' and minuto='" + minuto+ "' and medico_id='" + medicoCedula + "'";
+        
+        try {
+            cita =  (Cita) Conexion.getInstance().getConexion().createNativeQuery(query, Cita.class).getSingleResult();            
+            
+            Conexion.getInstance().getConexion().getTransaction().commit(); 
+        } catch (Exception e) {
+            Conexion.getInstance().getConexion().getTransaction().rollback();       
+        
+        }
+        return cita;
+    }
 }

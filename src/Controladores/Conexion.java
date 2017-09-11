@@ -88,6 +88,19 @@ public class Conexion {
         } 
     }
     
+    public void Eliminar(Object object) {
+        
+        getConexion().getTransaction().begin();
+        
+        try {
+            getConexion().remove(object);
+            getConexion().getTransaction().commit();
+        } catch (Exception e) {
+            e.printStackTrace();            
+            getConexion().getTransaction().rollback();
+        } 
+    }
+    
     public void Actualizar(Object object) {
         
         getConexion().getTransaction().begin();

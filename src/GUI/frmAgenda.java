@@ -305,22 +305,22 @@ public class frmAgenda extends javax.swing.JDialog {
 
     private void lstCitasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lstCitasValueChanged
 
-//        if(lstCitas.getSelectedIndex() != -1){
-//
-//            Cita cita = (Cita) modeloCitas.getElementAt(lstCitas.getSelectedIndex());
-//            txtDescripcion.setText(cita.getDescripcion());
-//
-//            String fchStr = cita.getfecha();
-//            try {
-//                Date date = new SimpleDateFormat("dd/MM/yyyy").parse(fchStr);
-//                dteFechaCita.setDate(date);
-//            } catch (ParseException ex) {
-//                Logger.getLogger(frmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//            cmbHora.setSelectedItem(cita.getHora());
-//            cmbMinuto.setSelectedItem(cita.getMinuto());
-//        }
+        if(lstCitas.getSelectedIndex() != -1){
+            
+            Cita cita = (Cita) modeloCitas.getElementAt(lstCitas.getSelectedIndex());
+            txtDescripcion.setText(cita.getDescripcion());
+            
+            String fchStr = cita.getFecha();
+            try {
+                Date date = new SimpleDateFormat("dd/MM/yyyy").parse(fchStr);
+                dteFechaCita.setDate(date);
+            } catch (ParseException ex) {
+                Logger.getLogger(frmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            cmbHora.setSelectedItem(cita.getHora());
+            cmbMinuto.setSelectedItem(cita.getMinuto()); 
+        }
     }//GEN-LAST:event_lstCitasValueChanged
 
     private void dteFechaCitaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dteFechaCitaPropertyChange
@@ -368,11 +368,78 @@ public class frmAgenda extends javax.swing.JDialog {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnMoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoverActionPerformed
-        // TODO add your handling code here:
+        
+        if(lstCitas.getSelectedIndex() != -1){
+            
+            Medico medico = (Medico) cmbMedicos.getSelectedItem();
+            
+//            Cita cita = 
+//            Conexion.getInstance().Eliminar(cita);             
+            Cita citaAux = (Cita) modeloCitas.getElementAt(lstCitas.getSelectedIndex());
+            
+            CitasXFecha(medico, dteFechaCita.getDate());
+            
+            String sigo = "S";
+        
+            if(txtDescripcion.getText().equals("")){
+                sigo = "N";
+                JOptionPane.showMessageDialog(this, "Descripción de la cita requerida", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
+            if(sigo.equals("S")){
+                String fchStr = df.format(dteFechaCita.getDate());
+                String hora = cmbHora.getSelectedItem().toString();
+                String minuto = cmbMinuto.getSelectedItem().toString();                
+                
+                Cita c = Conexion.getInstance().getCitas().unaCita(fchStr, hora, minuto, medico.getId());
+                
+                if(c == null){
+
+                    //Cita citaAux = (Cita) modeloCitas.getElementAt(lstCitas.getSelectedIndex()); //new Cita();
+
+                    citaAux.setFecha(fchStr);
+                    citaAux.setHora(hora);
+                    citaAux.setMinuto(minuto);
+                    citaAux.setDescripcion(txtDescripcion.getText());                
+//                    citaAux.setMedico(medico);
+                    
+                    Conexion.getInstance().Actualizar(citaAux);
+                    
+                    txtDescripcion.setText("");
+                    dteFechaCita.setDate(jCalendario.getDate());
+                    cmbHora.setSelectedIndex(0);
+                    cmbMinuto.setSelectedIndex(0);
+                    jCalendario.setDate(dteFechaCita.getDate());
+                    
+                    CitasXFecha(medico, dteFechaCita.getDate());
+
+                    txtDescripcion.requestFocus();
+                }else{
+
+                }
+            }
+        }
     }//GEN-LAST:event_btnMoverActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+       
+        if(lstCitas.getSelectedIndex() != -1){
+            Cita cita = (Cita) modeloCitas.getElementAt(lstCitas.getSelectedIndex());
+            Medico medico = (Medico) cmbMedicos.getSelectedItem();
+            
+            Conexion.getInstance().Eliminar(cita);
+            
+            JOptionPane.showMessageDialog(this, "Cita eliminada con éxito", "Eliminar Cita", JOptionPane.INFORMATION_MESSAGE);                        
+            
+            CitasXFecha(medico, dteFechaCita.getDate());  // Actualizo la lista de citas
+            
+            txtDescripcion.setText("");
+            dteFechaCita.setDate(jCalendario.getDate());
+            cmbHora.setSelectedIndex(0);
+            cmbMinuto.setSelectedIndex(0);
+        }else{
+            JOptionPane.showMessageDialog(this, "Elija una cita a eliminar", "Eliminar Cita", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void cmbMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMedicosActionPerformed
@@ -388,13 +455,14 @@ public class frmAgenda extends javax.swing.JDialog {
     public void CitasXFecha(Medico medico, Date fch){                               
         
         modeloCitas.clear();
-
+        Conexion.getInstance().Combinar(medico);
+        
         Iterator<Cita> it = medico.getCitas().iterator();                
 
         while (it.hasNext()) {
             Cita next = it.next();            
 
-            if(next.getFecha().equals(fch)){
+            if(next.getFecha().equals(df.format(fch))){
                 modeloCitas.addElement(next);
             }
         }
