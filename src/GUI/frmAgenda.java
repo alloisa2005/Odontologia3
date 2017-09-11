@@ -8,9 +8,12 @@ package GUI;
 import Controladores.Conexion;
 import IO.Cita;
 import IO.Medico;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
@@ -37,8 +40,8 @@ public class frmAgenda extends javax.swing.JDialog {
         
         dteFechaCita.setDate(fchHoy);
         
-    }
-
+    }            
+    
     public void CargarComboMedicos(){
         Iterator<Medico> it = Conexion.getInstance().getMedicos().listaDeMedicosActivos().iterator();        
         
@@ -289,14 +292,9 @@ public class frmAgenda extends javax.swing.JDialog {
         //System.out.println(evt.getPropertyName());
         if(evt.getPropertyName().equals("calendar")){
             modeloCitas.clear();
-            Medico medico = (Medico) cmbMedicos.getSelectedItem();
-
-            String fchStr = df.format(jCalendario.getDate());
-            Iterator<Cita> listaCitas = Conexion.getInstance().getCitas().listaDeCitasXFecha(jCalendario.getDate(), medico.getId()).iterator();
-            while (listaCitas.hasNext()) {
-                modeloCitas.addElement(listaCitas.next());
-            }
-            lstCitas.setModel(modeloCitas);
+            Medico medico = (Medico) cmbMedicos.getSelectedItem();                        
+            
+            CitasXFecha(medico, jCalendario.getDate());
             dteFechaCita.setDate(jCalendario.getDate());
         }
     }//GEN-LAST:event_jCalendarioPropertyChange
@@ -355,7 +353,7 @@ public class frmAgenda extends javax.swing.JDialog {
                 Medico medico = (Medico) cmbMedicos.getSelectedItem();
 
                 c.setDescripcion(txtDescripcion.getText());
-                c.setFecha(dteFechaCita.getDate());
+                c.setFecha(df.format(dteFechaCita.getDate()));
                 c.setMedico(medico);
                 c.setHora(cmbHora.getSelectedItem().toString());
                 c.setMinuto(cmbMinuto.getSelectedItem().toString());
@@ -387,8 +385,8 @@ public class frmAgenda extends javax.swing.JDialog {
         
     }//GEN-LAST:event_cmbMedicosActionPerformed
 
-    public void CitasXFecha(Medico medico, Date fch){               
-                
+    public void CitasXFecha(Medico medico, Date fch){                               
+        
         modeloCitas.clear();
 
         Iterator<Cita> it = medico.getCitas().iterator();                

@@ -25,8 +25,8 @@ public class Cita implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Temporal(javax.persistence.TemporalType.DATE)
-    private Date fecha;
+    //@Temporal(javax.persistence.TemporalType.DATE)
+    private String fecha;
     private String descripcion;
     private String hora;
     private String minuto;
@@ -42,11 +42,11 @@ public class Cita implements Serializable {
         this.id = id;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
