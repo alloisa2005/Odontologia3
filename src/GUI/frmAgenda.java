@@ -40,7 +40,34 @@ public class frmAgenda extends javax.swing.JDialog {
         
         dteFechaCita.setDate(fchHoy);
         
+        inhabilitarCampos();        
     }            
+    
+    public void habilitarCampos(){
+        jCalendario.setEnabled(true);
+        lstCitas.setEnabled(true);
+        txtDescripcion.setEnabled(true);
+        dteFechaCita.setEnabled(true);
+        cmbHora.setEnabled(true);
+        cmbMinuto.setEnabled(true);
+        btnGuardar.setEnabled(true);
+        btnMover.setEnabled(true);
+        btnEliminar.setEnabled(true);
+    }
+    
+    public void inhabilitarCampos(){
+        jCalendario.setEnabled(false);
+        lstCitas.setEnabled(false);
+        txtDescripcion.setEnabled(false);
+        dteFechaCita.setEnabled(false);
+        cmbHora.setEnabled(false);
+        cmbMinuto.setEnabled(false);
+        btnGuardar.setEnabled(false);
+        btnMover.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        modeloCitas.clear();
+        lstCitas.setModel(modeloCitas);
+    }
     
     public void CargarComboMedicos(){
         Iterator<Medico> it = Conexion.getInstance().getMedicos().listaDeMedicosActivos().iterator();        
@@ -444,12 +471,17 @@ public class frmAgenda extends javax.swing.JDialog {
 
     private void cmbMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMedicosActionPerformed
         
-        Medico medico = (Medico) cmbMedicos.getSelectedItem();
-        Conexion.getInstance().Combinar(medico);
-        
-        CitasXFecha(medico, fchHoy);
-        dteFechaCita.setDate(fchHoy);
-        
+        if(cmbMedicos.getSelectedIndex() != 0){
+            habilitarCampos();
+            
+            Medico medico = (Medico) cmbMedicos.getSelectedItem();
+            Conexion.getInstance().Combinar(medico);
+
+            CitasXFecha(medico, fchHoy);
+            dteFechaCita.setDate(fchHoy);
+        }else{
+            inhabilitarCampos();
+        }
     }//GEN-LAST:event_cmbMedicosActionPerformed
 
     public void CitasXFecha(Medico medico, Date fch){                               
