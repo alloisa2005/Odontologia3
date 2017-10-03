@@ -10,12 +10,25 @@ import IO.Consulta;
 import IO.Paciente;
 import IO.Pago;
 import IO.Usuario;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import javax.imageio.ImageIO;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +37,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author User
  */
-public class frmPagos extends javax.swing.JDialog {
+public class frmPagos extends javax.swing.JDialog  implements Printable{
 
     Date fchHoy = new Date();
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -143,6 +156,7 @@ public class frmPagos extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        btnImprimir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Menu de Pagos");
@@ -305,6 +319,13 @@ public class frmPagos extends javax.swing.JDialog {
                 .addGap(15, 15, 15))
         );
 
+        btnImprimir.setText("Imprimir");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -328,9 +349,10 @@ public class frmPagos extends javax.swing.JDialog {
                 .addGap(17, 17, 17)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnPago, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDetallePagos, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnPago, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                    .addComponent(btnDetallePagos, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                    .addComponent(btnImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(panelPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -357,7 +379,9 @@ public class frmPagos extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnPago, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
-                        .addComponent(btnDetallePagos, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnDetallePagos, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(29, 29, 29)
+                        .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(13, 13, 13)
                 .addComponent(panelPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -482,7 +506,7 @@ public class frmPagos extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Pago realizado con exito", "Nuevo Pago", JOptionPane.INFORMATION_MESSAGE);
                 panelPago.setVisible(false);
                 VaciarTabla();
-                CargarTablaPacientes();
+                CargarTablaPacientes();                                
                 
             }else{
                 JOptionPane.showMessageDialog(this, "Ingrese monto a pagar", "Error", JOptionPane.ERROR_MESSAGE);
@@ -542,12 +566,32 @@ public class frmPagos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtPagoKeyTyped
 
-    /*
+    
     private void tblPacientesMouseClilblFechacked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPacientesMouseClicked
         
         
     }//GEN-LAST:event_tblPacientesMouseClicked
-    */
+
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        
+           PrinterJob job = PrinterJob.getPrinterJob();
+           Paper hoja = new Paper();
+           hoja.setImageableArea(0, 0, 595, 841);
+           hoja.setSize(595, 841);
+           try {
+              // Diálogo para elegir el formato de impresión
+              PageFormat pageFormat = new PageFormat();
+              pageFormat.setPaper(hoja);
+              job.setPrintable(this, pageFormat);
+              //pageFormat = job.pageDialog(pageFormat);
+              if (job.printDialog()) {
+                  job.print();
+              }
+           } catch (Exception e) {
+           }
+
+    }//GEN-LAST:event_btnImprimirActionPerformed
+    
     
     private void tblPacientesMouseClicked(java.awt.event.MouseEvent evt) {                                          
         panelPago.setVisible(false);
@@ -559,6 +603,7 @@ public class frmPagos extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDetallePagos;
+    private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnPago;
     private javax.swing.JButton btnPago1;
     private javax.swing.JLabel jLabel1;
@@ -576,4 +621,75 @@ public class frmPagos extends javax.swing.JDialog {
     private javax.swing.JTextField txtIdBuscar;
     private javax.swing.JTextField txtPago;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public int print(Graphics g, PageFormat f, int pageIndex) throws PrinterException {
+//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        int x;
+        String s;
+        
+        if(pageIndex == 0){
+            
+//            g.setFont(new Font("Tahoma", Font.BOLD, 11));
+//            FontMetrics fm = g.getFontMetrics();
+//            s = "LISTADO DE PERSONAS";
+//            x = (int) (f.getWidth() - fm.stringWidth(s)) / 4;
+//            g.drawString(s, x, 30);
+//            
+//            Graphics2D g2d = (Graphics2D) g;
+//            g2d.translate(x, 40);
+//            g2d.scale(0.65, 0.65); //Reducción de la impresión al 75%
+//            tblPacientes.printAll(g);
+            
+            try {
+               Image img = ImageIO.read(new File("src/Imagenes/prueba2.png").toURI().toURL());
+                g.drawImage(img, 5, 5, 590, 410, null);
+            } catch (Exception ex) {
+            }
+            
+            // Fecha (Dia)
+            g.setFont(new Font("Calibri", Font.BOLD, 11));            
+            s = String.valueOf(fchHoy.getDate());
+            g.drawString(s, 418, 52);
+            
+            // Fecha (Mes)
+            g.setFont(new Font("Calibri", Font.BOLD, 11));   
+            int mes = fchHoy.getMonth();
+            s = DevuelvoMes(mes);
+            //s = String.valueOf();
+            g.drawString(s, 465, 52);
+            
+            // Fecha (Anio)
+            g.setFont(new Font("Calibri", Font.BOLD, 11));               
+            s = String.valueOf(fchHoy.getYear()+ 1900);    // el getYear me devuelve en int el año atual menos 1900, por eso le sumo 1900
+            //s = String.valueOf();
+            g.drawString(s, 545, 52);
+            
+            return PAGE_EXISTS;
+        }else{            
+            return NO_SUCH_PAGE;
+        }
+    }
+    
+    public String DevuelvoMes(int nroMes){
+        String mes = "";
+        
+        switch(nroMes){
+            case 0:  mes = "Enero"; break;
+            case 1:  mes = "Febrero";  break;
+            case 2:  mes = "Marzo";  break;
+            case 3:  mes = "Abril";  break;
+            case 4:  mes = "Mayo";  break;
+            case 5:  mes = "Junio";  break;
+            case 6:  mes = "Julio";  break;
+            case 7:  mes = "Agosto";  break;
+            case 8:  mes = "Setiembre";  break;
+            case 9:  mes = "Octubre";  break;
+            case 10: mes = "Noviembre";  break;
+            case 11: mes = "Diciembre";  break;
+        }
+        
+        return mes;
+    }
 }

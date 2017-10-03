@@ -8,6 +8,7 @@ package GUI;
 import Controladores.Conexion;
 import IO.Cita;
 import IO.Medico;
+import java.awt.print.Printable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

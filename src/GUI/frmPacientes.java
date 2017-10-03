@@ -10,10 +10,20 @@ import Controladores.Usuarios;
 import IO.Medico;
 import IO.Paciente;
 import IO.Usuario;
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.text.MessageFormat;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -30,6 +40,15 @@ public class frmPacientes extends javax.swing.JDialog {
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/molar.png")).getImage()); 
         
         CargarTablaPacientes();
+        
+//        MessageFormat header = new MessageFormat("Lista de Pacientes");
+//        MessageFormat footer = new MessageFormat("Page{0,number,integer}");
+//        
+//        try {
+//            tblPacientes.print(JTable.PrintMode.FIT_WIDTH,header,footer);
+//        } catch (PrinterException ex) {
+//            Logger.getLogger(frmPacientes.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
     
     public void CargarTablaPacientes(){
@@ -240,8 +259,8 @@ public class frmPacientes extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnModificarMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnModificarMedico)
                             .addComponent(btnNuevoMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -278,10 +297,10 @@ public class frmPacientes extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnNuevoMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(24, 24, 24)
                         .addComponent(btnModificarMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 397, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 537, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -309,7 +328,8 @@ public class frmPacientes extends javax.swing.JDialog {
             frm.setVisible(true);
         }else{
             JOptionPane.showMessageDialog(this, "Seleccione un paciente de la lista", "Selección de Paciente", JOptionPane.INFORMATION_MESSAGE);
-        }
+        }        
+        
     }//GEN-LAST:event_btnModificarMedicoActionPerformed
 
     private void txtIdBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdBuscarKeyPressed
@@ -369,6 +389,7 @@ public class frmPacientes extends javax.swing.JDialog {
             evt.consume();
         }
     }//GEN-LAST:event_txtIdBuscarKeyTyped
+    
     
     
     /**
