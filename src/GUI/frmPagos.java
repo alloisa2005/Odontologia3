@@ -10,6 +10,7 @@ import IO.Consulta;
 import IO.Paciente;
 import IO.Pago;
 import IO.Usuario;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -102,6 +103,25 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
             CargarTablaPacientes();
             JOptionPane.showMessageDialog(this, "No existen resutados para la búsqueda", "Buscar Paciente", JOptionPane.INFORMATION_MESSAGE);
         }               
+    }
+    
+    public void Imprimo(){
+        
+           PrinterJob job = PrinterJob.getPrinterJob();
+           Paper hoja = new Paper();
+           hoja.setImageableArea(0, 0, 595, 841);
+           hoja.setSize(595, 841);
+           try {
+              // Diálogo para elegir el formato de impresión
+              PageFormat pageFormat = new PageFormat();
+              pageFormat.setPaper(hoja);
+              job.setPrintable(this, pageFormat);
+              //pageFormat = job.pageDialog(pageFormat);
+              if (job.printDialog()) {
+                  job.print();
+              }
+           } catch (Exception e) {
+           }    
     }
     
     public void CargarTablaPacienteXId(){
@@ -503,39 +523,21 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
                         Conexion.getInstance().Actualizar(pago);
                     }
                 }
+                
                 JOptionPane.showMessageDialog(this, "Pago realizado con exito", "Nuevo Pago", JOptionPane.INFORMATION_MESSAGE);
                 panelPago.setVisible(false);
                 VaciarTabla();
                 CargarTablaPacientes();                                
                 
-            }else{
-                JOptionPane.showMessageDialog(this, "Ingrese monto a pagar", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            
-//            if(!txtPago.getText().equals("0") && !txtPago.getText().equals("")){
+//                int imprimo = JOptionPane.showConfirmDialog(rootPane, "¿Desea Imprimir la factura?");
 //                
-//                Pago pago = new Pago();
-//                
-//                //pago.setConsulta((List<Consulta>) con);
-//                pago.setFchPago(dteFchConsulta.getDate());
-//                pago.setMonto(Double.parseDouble(txtPago.getText()));                               
-//                Conexion.getInstance().Guardar(pago);
-//                
-//                if(!con.getPagos().contains(pago)){
-//                    con.getPagos().add(pago);
-//                    Conexion.getInstance().Actualizar(con);
-//                }
-//                
-//                Conexion.getInstance().Combinar(pago);
-//                if(!pago.getConsultas().contains(con)){
-//                    pago.getConsultas().add(con);
-//                    Conexion.getInstance().Actualizar(pago);
-//                }
-//            }
+//                if (JOptionPane.OK_OPTION == imprimo)
+//                    Imprimo();
+//                }            
         }else{
             JOptionPane.showMessageDialog(this, "Seleccione un paciente de la lista", "Selección de Paciente", JOptionPane.INFORMATION_MESSAGE);
         }
-        
+        }
     }//GEN-LAST:event_btnPago1ActionPerformed
 
     private void btnPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagoActionPerformed
@@ -574,21 +576,7 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         
-           PrinterJob job = PrinterJob.getPrinterJob();
-           Paper hoja = new Paper();
-           hoja.setImageableArea(0, 0, 595, 841);
-           hoja.setSize(595, 841);
-           try {
-              // Diálogo para elegir el formato de impresión
-              PageFormat pageFormat = new PageFormat();
-              pageFormat.setPaper(hoja);
-              job.setPrintable(this, pageFormat);
-              //pageFormat = job.pageDialog(pageFormat);
-              if (job.printDialog()) {
-                  job.print();
-              }
-           } catch (Exception e) {
-           }
+        Imprimo();
 
     }//GEN-LAST:event_btnImprimirActionPerformed
     
@@ -627,7 +615,8 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         
         int x;
-        String s;
+        String s;        
+        Paciente paciente = (Paciente) tblPacientes.getModel().getValueAt(tblPacientes.getSelectedRow(), 1); 
         
         if(pageIndex == 0){
             
@@ -643,7 +632,7 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
 //            tblPacientes.printAll(g);
             
             try {
-               Image img = ImageIO.read(new File("src/Imagenes/prueba2.png").toURI().toURL());
+               Image img = ImageIO.read(new File("src/Imagenes/factura.png").toURI().toURL());
                 g.drawImage(img, 5, 5, 590, 410, null);
             } catch (Exception ex) {
             }
@@ -651,20 +640,34 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
             // Fecha (Dia)
             g.setFont(new Font("Calibri", Font.BOLD, 11));            
             s = String.valueOf(fchHoy.getDate());
-            g.drawString(s, 418, 52);
+            g.drawString(s, 418, 76);
             
             // Fecha (Mes)
             g.setFont(new Font("Calibri", Font.BOLD, 11));   
             int mes = fchHoy.getMonth();
             s = DevuelvoMes(mes);
             //s = String.valueOf();
-            g.drawString(s, 465, 52);
+            g.drawString(s, 465, 76);
             
             // Fecha (Anio)
             g.setFont(new Font("Calibri", Font.BOLD, 11));               
             s = String.valueOf(fchHoy.getYear()+ 1900);    // el getYear me devuelve en int el año atual menos 1900, por eso le sumo 1900
             //s = String.valueOf();
-            g.drawString(s, 545, 52);
+            g.drawString(s, 544, 76);                                    
+            
+            // Nombre y Apellido de paciente
+            g.setFont(new Font("Calibri", Font.BOLD, 11)); 
+            g.setColor(Color.red);
+            s = paciente.toString();
+            //s = String.valueOf();
+            g.drawString(s, 150, 128); 
+            
+            // Cédula del paciente
+            g.setFont(new Font("Calibri", Font.BOLD, 11));  
+            g.setColor(Color.red);
+            s = paciente.getId();
+            //s = String.valueOf();
+            g.drawString(s, 400, 128); 
             
             return PAGE_EXISTS;
         }else{            
