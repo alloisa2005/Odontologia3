@@ -22,6 +22,7 @@ import java.util.Objects;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import org.jfree.chart.JFreeChart;
 
 /**
  *
@@ -31,7 +32,7 @@ public class frmAltaConsulta extends javax.swing.JDialog {
 
     Date hoy = new Date();    
     DefaultComboBoxModel modeloMedicos = new DefaultComboBoxModel();
-    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");    
     
     int edad = 0; 
     private Paciente pac;

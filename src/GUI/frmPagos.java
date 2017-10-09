@@ -42,6 +42,8 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
 
     Date fchHoy = new Date();
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    ArrayList<Consulta> listaConsultas = new ArrayList<>();
+    Paciente pacAux;
     
     public frmPagos(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
@@ -484,11 +486,14 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
         
         if(tblPacientes.getSelectedRowCount() > 0){
             
+            listaConsultas.clear();
+            
             Double montoAPagar = Double.parseDouble(txtPago.getText());
             
             int row = tblPacientes.getSelectedRow();   
             
             Paciente paciente = (Paciente) tblPacientes.getModel().getValueAt(row, 1);                                     
+            pacAux = paciente;
             
             if(!txtPago.getText().equals("0") && !txtPago.getText().equals("")){
                 
@@ -496,6 +501,9 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
                 while (it.hasNext() && montoAPagar > 0) {
                     
                     Consulta con = it.next();
+                    
+                    listaConsultas.add(con);  // Guardo en este ArrayList para la impresión de la factura
+                    
                     Double montoAdeudadoXConsulta = con.getMontoAdeudado();
                     
                     Pago pago = new Pago();
@@ -524,16 +532,18 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
                     }
                 }
                 
-                JOptionPane.showMessageDialog(this, "Pago realizado con exito", "Nuevo Pago", JOptionPane.INFORMATION_MESSAGE);
-                panelPago.setVisible(false);
+//                JOptionPane.showMessageDialog(this, "Pago realizado con exito", "Nuevo Pago", JOptionPane.INFORMATION_MESSAGE);
+//                panelPago.setVisible(false);
                 VaciarTabla();
                 CargarTablaPacientes();                                
                 
-//                int imprimo = JOptionPane.showConfirmDialog(rootPane, "¿Desea Imprimir la factura?");
+                int imprimo = JOptionPane.showConfirmDialog(rootPane, "¿Desea Imprimir la factura?");
 //                
-//                if (JOptionPane.OK_OPTION == imprimo)
-//                    Imprimo();
-//                }            
+                if (JOptionPane.OK_OPTION == imprimo){
+                    Imprimo();
+                }    
+//            
+                panelPago.setVisible(false);
         }else{
             JOptionPane.showMessageDialog(this, "Seleccione un paciente de la lista", "Selección de Paciente", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -616,15 +626,9 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
         
         int x;
         String s;        
-        Paciente paciente = (Paciente) tblPacientes.getModel().getValueAt(tblPacientes.getSelectedRow(), 1); 
+        //Paciente paciente = (Paciente) tblPacientes.getModel().getValueAt(tblPacientes.getSelectedRow(), 1); 
         
-        if(pageIndex == 0){
-            
-//            g.setFont(new Font("Tahoma", Font.BOLD, 11));
-//            FontMetrics fm = g.getFontMetrics();
-//            s = "LISTADO DE PERSONAS";
-//            x = (int) (f.getWidth() - fm.stringWidth(s)) / 4;
-//            g.drawString(s, x, 30);
+        if(pageIndex == 0){            
 //            
 //            Graphics2D g2d = (Graphics2D) g;
 //            g2d.translate(x, 40);
@@ -658,16 +662,30 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
             // Nombre y Apellido de paciente
             g.setFont(new Font("Calibri", Font.BOLD, 11)); 
             g.setColor(Color.red);
-            s = paciente.toString();
+            s = pacAux.toString();
             //s = String.valueOf();
             g.drawString(s, 150, 128); 
             
             // Cédula del paciente
             g.setFont(new Font("Calibri", Font.BOLD, 11));  
             g.setColor(Color.red);
-            s = paciente.getId();
+            s = pacAux.getId();
             //s = String.valueOf();
             g.drawString(s, 400, 128); 
+            
+            for (int i = 0; i < listaConsultas.size(); i++) {
+                Consulta con = listaConsultas.get(i);
+                g.setColor(Color.black);
+                s = con.getTitulo() + " - " + df.format(con.getFecha());
+                x = 210 + (i*25);
+                g.drawString(s, 50, x); 
+                
+                s = con.getMontoPagado().toString();
+                g.drawString(s, 508, x);
+            }
+            
+            s = txtPago.getText();
+            g.drawString(s, 508, 380);
             
             return PAGE_EXISTS;
         }else{            
