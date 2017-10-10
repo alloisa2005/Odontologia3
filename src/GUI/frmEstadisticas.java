@@ -193,6 +193,11 @@ public class frmEstadisticas extends javax.swing.JDialog {
         btnVerMontoRecaudado.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         btnVerMontoRecaudado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ver32.png"))); // NOI18N
         btnVerMontoRecaudado.setText("Detalle");
+        btnVerMontoRecaudado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerMontoRecaudadoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
         panel2.setLayout(panel2Layout);
@@ -343,6 +348,10 @@ public class frmEstadisticas extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Seleccione médico", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnVerConsultasXMedicoActionPerformed
+
+    private void btnVerMontoRecaudadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerMontoRecaudadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVerMontoRecaudadoActionPerformed
 
     /**
      * @param args the command line arguments

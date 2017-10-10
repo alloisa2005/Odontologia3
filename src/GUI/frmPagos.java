@@ -44,6 +44,7 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     ArrayList<Consulta> listaConsultas = new ArrayList<>();
     Paciente pacAux;
+    double montoPagadoGlobal = 0.0;
     
     public frmPagos(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
@@ -117,6 +118,8 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
               // Diálogo para elegir el formato de impresión
               PageFormat pageFormat = new PageFormat();
               pageFormat.setPaper(hoja);
+              
+             // job.setPrintable(new ImpFact(listaConsultas,paciete), pageFormat);
               job.setPrintable(this, pageFormat);
               //pageFormat = job.pageDialog(pageFormat);
               if (job.printDialog()) {
@@ -540,6 +543,8 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
                 int imprimo = JOptionPane.showConfirmDialog(rootPane, "¿Desea Imprimir la factura?");
 //                
                 if (JOptionPane.OK_OPTION == imprimo){
+                    
+                    montoPagadoGlobal = Double.parseDouble(txtPago.getText());
                     Imprimo();
                 }    
 //            
@@ -619,14 +624,15 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
     private javax.swing.JTextField txtIdBuscar;
     private javax.swing.JTextField txtPago;
     // End of variables declaration//GEN-END:variables
-
+    
+    
     @Override
     public int print(Graphics g, PageFormat f, int pageIndex) throws PrinterException {
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         
         int x;
         String s;        
-        //Paciente paciente = (Paciente) tblPacientes.getModel().getValueAt(tblPacientes.getSelectedRow(), 1); 
+        
         
         if(pageIndex == 0){            
 //            
@@ -673,6 +679,8 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
             //s = String.valueOf();
             g.drawString(s, 400, 128); 
             
+            double monto = 0.0;
+            
             for (int i = 0; i < listaConsultas.size(); i++) {
                 Consulta con = listaConsultas.get(i);
                 g.setColor(Color.black);
@@ -680,11 +688,12 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
                 x = 210 + (i*25);
                 g.drawString(s, 50, x); 
                 
-                s = con.getMontoPagado().toString();
+                s = con.getPagos().get(con.getPagos().size()-1).getMonto().toString();
                 g.drawString(s, 508, x);
+                monto += con.getPagos().get(con.getPagos().size()-1).getMonto();
             }
             
-            s = txtPago.getText();
+            s = String.valueOf(monto);  //txtPago.getText();
             g.drawString(s, 508, 380);
             
             return PAGE_EXISTS;
