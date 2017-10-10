@@ -454,6 +454,7 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
     }//GEN-LAST:event_txtApellidoBuscarKeyPressed
 
     private void txtApellidoBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoBuscarKeyTyped
+        
         char c = evt.getKeyChar();
         if(Character.isDigit(c)){
             evt.consume();

@@ -27,6 +27,9 @@ import javax.swing.ImageIcon;
 public class Paciente implements Serializable {
 
     @OneToMany(mappedBy = "paciente")
+    private List<Factura> facturas;
+
+    @OneToMany(mappedBy = "paciente")
     private List<Consulta> consultas;
 
     private static final long serialVersionUID = 1L;
@@ -107,6 +110,14 @@ public class Paciente implements Serializable {
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public List<Factura> getFacturas() {
+        return facturas;
+    }
+
+    public void setFacturas(List<Factura> facturas) {
+        this.facturas = facturas;
     }
     
     public void setFoto(byte[] foto) {
