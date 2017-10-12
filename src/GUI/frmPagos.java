@@ -47,6 +47,7 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
     ArrayList<Consulta> listaConsultas = new ArrayList<>();
     Paciente pacAux;
     double montoPagadoGlobal = 0.0;
+    long nroFacAux = 0;
     
     public frmPagos(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
@@ -112,9 +113,14 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
     
     public void Imprimo(Double montoPagadoGlobal){
            
+           Factura ultFac = Conexion.getInstance().getFacturas().maxFactura();
+           long nroFac = ultFac.getNumero() + 1;
+           
+           nroFacAux = nroFac;   // Guardo el numero de la factura para la impresión
+           
            Factura fac = new Factura();                      
            
-           fac.setNumero(Long.parseLong("11223344"));
+           fac.setNumero(nroFac);
            fac.setFecha(fchHoy);
            fac.setPaciente(pacAux);
            fac.setMonto(montoPagadoGlobal);
@@ -684,6 +690,12 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
             s = String.valueOf(fchHoy.getYear()+ 1900);    // el getYear me devuelve en int el año atual menos 1900, por eso le sumo 1900
             //s = String.valueOf();
             g.drawString(s, 544, 76);                                    
+            
+            // Nro Factura
+            g.setFont(new Font("Calibri", Font.BOLD, 11)); 
+            g.setColor(Color.red);
+            s = String.valueOf(nroFacAux);
+            g.drawString(s, 500, 30);
             
             // Nombre y Apellido de paciente
             g.setFont(new Font("Calibri", Font.BOLD, 11)); 
