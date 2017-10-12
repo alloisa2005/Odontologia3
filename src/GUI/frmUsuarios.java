@@ -11,6 +11,7 @@ import IO.Usuario;
 import java.awt.event.KeyEvent;
 import java.util.Iterator;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -133,6 +134,7 @@ public class frmUsuarios extends javax.swing.JDialog {
         jLabel14 = new javax.swing.JLabel();
         txtApellidoBuscar = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
+        btnAccesos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Usuarios del Sistema");
@@ -213,6 +215,15 @@ public class frmUsuarios extends javax.swing.JDialog {
         jLabel15.setForeground(new java.awt.Color(255, 0, 0));
         jLabel15.setText("Enter para filtrar usuarios");
 
+        btnAccesos.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        btnAccesos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/acceso32.png"))); // NOI18N
+        btnAccesos.setText("Accesos");
+        btnAccesos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAccesosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -226,7 +237,8 @@ public class frmUsuarios extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnModificarUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnNuevoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnNuevoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnAccesos, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18))
             .addGroup(layout.createSequentialGroup()
@@ -259,8 +271,10 @@ public class frmUsuarios extends javax.swing.JDialog {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnNuevoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnModificarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(24, 24, 24)
+                        .addComponent(btnModificarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(btnAccesos, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -329,12 +343,28 @@ public class frmUsuarios extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtApellidoBuscarKeyPressed
 
+    private void btnAccesosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccesosActionPerformed
+        
+        if(tblUsuarios.getSelectedRowCount() > 0){
+            
+            int row = tblUsuarios.getSelectedRow();                        
+            Usuario usuario = (Usuario) tblUsuarios.getModel().getValueAt(row, 0); 
+
+            frmAccesos frm = new frmAccesos(new javax.swing.JDialog(), true, usuario, this);
+            frm.toFront();
+            frm.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione un usuario de la lista", "Selección de Usuario", JOptionPane.INFORMATION_MESSAGE);
+        } 
+    }//GEN-LAST:event_btnAccesosActionPerformed
+
     /**
      * @param args the command line arguments
      */
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAccesos;
     private javax.swing.JButton btnModificarUsuario;
     private javax.swing.JButton btnNuevoUsuario;
     private javax.swing.JLabel jLabel1;

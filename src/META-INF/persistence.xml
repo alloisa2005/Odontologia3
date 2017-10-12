@@ -10,6 +10,8 @@
     <class>IO.Pago</class>
     <class>IO.Cita</class>
     <class>IO.Factura</class>
+    <class>IO.LineaFactura</class>
+    <class>IO.Acceso</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Odontologia3"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

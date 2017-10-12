@@ -16,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -24,6 +25,9 @@ import javax.persistence.Temporal;
  */
 @Entity
 public class Consulta implements Serializable {
+
+    @OneToMany(mappedBy = "consulta")
+    private List<LineaFactura> lineaFacturas;
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -117,6 +121,14 @@ public class Consulta implements Serializable {
 
     public void setPagos(List<Pago> pagos) {
         this.pagos = pagos;
+    }
+
+    public List<LineaFactura> getLineaFacturas() {
+        return lineaFacturas;
+    }
+
+    public void setLineaFacturas(List<LineaFactura> lineaFacturas) {
+        this.lineaFacturas = lineaFacturas;
     }
     
     public Double getMontoPagado(){

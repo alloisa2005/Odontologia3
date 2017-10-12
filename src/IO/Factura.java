@@ -8,11 +8,13 @@ package IO;
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -21,6 +23,9 @@ import javax.persistence.Temporal;
  */
 @Entity
 public class Factura implements Serializable {
+
+    @OneToMany(mappedBy = "factura")
+    private List<LineaFactura> lineaFacturas;
 
     private static final long serialVersionUID = 1L;
     @Id    
@@ -63,6 +68,14 @@ public class Factura implements Serializable {
 
     public void setMonto(Double monto) {
         this.monto = monto;
+    }
+
+    public List<LineaFactura> getLineaFacturas() {
+        return lineaFacturas;
+    }
+
+    public void setLineaFacturas(List<LineaFactura> lineaFacturas) {
+        this.lineaFacturas = lineaFacturas;
     }
     
     @Override

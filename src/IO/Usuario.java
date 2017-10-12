@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.swing.ImageIcon;
 
 /**
@@ -21,6 +22,9 @@ import javax.swing.ImageIcon;
  */
 @Entity
 public class Usuario implements Serializable {
+
+    @OneToOne(mappedBy = "usuario")
+    private Acceso acceso;
 
     private static final long serialVersionUID = 1L;
     @Id   
@@ -126,6 +130,14 @@ public class Usuario implements Serializable {
 
     public void setFoto(byte[] foto) {
         this.foto = foto;
+    }
+
+    public Acceso getAcceso() {
+        return acceso;
+    }
+
+    public void setAcceso(Acceso acceso) {
+        this.acceso = acceso;
     }
     
     //Transforma el array de bytes en la foto

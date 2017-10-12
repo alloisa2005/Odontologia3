@@ -36,6 +36,7 @@
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btnModificarUsuario" max="32767" attributes="0"/>
                           <Component id="btnNuevoUsuario" min="-2" pref="203" max="-2" attributes="0"/>
+                          <Component id="btnAccesos" min="-2" pref="203" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jLabel13" alignment="0" min="-2" pref="137" max="-2" attributes="0"/>
@@ -78,8 +79,10 @@
                   <Component id="jScrollPane1" min="-2" pref="402" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="btnNuevoUsuario" min="-2" pref="61" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Component id="btnModificarUsuario" min="-2" pref="61" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                      <Component id="btnAccesos" min="-2" pref="61" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="22" max="32767" attributes="0"/>
@@ -242,6 +245,20 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Enter para filtrar usuarios"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnAccesos">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Calibri" size="18" style="1"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagenes/acceso32.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Accesos"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAccesosActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

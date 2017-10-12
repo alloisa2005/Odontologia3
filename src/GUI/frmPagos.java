@@ -7,6 +7,8 @@ package GUI;
 
 import Controladores.Conexion;
 import IO.Consulta;
+import IO.Factura;
+import IO.LineaFactura;
 import IO.Paciente;
 import IO.Pago;
 import IO.Usuario;
@@ -108,8 +110,26 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
         }               
     }
     
-    public void Imprimo(){
-        
+    public void Imprimo(Double montoPagadoGlobal){
+           
+           Factura fac = new Factura();                      
+           
+           fac.setNumero(Long.parseLong("11223344"));
+           fac.setFecha(fchHoy);
+           fac.setPaciente(pacAux);
+           fac.setMonto(montoPagadoGlobal);
+           Conexion.getInstance().Guardar(fac);
+           
+           for (int i = 0; i < listaConsultas.size(); i++) {
+               LineaFactura linFan = new LineaFactura();
+               Consulta conAux = listaConsultas.get(i);
+               
+               linFan.setConsulta(conAux);
+               linFan.setFactura(fac);
+               linFan.setMonto(conAux.getPagos().get(conAux.getPagos().size()-1).getMonto()); 
+               Conexion.getInstance().Guardar(linFan);
+           }
+           
            PrinterJob job = PrinterJob.getPrinterJob();
            Paper hoja = new Paper();
            hoja.setImageableArea(0, 0, 595, 841);
@@ -541,12 +561,12 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
                 VaciarTabla();
                 CargarTablaPacientes();                                
                 
-                int imprimo = JOptionPane.showConfirmDialog(rootPane, "¿Desea Imprimir la factura?");
+                int imprimo = JOptionPane.showConfirmDialog(rootPane, "¿Desea Imprimir la factura?","Impresión",JOptionPane.YES_NO_OPTION);
 //                
-                if (JOptionPane.OK_OPTION == imprimo){
+                if (JOptionPane.YES_OPTION == imprimo){
                     
                     montoPagadoGlobal = Double.parseDouble(txtPago.getText());
-                    Imprimo();
+                    Imprimo(montoPagadoGlobal);
                 }    
 //            
                 panelPago.setVisible(false);
@@ -592,7 +612,7 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         
-        Imprimo();
+       
 
     }//GEN-LAST:event_btnImprimirActionPerformed
     
@@ -632,8 +652,7 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
 //        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         
         int x;
-        String s;        
-        
+        String s;                
         
         if(pageIndex == 0){            
 //            
