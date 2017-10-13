@@ -113,8 +113,14 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
     
     public void Imprimo(Double montoPagadoGlobal){
            
+           long nroFac = 0;
            Factura ultFac = Conexion.getInstance().getFacturas().maxFactura();
-           long nroFac = ultFac.getNumero() + 1;
+           
+           if(ultFac == null){
+               nroFac = 1;
+           }else{
+               nroFac = ultFac.getNumero() + 1;
+           }
            
            nroFacAux = nroFac;   // Guardo el numero de la factura para la impresión
            

@@ -18,6 +18,7 @@ import javax.swing.JDialog;
 public class frmAccesos extends javax.swing.JDialog {
        
     Usuario usuAux;
+    Acceso accesoAux;
     
     public frmAccesos(javax.swing.JDialog parent, boolean modal, Usuario usu, JDialog padre) {
         super(parent, modal);
@@ -30,6 +31,7 @@ public class frmAccesos extends javax.swing.JDialog {
         lblUsuario.setText(usu.getId());
         
         Acceso acc = usu.getAcceso();
+        accesoAux = acc;   // Guardo este objeto para ver si hacer update o insert a la tabla
         
         chkPacientes.setSelected(false);
         chkConsultas.setSelected(false);
@@ -40,7 +42,9 @@ public class frmAccesos extends javax.swing.JDialog {
         chkOpciones.setSelected(false);
             
         if(acc != null){
-            chkPacientes.setSelected(acc.isOpciones());
+            btnGuardar.setText("Modificar");
+            
+            chkPacientes.setSelected(acc.isPacientes());
             chkConsultas.setSelected(acc.isConsultas());
             chkEstadisticas.setSelected(acc.isEstadisticas());
             chkAgenda.setSelected(acc.isAgenda());
@@ -217,10 +221,10 @@ public class frmAccesos extends javax.swing.JDialog {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(951, 436));
+        setSize(new java.awt.Dimension(951, 425));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -235,11 +239,23 @@ public class frmAccesos extends javax.swing.JDialog {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         
         Acceso accAux = new Acceso();
-        
+
         accAux.setUsuario(usuAux);
         accAux.setAgenda(chkAgenda.isSelected());
+        accAux.setConsultas(chkConsultas.isSelected());
+        accAux.setEstadisticas(chkEstadisticas.isSelected());
+        accAux.setOpciones(chkOpciones.isSelected());
+        accAux.setPacientes(chkPacientes.isSelected());
+        accAux.setPagos(chkPagos.isSelected());
+        accAux.setReportes(chkReportes.isSelected());
         
-        Conexion.getInstance().Guardar(accAux);
+        if(accesoAux != null){
+            Conexion.getInstance().Actualizar(accAux);
+        }else{
+            Conexion.getInstance().Guardar(accAux);
+        }
+        
+        Conexion.getInstance().Combinar(usuAux);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
