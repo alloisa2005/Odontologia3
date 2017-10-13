@@ -378,6 +378,8 @@ public class frmAltaUsuario extends javax.swing.JDialog {
             
             JOptionPane.showMessageDialog(this, "Usuario " + txtId.getText() + " dado de alta exitosamente", "Nuevo Usuario", JOptionPane.INFORMATION_MESSAGE);
             
+            int opcion = JOptionPane.showConfirmDialog(rootPane, "¿Desea brindar los accesos al usuario ahora?","Accesos de usuario",JOptionPane.YES_NO_OPTION);//                             
+            
             LimpiarCampos();
             
             try {
@@ -385,6 +387,12 @@ public class frmAltaUsuario extends javax.swing.JDialog {
                 frm.VaciarTabla();
                 frm.CargarTablaUsuario();
             } catch (Exception e) {
+            }
+            
+            if (JOptionPane.YES_OPTION == opcion){
+                frmAccesos frm = new frmAccesos(new javax.swing.JDialog(), true, usu, this);
+                frm.toFront();
+                frm.setVisible(true);
             }
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
