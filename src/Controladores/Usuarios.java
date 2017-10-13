@@ -15,8 +15,27 @@ import java.util.List;
 public class Usuarios {
     
     public Usuario unUsuario(String id) {
-        Usuario usu = null;                
+        Usuario usu = null;   
+        
         String query = "SELECT * FROM USUARIO where id='" + id + "'";
+        
+        Conexion.getInstance().getConexion().getTransaction().begin();
+        
+        try {
+            usu = (Usuario) Conexion.getInstance().getConexion().createNativeQuery(query, Usuario.class).getSingleResult();            
+            
+            Conexion.getInstance().getConexion().getTransaction().commit(); 
+        } catch (Exception e) {
+            Conexion.getInstance().getConexion().getTransaction().rollback();       
+        
+        }
+        return usu;
+    }
+    
+    public Usuario loginUsuario(String id, String contrasenia) {
+        Usuario usu = null;    
+        
+        String query = "SELECT * FROM USUARIO where id='" + id + "' and contrasenia='" + contrasenia + "'";
         
         Conexion.getInstance().getConexion().getTransaction().begin();
         

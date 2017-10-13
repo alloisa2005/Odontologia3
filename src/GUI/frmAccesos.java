@@ -10,6 +10,7 @@ import IO.Acceso;
 import IO.Usuario;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -256,6 +257,8 @@ public class frmAccesos extends javax.swing.JDialog {
         }
         
         Conexion.getInstance().Combinar(usuAux);
+        
+        JOptionPane.showMessageDialog(this, "Debe reiniciar sesión para que los cambios se confirmen", "Accesos de Usuario", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**

@@ -6,6 +6,8 @@
 package GUI;
 
 import Controladores.Conexion;
+import IO.Acceso;
+import IO.Usuario;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,20 +19,54 @@ import javax.swing.ImageIcon;
  */
 public class frmPrincipal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form frmPrincipal
-     */
-    public frmPrincipal() {
+    private Usuario usu;
+
+    
+    public frmPrincipal(Usuario usuAux) {
         initComponents();
         
         //this.setExtendedState(MAXIMIZED_BOTH); 
         
-        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/molar.png")).getImage()); 
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/molar.png")).getImage());                 
+        usu = usuAux;
         
-        Conexion.getInstance().getConexion();
+        accesoUsuarios();        
         
     }
-
+    
+    private void accesoUsuarios(){
+        
+        Acceso acceso = usu.getAcceso();
+        
+        if(!acceso.isAgenda()){
+            btnAgenda.setEnabled(false);
+        }
+        
+        if(!acceso.isConsultas()){
+            btnConsultasMedicas.setEnabled(false);
+        }
+        
+        if(!acceso.isEstadisticas()){
+            btnEstadisticas.setEnabled(false);
+        }
+        
+        if(!acceso.isOpciones()){
+            btnOpciones.setEnabled(false);
+        }
+        
+        if(!acceso.isPacientes()){
+            btnPersonas.setEnabled(false);
+        }
+        
+        if(!acceso.isPagos()){
+            btnPagos.setEnabled(false);
+        }
+        
+        if(!acceso.isReportes()){
+            btnReportes.setEnabled(false);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -212,43 +248,48 @@ public class frmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgendaActionPerformed
 
     private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
-        // TODO add your handling code here:
+        
+        this.dispose();
+        
+        frmLogin frm = new frmLogin(this, true);
+        frm.toFront();
+        frm.setVisible(true);
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new frmPrincipal().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(frmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(frmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(frmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(frmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new frmPrincipal().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgenda;
