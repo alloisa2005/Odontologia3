@@ -390,6 +390,7 @@ public class frmModifiacionUsuario extends javax.swing.JDialog {
             usu.setTelefono(txtTelefono.getText());
             usu.setDireccion(txtDireccion.getText());
             usu.setFch_nac(dteFchNacimiento.getDate());            
+            usu.setFoto(fotoPerfil);
             
             Conexion.getInstance().Actualizar(usu);
             
