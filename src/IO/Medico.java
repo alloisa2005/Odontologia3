@@ -29,10 +29,7 @@ public class Medico implements Serializable {
     private List<Cita> citas;
 
     @OneToMany(mappedBy = "medico")
-    private List<Consulta> consultas;
-
-    @OneToMany(mappedBy = "medico")
-    private List<Usuario> usuarios;
+    private List<Consulta> consultas;    
 
     private static final long serialVersionUID = 1L;
     @Id    
@@ -139,15 +136,7 @@ public class Medico implements Serializable {
 
     public void setConsultas(List<Consulta> consultas) {
         this.consultas = consultas;
-    }
-
-    public List<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
-    }
+    }    
     
     //Transforma el array de bytes en la foto
     public ImageIcon getFotoImage() {

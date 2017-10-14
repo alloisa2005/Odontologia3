@@ -42,40 +42,56 @@ public class frmPrincipal extends javax.swing.JFrame {
         
         lblNombreUsu.setText(usu.getNombre() + " " + usu.getApellido());
         
+        inhabilitoBotones();  // Cuando carga el panel deshabilito todos los botones y habilito de acuerdo a los accesos del usuario
+        
         accesoUsuarios();        
         
+    }
+    
+    private void inhabilitoBotones(){
+        
+        btnAgenda.setEnabled(false);
+        btnConsultasMedicas.setEnabled(false);
+        btnEstadisticas.setEnabled(false);
+        btnEstadisticas.setEnabled(false);
+        btnOpciones.setEnabled(false);
+        btnPersonas.setEnabled(false);
+        btnPagos.setEnabled(false);
+        btnReportes.setEnabled(false);
     }
     
     private void accesoUsuarios(){
         
         Acceso acceso = usu.getAcceso();
         
-        if(!acceso.isAgenda()){
-            btnAgenda.setEnabled(false);
-        }
-        
-        if(!acceso.isConsultas()){
-            btnConsultasMedicas.setEnabled(false);
-        }
-        
-        if(!acceso.isEstadisticas()){
-            btnEstadisticas.setEnabled(false);
-        }
-        
-        if(!acceso.isOpciones()){
-            btnOpciones.setEnabled(false);
-        }
-        
-        if(!acceso.isPacientes()){
-            btnPersonas.setEnabled(false);
-        }
-        
-        if(!acceso.isPagos()){
-            btnPagos.setEnabled(false);
-        }
-        
-        if(!acceso.isReportes()){
-            btnReportes.setEnabled(false);
+        if(acceso != null){
+            if(acceso.isAgenda()){
+                btnAgenda.setEnabled(true);
+            }
+
+            if(acceso.isConsultas()){
+                btnConsultasMedicas.setEnabled(true);
+            }
+
+            if(acceso.isEstadisticas()){
+                btnEstadisticas.setEnabled(true);
+            }
+
+            if(acceso.isOpciones()){
+                btnOpciones.setEnabled(true);
+            }
+
+            if(acceso.isPacientes()){
+                btnPersonas.setEnabled(true);
+            }
+
+            if(acceso.isPagos()){
+                btnPagos.setEnabled(true);
+            }
+
+            if(acceso.isReportes()){
+                btnReportes.setEnabled(true);
+            }
         }
     }
     
