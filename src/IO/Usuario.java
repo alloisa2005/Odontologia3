@@ -36,13 +36,7 @@ public class Usuario implements Serializable {
     private String direccion;
     private String telefono;
     private String celular;
-    private byte[] foto;
-    
-    @ManyToOne
-    private Rol rol;
-    
-    @ManyToOne
-    private Medico medico;
+    private byte[] foto;        
     
     public String getId() {
         return id;
@@ -106,23 +100,7 @@ public class Usuario implements Serializable {
 
     public void setCelular(String celular) {
         this.celular = celular;
-    }
-
-    public Rol getRol() {
-        return rol;
-    }
-
-    public void setRol(Rol rol) {
-        this.rol = rol;
-    }
-
-    public Medico getMedico() {
-        return medico;
-    }
-
-    public void setMedico(Medico medico) {
-        this.medico = medico;
-    }
+    }    
 
     public byte[] getFoto() {
         return foto;

@@ -27,9 +27,8 @@ public class Conexion {
 
         private static final Conexion INSTANCE = new Conexion();                
         private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("Odontologia3PU");
-        private static final EntityManager em = emf.createEntityManager();
+        private static final EntityManager em = emf.createEntityManager();        
         
-        private static final Roles roles = new Roles();
         private static final Medicos medicos = new Medicos();
         private static final Usuarios usuarios = new Usuarios();
         private static final Pacientes pac = new Pacientes();
@@ -46,11 +45,7 @@ public class Conexion {
     
     public Citas getCitas(){
         return ConexionHolder.citas;
-    }
-    
-    public Roles getRoles(){
-        return ConexionHolder.roles;
-    }
+    }        
     
     public Consultas getConsultas(){
         return ConexionHolder.con;

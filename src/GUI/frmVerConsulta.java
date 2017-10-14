@@ -6,22 +6,14 @@
 package GUI;
 
 import Controladores.Conexion;
-import Controladores.Roles;
 import IO.Consulta;
 import IO.Medico;
-import IO.Paciente;
 import IO.Pago;
-import IO.Rol;
-import IO.Usuario;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 /**
  *

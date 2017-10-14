@@ -6,14 +6,10 @@
 package GUI;
 
 import Controladores.Conexion;
-import Controladores.Roles;
 import IO.Medico;
-import IO.Rol;
-import IO.Usuario;
 import java.awt.Image;
 import java.io.IOException;
 import java.util.Date;
-import java.util.Iterator;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
