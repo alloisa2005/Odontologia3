@@ -111,36 +111,7 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
         }               
     }
     
-    public void Imprimo(Double montoPagadoGlobal){
-           
-           long nroFac = 0;
-           Factura ultFac = Conexion.getInstance().getFacturas().maxFactura();
-           
-           if(ultFac == null){
-               nroFac = 1;
-           }else{
-               nroFac = ultFac.getNumero() + 1;
-           }
-           
-           nroFacAux = nroFac;   // Guardo el numero de la factura para la impresión
-           
-           Factura fac = new Factura();                      
-           
-           fac.setNumero(nroFac);
-           fac.setFecha(fchHoy);
-           fac.setPaciente(pacAux);
-           fac.setMonto(montoPagadoGlobal);
-           Conexion.getInstance().Guardar(fac);
-           
-           for (int i = 0; i < listaConsultas.size(); i++) {
-               LineaFactura linFan = new LineaFactura();
-               Consulta conAux = listaConsultas.get(i);
-               
-               linFan.setConsulta(conAux);
-               linFan.setFactura(fac);
-               linFan.setMonto(conAux.getPagos().get(conAux.getPagos().size()-1).getMonto()); 
-               Conexion.getInstance().Guardar(linFan);
-           }
+    public void Imprimo(){           
            
            PrinterJob job = PrinterJob.getPrinterJob();
            Paper hoja = new Paper();
@@ -573,12 +544,42 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
                 VaciarTabla();
                 CargarTablaPacientes();                                
                 
+                long nroFac = 0;
+                Factura ultFac = Conexion.getInstance().getFacturas().maxFactura();
+
+                if(ultFac == null){
+                    nroFac = 1;
+                }else{
+                    nroFac = ultFac.getNumero() + 1;
+                }
+                
+                montoPagadoGlobal = Double.parseDouble(txtPago.getText());
+                nroFacAux = nroFac;   // Guardo el numero de la factura para la impresión
+
+                Factura fac = new Factura();                      
+
+                fac.setNumero(nroFac);
+                fac.setFecha(fchHoy);
+                fac.setPaciente(pacAux);
+                fac.setMonto(montoPagadoGlobal);
+                Conexion.getInstance().Guardar(fac);
+
+                for (int i = 0; i < listaConsultas.size(); i++) {
+                    LineaFactura linFan = new LineaFactura();
+                    Consulta conAux = listaConsultas.get(i);
+
+                    linFan.setConsulta(conAux);
+                    linFan.setFactura(fac);
+                    linFan.setMonto(conAux.getPagos().get(conAux.getPagos().size()-1).getMonto()); 
+                    Conexion.getInstance().Guardar(linFan);
+                }
+           
                 int imprimo = JOptionPane.showConfirmDialog(rootPane, "¿Desea Imprimir la factura?","Impresión",JOptionPane.YES_NO_OPTION);
 //                
                 if (JOptionPane.YES_OPTION == imprimo){
                     
                     montoPagadoGlobal = Double.parseDouble(txtPago.getText());
-                    Imprimo(montoPagadoGlobal);
+                    Imprimo();
                 }    
 //            
                 panelPago.setVisible(false);

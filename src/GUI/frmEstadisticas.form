@@ -51,7 +51,7 @@
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="86" max="32767" attributes="0"/>
+              <EmptySpace pref="69" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -68,7 +68,7 @@
               <Component id="rbtnMontoRecaudado" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="panel2" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="411" max="32767" attributes="0"/>
+              <EmptySpace pref="403" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -80,7 +80,7 @@
           <ComponentRef name="Grupo1"/>
         </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Calibri" size="18" style="1"/>
+          <Font name="Calibri" size="21" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Consultas por M&#xe9;dico"/>
       </Properties>
@@ -94,7 +94,7 @@
           <ComponentRef name="Grupo1"/>
         </Property>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Calibri" size="18" style="1"/>
+          <Font name="Calibri" size="21" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Monto recaudado entre fechas"/>
       </Properties>
@@ -201,18 +201,18 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel3" min="-2" pref="43" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="dteFchDesde" min="-2" pref="154" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                  <Component id="jLabel1" min="-2" pref="43" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                  <Component id="jLabel1" min="-2" pref="55" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="dteFchHasta" min="-2" pref="154" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="lblMontoRecaudado" min="-2" pref="60" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnVerMontoRecaudado" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="202" max="32767" attributes="0"/>
               </Group>
@@ -239,7 +239,7 @@
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Calibri" size="16" style="1"/>
+              <Font name="Calibri" size="19" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Hasta"/>
           </Properties>
@@ -247,7 +247,7 @@
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Calibri" size="16" style="1"/>
+              <Font name="Calibri" size="19" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Desde"/>
           </Properties>
@@ -291,7 +291,7 @@
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Calibri" size="16" style="1"/>
+              <Font name="Calibri" size="19" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Monto ($)"/>
           </Properties>
@@ -299,7 +299,7 @@
         <Component class="javax.swing.JLabel" name="lblMontoRecaudado">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Calibri" size="18" style="1"/>
+              <Font name="Calibri" size="19" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="ff" type="rgb"/>

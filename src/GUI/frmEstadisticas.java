@@ -88,7 +88,7 @@ public class frmEstadisticas extends javax.swing.JDialog {
         setTitle("Menu de Estadísticas");
 
         Grupo1.add(rbtnConsultasXMedico);
-        rbtnConsultasXMedico.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        rbtnConsultasXMedico.setFont(new java.awt.Font("Calibri", 1, 21)); // NOI18N
         rbtnConsultasXMedico.setText("Consultas por Médico");
         rbtnConsultasXMedico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,7 +97,7 @@ public class frmEstadisticas extends javax.swing.JDialog {
         });
 
         Grupo1.add(rbtnMontoRecaudado);
-        rbtnMontoRecaudado.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        rbtnMontoRecaudado.setFont(new java.awt.Font("Calibri", 1, 21)); // NOI18N
         rbtnMontoRecaudado.setText("Monto recaudado entre fechas");
         rbtnMontoRecaudado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -158,10 +158,10 @@ public class frmEstadisticas extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLabel1.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
         jLabel1.setText("Hasta");
 
-        jLabel3.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
         jLabel3.setText("Desde");
 
         dteFchDesde.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
@@ -182,10 +182,10 @@ public class frmEstadisticas extends javax.swing.JDialog {
             }
         });
 
-        jLabel4.setFont(new java.awt.Font("Calibri", 1, 16)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
         jLabel4.setText("Monto ($)");
 
-        lblMontoRecaudado.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        lblMontoRecaudado.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
         lblMontoRecaudado.setForeground(new java.awt.Color(255, 0, 0));
         lblMontoRecaudado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMontoRecaudado.setText("0.0");
@@ -205,18 +205,18 @@ public class frmEstadisticas extends javax.swing.JDialog {
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
                 .addComponent(dteFchDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(54, 54, 54)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(dteFchHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
+                .addGap(61, 61, 61)
                 .addComponent(jLabel4)
                 .addGap(18, 18, 18)
                 .addComponent(lblMontoRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnVerMontoRecaudado)
                 .addContainerGap(202, Short.MAX_VALUE))
         );
@@ -253,7 +253,7 @@ public class frmEstadisticas extends javax.swing.JDialog {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(86, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,7 +268,7 @@ public class frmEstadisticas extends javax.swing.JDialog {
                 .addComponent(rbtnMontoRecaudado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(411, Short.MAX_VALUE))
+                .addContainerGap(403, Short.MAX_VALUE))
         );
 
         setSize(new java.awt.Dimension(1162, 784));
@@ -350,7 +350,14 @@ public class frmEstadisticas extends javax.swing.JDialog {
     }//GEN-LAST:event_btnVerConsultasXMedicoActionPerformed
 
     private void btnVerMontoRecaudadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerMontoRecaudadoActionPerformed
-        // TODO add your handling code here:
+        
+        String fchIni = df.format(dteFchDesde.getDate());
+        String fchFin = df.format(dteFchHasta.getDate());
+        
+        frmMontoRecaudado frm = new frmMontoRecaudado(new javax.swing.JDialog(), true, fchIni, fchFin, this);
+        frm.toFront();
+        frm.setVisible(true);
+        
     }//GEN-LAST:event_btnVerMontoRecaudadoActionPerformed
 
     /**

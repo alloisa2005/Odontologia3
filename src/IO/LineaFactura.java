@@ -84,7 +84,7 @@ public class LineaFactura implements Serializable {
 
     @Override
     public String toString() {
-        return "IO.LineaFactura[ id=" + id + " ]";
+        return id.toString();
     }
     
 }

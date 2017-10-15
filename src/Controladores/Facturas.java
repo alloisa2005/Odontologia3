@@ -6,6 +6,7 @@
 package Controladores;
 
 import IO.Factura;
+import java.util.List;
 
 /**
  *
@@ -30,6 +31,42 @@ public class Facturas {
         
         }
         
+        return factura;
+    }
+    
+    public List<Factura> facturasEntreFechas(String fchIni, String fchFin) {
+        List<Factura> lista = null;
+        
+        String query = "select * from factura where fecha between '" + fchIni + "' and '" + fchFin + "'";
+        
+        Conexion.getInstance().getConexion().getTransaction().begin();
+        
+        try {
+            lista = Conexion.getInstance().getConexion().createNativeQuery(query, Factura.class).getResultList();            
+            
+            Conexion.getInstance().getConexion().getTransaction().commit(); 
+        } catch (Exception e) {
+            Conexion.getInstance().getConexion().getTransaction().rollback();       
+        
+        }
+        return lista;
+    }
+    
+    public Factura unaFactura(Long numero) {
+        Factura factura = null;
+        
+        String query = "select * from factura where numero = " + numero;
+        
+        Conexion.getInstance().getConexion().getTransaction().begin();
+        
+        try {
+            factura = (Factura) Conexion.getInstance().getConexion().createNativeQuery(query, Factura.class).getSingleResult();            
+            
+            Conexion.getInstance().getConexion().getTransaction().commit(); 
+        } catch (Exception e) {
+            Conexion.getInstance().getConexion().getTransaction().rollback();       
+        
+        }
         return factura;
     }
 }
