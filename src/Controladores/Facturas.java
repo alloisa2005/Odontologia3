@@ -52,10 +52,10 @@ public class Facturas {
         return lista;
     }
     
-    public Factura unaFactura(Long numero) {
+    public Factura unaFactura(String numero) {
         Factura factura = null;
         
-        String query = "select * from factura where numero = " + numero;
+        String query = "select * from factura where numero = '" + numero + "'";
         
         Conexion.getInstance().getConexion().getTransaction().begin();
         

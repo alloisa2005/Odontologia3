@@ -30,7 +30,7 @@ public class Factura implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id    
-    private Long numero;
+    private String numero;
     @ManyToOne
     private Paciente paciente;
     
@@ -39,11 +39,11 @@ public class Factura implements Serializable {
     private Double monto;
     
     
-    public Long getNumero() {
+    public String getNumero() {
         return numero;
     }
 
-    public void setNumero(Long numero) {
+    public void setNumero(String numero) {
         this.numero = numero;
     }
 
@@ -101,7 +101,7 @@ public class Factura implements Serializable {
 
     @Override
     public String toString() {
-        return numero.toString();
+        return numero;
     }
 
     

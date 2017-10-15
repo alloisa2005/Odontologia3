@@ -544,13 +544,13 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
                 VaciarTabla();
                 CargarTablaPacientes();                                
                 
-                long nroFac = 0;
+                int nroFac = 0;
                 Factura ultFac = Conexion.getInstance().getFacturas().maxFactura();
 
                 if(ultFac == null){
                     nroFac = 1;
                 }else{
-                    nroFac = ultFac.getNumero() + 1;
+                    nroFac = Integer.parseInt(ultFac.getNumero()) + 1;
                 }
                 
                 montoPagadoGlobal = Double.parseDouble(txtPago.getText());
@@ -558,7 +558,7 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
 
                 Factura fac = new Factura();                      
 
-                fac.setNumero(nroFac);
+                fac.setNumero(String.valueOf(nroFac));
                 fac.setFecha(fchHoy);
                 fac.setPaciente(pacAux);
                 fac.setMonto(montoPagadoGlobal);

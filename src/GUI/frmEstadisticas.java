@@ -44,7 +44,8 @@ public class frmEstadisticas extends javax.swing.JDialog {
         
         CalcularMontoCobrado();
         
-        fchMinimaConsulta = dteFchDesde.getDate();  // Le asigno el valor del día minimo para asignarselo de nuevo si hay error
+        fchMinimaConsulta = dteFchDesde.getDate();  // Le asigno el valor del día minimo para asignarselo de nuevo si hay error        
+        
     }
 
     public void CargarComboMedicos() {
