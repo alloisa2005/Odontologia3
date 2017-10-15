@@ -8,11 +8,13 @@ package GUI;
 import Controladores.Conexion;
 import IO.Factura;
 import IO.LineaFactura;
+import IO.Paciente;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -122,6 +124,7 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
         tblDetalleFactura = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        btnVerFactura = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Monto Recaudado Entre Fechas");
@@ -233,6 +236,15 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
         );
 
+        btnVerFactura.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        btnVerFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/factura32.png"))); // NOI18N
+        btnVerFactura.setText(" Ver Factura");
+        btnVerFactura.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerFacturaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -250,11 +262,15 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(82, 82, 82)
+                        .addGap(67, 67, 67)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
                             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnVerFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(577, 577, 577))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -273,10 +289,12 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(38, 38, 38)
+                .addComponent(btnVerFactura, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                .addGap(23, 23, 23))
         );
 
-        setSize(new java.awt.Dimension(1411, 628));
+        setSize(new java.awt.Dimension(1411, 735));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -335,6 +353,22 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
         
     }//GEN-LAST:event_tblFacturasMouseClicked
 
+    private void btnVerFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerFacturaActionPerformed
+        
+        if(tblFacturas.getSelectedRowCount() > 0){
+            
+            int row = tblFacturas.getSelectedRow();                        
+            Factura factura = (Factura) tblFacturas.getModel().getValueAt(row, 0); 
+
+            frmVerFactura frm =  new frmVerFactura(new javax.swing.JDialog(), true, factura);
+            frm.toFront();
+            frm.setVisible(true); 
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione un paciente de la lista", "Selección de Paciente", JOptionPane.INFORMATION_MESSAGE);
+        }                      
+
+    }//GEN-LAST:event_btnVerFacturaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -378,6 +412,7 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnVerFactura;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
