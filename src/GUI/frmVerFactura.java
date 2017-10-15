@@ -5,7 +5,13 @@
  */
 package GUI;
 
+import Controladores.Conexion;
 import IO.Factura;
+import IO.LineaFactura;
+import java.awt.Graphics;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
 
 /**
  *
@@ -13,16 +19,77 @@ import IO.Factura;
  */
 public class frmVerFactura extends javax.swing.JDialog {
 
-    /**
-     * Creates new form frmVerFactura
-     */
+    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    
     public frmVerFactura(javax.swing.JDialog parent, boolean modal, Factura factura) {
         super(parent, modal);
         initComponents();        
         
         this.setTitle("Factura Nro.: " + factura.getNumero());
+
+        DibujoFactura(factura);
+        
     }
 
+    public void DibujoFactura(Factura factura){
+        
+        lblNroFactura.setText(factura.getNumero());
+        lblPaciente.setText(factura.getPaciente().toString());        
+        lblCedula.setText(factura.getPaciente().getId());
+        lblMontoTotal.setText(String.valueOf(factura.getMonto()));
+        
+        Date fchFactura = factura.getFecha();
+        int nroMes = fchFactura.getMonth();
+        String mes = DevuelvoMes(nroMes);
+        lblMes.setText(mes);
+        
+        lblDia.setText(String.valueOf(factura.getFecha().getDate()));
+        lblAnio.setText(String.valueOf(String.valueOf(factura.getFecha().getYear()+ 1900)));   
+        
+        Iterator<LineaFactura> it = factura.getLineaFacturas().iterator();
+        
+        int i = 0;
+        while (it.hasNext()) {
+            i += 1;
+            LineaFactura next = it.next();
+            
+            String fchLinea = df.format(next.getConsulta().getFecha());
+            
+            if(i == 1){
+                lblLinea1.setText(next.getConsulta().getTitulo() + "  -  " + fchLinea);
+                lblMonto1.setText(String.valueOf(next.getMonto()));
+            }else{
+                if(i == 2){
+                    lblLinea2.setText(next.getConsulta().getTitulo() + "  -  " + fchLinea);
+                    lblMonto2.setText(String.valueOf(next.getMonto()));
+                }
+            }
+            
+        }
+        
+    }
+    
+    public String DevuelvoMes(int nroMes){
+        String mes = "";
+        
+        switch(nroMes){
+            case 0:  mes = "Enero"; break;
+            case 1:  mes = "Febrero";  break;
+            case 2:  mes = "Marzo";  break;
+            case 3:  mes = "Abril";  break;
+            case 4:  mes = "Mayo";  break;
+            case 5:  mes = "Junio";  break;
+            case 6:  mes = "Julio";  break;
+            case 7:  mes = "Agosto";  break;
+            case 8:  mes = "Setiembre";  break;
+            case 9:  mes = "Octubre";  break;
+            case 10: mes = "Noviembre";  break;
+            case 11: mes = "Diciembre";  break;
+        }
+        
+        return mes;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,30 +99,101 @@ public class frmVerFactura extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblNroFactura = new javax.swing.JLabel();
+        lblPaciente = new javax.swing.JLabel();
+        lblCedula = new javax.swing.JLabel();
+        lblMontoTotal = new javax.swing.JLabel();
+        lblMes = new javax.swing.JLabel();
+        lblDia = new javax.swing.JLabel();
+        lblAnio = new javax.swing.JLabel();
+        lblLinea1 = new javax.swing.JLabel();
+        lblMonto1 = new javax.swing.JLabel();
+        lblLinea2 = new javax.swing.JLabel();
+        lblMonto2 = new javax.swing.JLabel();
         lblFactura = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Factura Nro.: ");
+        getContentPane().setLayout(null);
+
+        lblNroFactura.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblNroFactura.setForeground(new java.awt.Color(255, 0, 0));
+        lblNroFactura.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNroFactura.setText("jLabel1");
+        lblNroFactura.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblNroFactura);
+        lblNroFactura.setBounds(870, 30, 140, 30);
+
+        lblPaciente.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblPaciente.setForeground(new java.awt.Color(255, 0, 0));
+        lblPaciente.setText("jLabel1");
+        lblPaciente.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblPaciente);
+        lblPaciente.setBounds(260, 170, 340, 40);
+
+        lblCedula.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblCedula.setForeground(new java.awt.Color(255, 0, 0));
+        lblCedula.setText("jLabel1");
+        lblCedula.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblCedula);
+        lblCedula.setBounds(710, 170, 110, 40);
+
+        lblMontoTotal.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblMontoTotal.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMontoTotal.setText("jLabel1");
+        lblMontoTotal.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblMontoTotal);
+        lblMontoTotal.setBounds(860, 550, 110, 40);
+
+        lblMes.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblMes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMes.setText("jLabel1");
+        lblMes.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblMes);
+        lblMes.setBounds(800, 90, 130, 40);
+
+        lblDia.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblDia.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblDia.setText("jLabel1");
+        lblDia.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblDia);
+        lblDia.setBounds(720, 90, 60, 40);
+
+        lblAnio.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblAnio.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAnio.setText("jLabel1");
+        lblAnio.setVerifyInputWhenFocusTarget(false);
+        lblAnio.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblAnio);
+        lblAnio.setBounds(950, 90, 50, 40);
+
+        lblLinea1.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblLinea1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        lblLinea1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblLinea1);
+        lblLinea1.setBounds(90, 300, 720, 30);
+
+        lblMonto1.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblMonto1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMonto1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblMonto1);
+        lblMonto1.setBounds(850, 290, 130, 40);
+
+        lblLinea2.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblLinea2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblLinea2);
+        lblLinea2.setBounds(90, 340, 740, 30);
+
+        lblMonto2.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblMonto2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMonto2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblMonto2);
+        lblMonto2.setBounds(850, 330, 130, 40);
 
         lblFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/factura.PNG"))); // NOI18N
         lblFactura.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblFactura)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblFactura)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        getContentPane().add(lblFactura);
+        lblFactura.setBounds(12, 13, 1035, 616);
 
         setSize(new java.awt.Dimension(1077, 689));
         setLocationRelativeTo(null);
@@ -104,6 +242,17 @@ public class frmVerFactura extends javax.swing.JDialog {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel lblAnio;
+    private javax.swing.JLabel lblCedula;
+    private javax.swing.JLabel lblDia;
     private javax.swing.JLabel lblFactura;
+    private javax.swing.JLabel lblLinea1;
+    private javax.swing.JLabel lblLinea2;
+    private javax.swing.JLabel lblMes;
+    private javax.swing.JLabel lblMonto1;
+    private javax.swing.JLabel lblMonto2;
+    private javax.swing.JLabel lblMontoTotal;
+    private javax.swing.JLabel lblNroFactura;
+    private javax.swing.JLabel lblPaciente;
     // End of variables declaration//GEN-END:variables
 }
