@@ -27,7 +27,9 @@ public class frmAltaPaciente extends javax.swing.JDialog {
     Date hoy = new Date();
     DefaultComboBoxModel modeloRoles = new DefaultComboBoxModel();
     DefaultComboBoxModel modeloMedicos = new DefaultComboBoxModel();
+    
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    
     int edad = 0; 
     private byte[] fotoPerfil;
     private final JDialog padre;
@@ -385,7 +387,7 @@ public class frmAltaPaciente extends javax.swing.JDialog {
             sigo = "N";
             JOptionPane.showMessageDialog(this, "Apellido de paciente requerido", "Validación de datos", JOptionPane.ERROR_MESSAGE);
             txtApellido.requestFocus();
-        }
+        }                
         
         if(sigo.equals("S") && dteFchNacimiento.getDate().after(hoy)){
             sigo = "N";
