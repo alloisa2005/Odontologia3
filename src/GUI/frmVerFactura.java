@@ -66,6 +66,21 @@ public class frmVerFactura extends javax.swing.JDialog {
                     if(i == 3){
                         lblLinea3.setText(next.getConsulta().getTitulo() + "  -  " + fchLinea);
                         lblMonto3.setText(String.valueOf(next.getMonto()));
+                    }else{
+                        if(i == 4){
+                            lblLinea4.setText(next.getConsulta().getTitulo() + "  -  " + fchLinea);
+                            lblMonto4.setText(String.valueOf(next.getMonto()));
+                        }else{
+                            if(i == 5){
+                                lblLinea5.setText(next.getConsulta().getTitulo() + "  -  " + fchLinea);
+                                lblMonto5.setText(String.valueOf(next.getMonto()));
+                            }else{
+                                if(i == 6){
+                                    lblLinea6.setText(next.getConsulta().getTitulo() + "  -  " + fchLinea);
+                                    lblMonto6.setText(String.valueOf(next.getMonto()));
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -117,6 +132,12 @@ public class frmVerFactura extends javax.swing.JDialog {
         lblMonto2 = new javax.swing.JLabel();
         lblLinea3 = new javax.swing.JLabel();
         lblMonto3 = new javax.swing.JLabel();
+        lblLinea4 = new javax.swing.JLabel();
+        lblMonto4 = new javax.swing.JLabel();
+        lblLinea5 = new javax.swing.JLabel();
+        lblMonto5 = new javax.swing.JLabel();
+        lblLinea6 = new javax.swing.JLabel();
+        lblMonto6 = new javax.swing.JLabel();
         lblFactura = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -178,7 +199,7 @@ public class frmVerFactura extends javax.swing.JDialog {
         lblLinea1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblLinea1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         getContentPane().add(lblLinea1);
-        lblLinea1.setBounds(90, 300, 720, 30);
+        lblLinea1.setBounds(90, 290, 750, 40);
 
         lblMonto1.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
         lblMonto1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -189,7 +210,7 @@ public class frmVerFactura extends javax.swing.JDialog {
         lblLinea2.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
         lblLinea2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         getContentPane().add(lblLinea2);
-        lblLinea2.setBounds(90, 340, 740, 30);
+        lblLinea2.setBounds(90, 330, 750, 40);
 
         lblMonto2.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
         lblMonto2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -200,7 +221,7 @@ public class frmVerFactura extends javax.swing.JDialog {
         lblLinea3.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
         lblLinea3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         getContentPane().add(lblLinea3);
-        lblLinea3.setBounds(90, 380, 750, 30);
+        lblLinea3.setBounds(90, 370, 750, 40);
 
         lblMonto3.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
         lblMonto3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -208,6 +229,39 @@ public class frmVerFactura extends javax.swing.JDialog {
         lblMonto3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         getContentPane().add(lblMonto3);
         lblMonto3.setBounds(850, 370, 130, 40);
+
+        lblLinea4.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblLinea4.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblLinea4);
+        lblLinea4.setBounds(90, 410, 750, 40);
+
+        lblMonto4.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblMonto4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMonto4.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblMonto4);
+        lblMonto4.setBounds(850, 410, 130, 40);
+
+        lblLinea5.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblLinea5.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblLinea5);
+        lblLinea5.setBounds(90, 450, 750, 40);
+
+        lblMonto5.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblMonto5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMonto5.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblMonto5);
+        lblMonto5.setBounds(850, 450, 130, 40);
+
+        lblLinea6.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblLinea6.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblLinea6);
+        lblLinea6.setBounds(90, 490, 750, 40);
+
+        lblMonto6.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblMonto6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMonto6.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblMonto6);
+        lblMonto6.setBounds(850, 490, 130, 40);
 
         lblFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/factura.PNG"))); // NOI18N
         lblFactura.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
@@ -268,10 +322,16 @@ public class frmVerFactura extends javax.swing.JDialog {
     private javax.swing.JLabel lblLinea1;
     private javax.swing.JLabel lblLinea2;
     private javax.swing.JLabel lblLinea3;
+    private javax.swing.JLabel lblLinea4;
+    private javax.swing.JLabel lblLinea5;
+    private javax.swing.JLabel lblLinea6;
     private javax.swing.JLabel lblMes;
     private javax.swing.JLabel lblMonto1;
     private javax.swing.JLabel lblMonto2;
     private javax.swing.JLabel lblMonto3;
+    private javax.swing.JLabel lblMonto4;
+    private javax.swing.JLabel lblMonto5;
+    private javax.swing.JLabel lblMonto6;
     private javax.swing.JLabel lblMontoTotal;
     private javax.swing.JLabel lblNroFactura;
     private javax.swing.JLabel lblPaciente;

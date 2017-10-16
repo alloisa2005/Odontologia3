@@ -6,6 +6,7 @@
 package GUI;
 
 import Controladores.Conexion;
+import IO.Consulta;
 import IO.Factura;
 import IO.LineaFactura;
 import IO.Paciente;
@@ -125,6 +126,7 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         btnVerFactura = new javax.swing.JButton();
+        btnVerConsulta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Monto Recaudado Entre Fechas");
@@ -216,6 +218,11 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
         ));
         tblDetalleFactura.setRowHeight(23);
         tblDetalleFactura.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tblDetalleFactura.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDetalleFacturaMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tblDetalleFactura);
 
         jPanel2.setBackground(new java.awt.Color(0, 51, 255));
@@ -245,32 +252,47 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
             }
         });
 
+        btnVerConsulta.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        btnVerConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/consultaMedica32.png"))); // NOI18N
+        btnVerConsulta.setText(" Ver Consulta");
+        btnVerConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerConsultaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(btnVerFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(67, 67, 67)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
+                                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnVerConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(187, 187, 187))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtNroFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(67, 67, 67)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 617, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(27, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnVerFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(577, 577, 577))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,9 +311,11 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 398, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addGap(38, 38, 38)
-                .addComponent(btnVerFactura, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
-                .addGap(23, 23, 23))
+                .addGap(34, 34, 34)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVerFactura, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                    .addComponent(btnVerConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE))
+                .addGap(27, 27, 27))
         );
 
         setSize(new java.awt.Dimension(1411, 735));
@@ -334,6 +358,8 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
         while (it.hasNext()) {
             LineaFactura next = it.next();
             
+            Conexion.getInstance().Combinar(next);
+            
             Object[] fila = new Object[3]; 
             
             fila[0] = next;
@@ -349,13 +375,15 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
         int row = tblFacturas.getSelectedRow();                        
         Factura fac = (Factura) tblFacturas.getModel().getValueAt(row, 0); 
         
+        Conexion.getInstance().Combinar(fac);
+        
         CargarLineasFacturas(fac);
         
     }//GEN-LAST:event_tblFacturasMouseClicked
 
     private void btnVerFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerFacturaActionPerformed
         
-        if(tblFacturas.getSelectedRowCount() > 0){
+        if(tblFacturas.getSelectedRowCount() > -1){
             
             int row = tblFacturas.getSelectedRow();                        
             Factura factura = (Factura) tblFacturas.getModel().getValueAt(row, 0); 
@@ -368,6 +396,28 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
         }                      
 
     }//GEN-LAST:event_btnVerFacturaActionPerformed
+
+    private void btnVerConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerConsultaActionPerformed
+        
+        if(tblDetalleFactura.getSelectedRow() > -1){
+            
+            int row = tblDetalleFactura.getSelectedRow(); 
+            LineaFactura linea = (LineaFactura) tblDetalleFactura.getModel().getValueAt(row, 0);
+            
+            Consulta consulta = linea.getConsulta();
+            
+            frmVerConsulta frm = new frmVerConsulta(new javax.swing.JDialog(), true, consulta);
+            frm.toFront();
+            frm.setVisible(true);
+        }
+    }//GEN-LAST:event_btnVerConsultaActionPerformed
+
+    private void tblDetalleFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDetalleFacturaMouseClicked
+        
+        
+        
+        
+    }//GEN-LAST:event_tblDetalleFacturaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -412,6 +462,7 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnVerConsulta;
     private javax.swing.JButton btnVerFactura;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
