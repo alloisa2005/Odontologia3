@@ -29,25 +29,25 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                  <Component id="btnMedicos" max="32767" attributes="0"/>
-                  <Component id="btnUsuarios" max="32767" attributes="0"/>
-                  <Component id="btnBaseDeDatos" alignment="0" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnBaseDeDatos" min="-2" pref="216" max="-2" attributes="0"/>
+                  <Component id="btnMedicos" min="-2" pref="216" max="-2" attributes="0"/>
+                  <Component id="btnUsuarios" min="-2" pref="216" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="1033" max="32767" attributes="0"/>
+              <EmptySpace pref="986" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
-              <Component id="btnUsuarios" min="-2" pref="61" max="-2" attributes="0"/>
+              <Component id="btnUsuarios" min="-2" pref="87" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-              <Component id="btnMedicos" min="-2" pref="61" max="-2" attributes="0"/>
+              <Component id="btnMedicos" min="-2" pref="87" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-              <Component id="btnBaseDeDatos" min="-2" pref="61" max="-2" attributes="0"/>
-              <EmptySpace pref="412" max="32767" attributes="0"/>
+              <Component id="btnBaseDeDatos" min="-2" pref="87" max="-2" attributes="0"/>
+              <EmptySpace pref="334" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
