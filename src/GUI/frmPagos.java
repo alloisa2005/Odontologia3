@@ -184,7 +184,6 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
         jLabel2 = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        btnImprimir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Menu de Pagos");
@@ -348,13 +347,6 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
                 .addGap(15, 15, 15))
         );
 
-        btnImprimir.setText("Imprimir");
-        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnImprimirActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -380,8 +372,7 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnPago, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                    .addComponent(btnDetallePagos, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
-                    .addComponent(btnImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(btnDetallePagos, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)))
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(panelPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -408,9 +399,7 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnPago, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
-                        .addComponent(btnDetallePagos, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnDetallePagos, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(13, 13, 13)
                 .addComponent(panelPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -623,12 +612,6 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
         
         
     }//GEN-LAST:event_tblPacientesMouseClicked
-
-    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-        
-       
-
-    }//GEN-LAST:event_btnImprimirActionPerformed
     
     
     private void tblPacientesMouseClicked(java.awt.event.MouseEvent evt) {                                          
@@ -641,7 +624,6 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDetallePagos;
-    private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnPago;
     private javax.swing.JButton btnPago1;
     private javax.swing.JLabel jLabel1;

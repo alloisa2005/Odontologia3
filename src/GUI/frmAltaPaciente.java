@@ -17,6 +17,7 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import oracle.jrockit.jfr.tools.ConCatRepository;
 
 /**
  *
@@ -63,6 +64,7 @@ public class frmAltaPaciente extends javax.swing.JDialog {
         txtEdad.setText("");
         txtTelefono.setText("");
         txtCelular.setText("");  
+        txtMail.setText("");
         Image aux = new ImageIcon(getClass().getResource("/Imagenes/camara.png")).getImage();                
         ImageIcon perfil = new ImageIcon(aux.getScaledInstance(228, 235, Image.SCALE_DEFAULT));
         lblFoto.setIcon(perfil);
@@ -129,6 +131,11 @@ public class frmAltaPaciente extends javax.swing.JDialog {
 
         txtId.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         txtId.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
+        txtId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIdKeyTyped(evt);
+            }
+        });
 
         txtNombre.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         txtNombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
@@ -371,12 +378,33 @@ public class frmAltaPaciente extends javax.swing.JDialog {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         String sigo = "S";
+        String cedula = txtId.getText();
+        
+        Paciente pacAux = Conexion.getInstance().getPacientes().unPaciente(cedula);
+        if(pacAux != null){
+            sigo = "N";
+            JOptionPane.showMessageDialog(this, "Paciente ya existe, valide nro. de cédula ingresado", "Validación de datos", JOptionPane.ERROR_MESSAGE);
+            txtId.requestFocus();
+        }
         
         if(txtId.getText().equals("")){
             sigo = "N";
             JOptionPane.showMessageDialog(this, "Nro. de cédula requerido", "Validación de datos", JOptionPane.ERROR_MESSAGE);
             txtId.requestFocus();
         }                
+        
+        if(txtId.getText().length() != 8){   // Si el largo de la cedula ingresada no es de 8 caracteres, lo considero error
+            sigo = "N";
+            JOptionPane.showMessageDialog(this, "Nro. de cédula debe ser de 8 digitos", "Validación de datos", JOptionPane.ERROR_MESSAGE);
+            txtId.requestFocus();
+        }
+        
+        boolean validoCedula = Conexion.getInstance().getProcedimientos().validarCedula(cedula);
+        if(!validoCedula){
+            sigo = "N";
+            JOptionPane.showMessageDialog(this, "Nro. de cédula incorrecto, verifique por favor", "Validación de datos", JOptionPane.ERROR_MESSAGE);
+            txtId.requestFocus();
+        }
         
         if(sigo.equals("S") && txtNombre.getText().equals("")){
             sigo = "N";
@@ -530,6 +558,14 @@ public class frmAltaPaciente extends javax.swing.JDialog {
     }
 
     }//GEN-LAST:event_lblFotoMouseClicked
+
+    private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
+       
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c)){
+            evt.consume();
+        } 
+    }//GEN-LAST:event_txtIdKeyTyped
 
     /**
      * @param args the command line arguments
