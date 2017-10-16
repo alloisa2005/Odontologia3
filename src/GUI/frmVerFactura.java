@@ -142,6 +142,7 @@ public class frmVerFactura extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Factura Nro.: ");
+        setResizable(false);
         getContentPane().setLayout(null);
 
         lblNroFactura.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N

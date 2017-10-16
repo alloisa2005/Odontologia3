@@ -117,6 +117,7 @@ public class frmAgenda extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agenda de Médico");
+        setResizable(false);
 
         cmbMedicos.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
         cmbMedicos.addActionListener(new java.awt.event.ActionListener() {

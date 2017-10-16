@@ -141,6 +141,7 @@ public class frmConsultasMedicas extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Menu de Pacientes");
+        setResizable(false);
 
         btnNuevaConsulta.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         btnNuevaConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/consultaMedica32.png"))); // NOI18N

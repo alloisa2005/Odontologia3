@@ -109,6 +109,7 @@ public class frmModifiacionMedico extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nuevo Usuario del Sistema");
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 255));
 
@@ -225,7 +226,7 @@ public class frmModifiacionMedico extends javax.swing.JDialog {
         jLabel12.setFont(new java.awt.Font("Calibri", 0, 15)); // NOI18N
         jLabel12.setText("Teléfono");
 
-        chkActivo.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        chkActivo.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
         chkActivo.setText("¿Médico en actividad?");
         chkActivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,7 +251,7 @@ public class frmModifiacionMedico extends javax.swing.JDialog {
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(dteFchIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 215, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE)

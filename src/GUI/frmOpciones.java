@@ -43,6 +43,7 @@ public class frmOpciones extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Opciones de Programa");
+        setResizable(false);
 
         btnUsuarios.setFont(new java.awt.Font("Calibri", 1, 17)); // NOI18N
         btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuarios32.png"))); // NOI18N

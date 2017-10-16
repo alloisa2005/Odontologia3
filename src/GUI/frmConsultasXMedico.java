@@ -76,6 +76,7 @@ public class frmConsultasXMedico extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agenda de Médico");
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 255));
 

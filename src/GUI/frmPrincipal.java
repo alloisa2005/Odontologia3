@@ -119,6 +119,7 @@ public class frmPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Software de Gestión de Pacientes");
+        setResizable(false);
 
         btnPersonas.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         btnPersonas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/personas32.png"))); // NOI18N

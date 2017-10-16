@@ -138,6 +138,7 @@ public class frmUsuarios extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Usuarios del Sistema");
+        setResizable(false);
 
         btnNuevoUsuario.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         btnNuevoUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuario32.png"))); // NOI18N

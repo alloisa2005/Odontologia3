@@ -87,6 +87,7 @@ public class frmEstadisticas extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Menu de Estadísticas");
+        setResizable(false);
 
         Grupo1.add(rbtnConsultasXMedico);
         rbtnConsultasXMedico.setFont(new java.awt.Font("Calibri", 1, 21)); // NOI18N

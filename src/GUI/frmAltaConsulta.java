@@ -97,6 +97,7 @@ public class frmAltaConsulta extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nueva Consulta");
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 255));
 

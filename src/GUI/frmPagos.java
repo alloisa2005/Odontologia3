@@ -188,6 +188,7 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Menu de Pagos");
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 255));
 

@@ -158,6 +158,7 @@ public class frmPacientes extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Menu de Pacientes");
+        setResizable(false);
 
         btnNuevoMedico.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         btnNuevoMedico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/persona32.png"))); // NOI18N
