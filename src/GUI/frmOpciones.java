@@ -5,6 +5,9 @@
  */
 package GUI;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -62,6 +65,11 @@ public class frmOpciones extends javax.swing.JFrame {
         btnBaseDeDatos.setFont(new java.awt.Font("Calibri", 1, 17)); // NOI18N
         btnBaseDeDatos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bd32.png"))); // NOI18N
         btnBaseDeDatos.setText("Base de Datos");
+        btnBaseDeDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBaseDeDatosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -103,6 +111,18 @@ public class frmOpciones extends javax.swing.JFrame {
         frm.toFront();
         frm.setVisible(true);
     }//GEN-LAST:event_btnMedicosActionPerformed
+
+    private void btnBaseDeDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBaseDeDatosActionPerformed
+        
+        frmBaseDeDatos frm = null;
+        try {
+            frm = new frmBaseDeDatos(new javax.swing.JDialog(), true);
+        } catch (IOException ex) {
+            Logger.getLogger(frmOpciones.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        frm.toFront();
+        frm.setVisible(true);
+    }//GEN-LAST:event_btnBaseDeDatosActionPerformed
 
     /**
      * @param args the command line arguments

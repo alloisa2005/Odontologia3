@@ -7,13 +7,17 @@ package Controladores;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.text.DateFormat;
+import java.util.ArrayList;
 
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,6 +25,8 @@ import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageInputStream;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import org.postgresql.util.Base64;
 
 /**
@@ -169,5 +175,106 @@ public class Procedimientos {
             baos.close();
 
             return Base64.decode(base64String);
-    }    
+    }   
+    
+    public void realizaBackup() {      
+        final List<String> comandos = new ArrayList<String>();   
+        String dir = "C:/DentistaBD";  
+                 
+        comandos.add("C:\\Program Files\\PostgreSQL\\9.5\\bin\\pg_dump.exe");  
+                         
+        comandos.add("-h");      
+        comandos.add("localhost");
+        //comandos.add("192.168.0.25");
+        comandos.add("-p");      
+        comandos.add("5432");      
+        comandos.add("-U");      
+        comandos.add("postgres");      
+        comandos.add("-F");      
+        comandos.add("c");      
+        comandos.add("-b");      
+        comandos.add("-v");      
+        comandos.add("-f"); 
+
+        //comandos.add("C:\\TesteHib4\\Backups do Banco de Dados\\"+JOptionPane.showInputDialog(null,"Digite o nome do Backup")+".backup");   // eu utilizei meu C:\ e D:\ para os testes e gravei o backup com sucesso.  
+        //comandos.add("C:\\TesteHib4\\Backups do Banco de Dados\\"+(Character.getNumericValue(recebe)+1)+" "+getDateTime()+".backup");   // eu utilizei meu C:\ e D:\ para os testes e gravei o backup com sucesso.  
+        comandos.add("C:\\DentistaBD\\" + JOptionPane.showInputDialog(null,"Escriba nombre de archivo") + ".backup");   // eu utilizei meu C:\ e D:\ para os testes e gravei o backup com sucesso.  
+        comandos.add("Odontologia3");      
+        ProcessBuilder pb = new ProcessBuilder(comandos);      
+
+        pb.environment().put("PGPASSWORD", "1234");              
+
+        try {      
+            final Process process = pb.start();      
+
+            final BufferedReader r = new BufferedReader(      
+                new InputStreamReader(process.getErrorStream()));      
+            String line = r.readLine();      
+            while (line != null) {      
+            System.err.println(line);      
+            line = r.readLine();      
+            }      
+            r.close();      
+
+            process.waitFor();    
+            process.destroy(); 
+            JOptionPane.showMessageDialog(null,"BackUp realizado con exito en " + dir);  
+
+        } catch (IOException e) {      
+            e.printStackTrace();      
+        } catch (InterruptedException ie) {      
+            ie.printStackTrace();      
+        }                                               
+    }
+    
+    public void RestaurarBD(){
+        JFileChooser open = new JFileChooser(new File("C:/DentistaBD")); 
+        int op = open.showOpenDialog(null); 
+        
+        if(op == JFileChooser.APPROVE_OPTION){
+           File arq = open.getSelectedFile(); 
+           String nomeDoArquivo = open.getName(arq);
+           
+           final List<String> comandos = new ArrayList<String>();      
+           comandos.add("C:\\Program Files\\PostgreSQL\\9.5\\bin\\pg_restore.exe");
+                 
+           comandos.add("-h");      
+           comandos.add("localhost");      
+           comandos.add("-p");      
+           comandos.add("5432");      
+           comandos.add("-U");      
+           comandos.add("postgres");
+           comandos.add("-c");
+           comandos.add("-d");
+           comandos.add("Odontologia3");     
+           comandos.add("-v");      
+             
+           //comandos.add("C:\\BOHib3.6.4\\Backups do Banco de Dados\\bkpBolOcor04102012.backup");   // eu utilizei meu C:\ e D:\ para os testes e gravei o backup com sucesso.  
+           comandos.add("C:\\DentistaBD\\" + nomeDoArquivo);
+           ProcessBuilder pb = new ProcessBuilder(comandos);      
+           pb.environment().put("PGPASSWORD", "1234");        
+           try {      
+               final Process process = pb.start();      
+               final BufferedReader r = new BufferedReader(      
+                   new InputStreamReader(process.getErrorStream()));      
+               String line = r.readLine();      
+               while (line != null) {      
+               System.err.println(line);      
+               line = r.readLine();    
+               
+               }      
+               r.close();      
+               
+               process.waitFor();    
+               process.destroy();                
+               JOptionPane.showMessageDialog(null,"Restauración realizada con éxito");
+               
+            } catch (IOException e) {      
+               e.printStackTrace();      
+            } catch (InterruptedException ie) {      
+               ie.printStackTrace();      
+            }         
+        }    
+    }
+    
 }

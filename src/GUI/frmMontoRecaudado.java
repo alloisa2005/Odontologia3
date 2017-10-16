@@ -13,10 +13,13 @@ import IO.Paciente;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -43,8 +46,20 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
         
         CargarTablaFacturas(FchIniAux,FchFinAux);
         
+        //CrearGrafica();
+        
     }
     
+    public void CrearGrafica(){
+         JFreeChart grafica = null;
+         
+         Object[] valores =  Conexion.getInstance().getGraficas().Valores(2017);
+         
+         DefaultCategoryDataset resultado = new DefaultCategoryDataset();
+         
+         //Iterator<Object[]> it = valores.
+    }
+     
     public void VaciarTablaFacturas(){
         
         DefaultTableModel modeloTabla = (DefaultTableModel) tblFacturas.getModel();
