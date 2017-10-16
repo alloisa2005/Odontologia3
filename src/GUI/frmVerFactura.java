@@ -62,6 +62,11 @@ public class frmVerFactura extends javax.swing.JDialog {
                 if(i == 2){
                     lblLinea2.setText(next.getConsulta().getTitulo() + "  -  " + fchLinea);
                     lblMonto2.setText(String.valueOf(next.getMonto()));
+                }else{
+                    if(i == 3){
+                        lblLinea3.setText(next.getConsulta().getTitulo() + "  -  " + fchLinea);
+                        lblMonto3.setText(String.valueOf(next.getMonto()));
+                    }
                 }
             }
             
@@ -110,6 +115,8 @@ public class frmVerFactura extends javax.swing.JDialog {
         lblMonto1 = new javax.swing.JLabel();
         lblLinea2 = new javax.swing.JLabel();
         lblMonto2 = new javax.swing.JLabel();
+        lblLinea3 = new javax.swing.JLabel();
+        lblMonto3 = new javax.swing.JLabel();
         lblFactura = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -190,6 +197,18 @@ public class frmVerFactura extends javax.swing.JDialog {
         getContentPane().add(lblMonto2);
         lblMonto2.setBounds(850, 330, 130, 40);
 
+        lblLinea3.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblLinea3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblLinea3);
+        lblLinea3.setBounds(90, 380, 750, 30);
+
+        lblMonto3.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        lblMonto3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMonto3.setToolTipText("");
+        lblMonto3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        getContentPane().add(lblMonto3);
+        lblMonto3.setBounds(850, 370, 130, 40);
+
         lblFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/factura.PNG"))); // NOI18N
         lblFactura.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
         getContentPane().add(lblFactura);
@@ -248,9 +267,11 @@ public class frmVerFactura extends javax.swing.JDialog {
     private javax.swing.JLabel lblFactura;
     private javax.swing.JLabel lblLinea1;
     private javax.swing.JLabel lblLinea2;
+    private javax.swing.JLabel lblLinea3;
     private javax.swing.JLabel lblMes;
     private javax.swing.JLabel lblMonto1;
     private javax.swing.JLabel lblMonto2;
+    private javax.swing.JLabel lblMonto3;
     private javax.swing.JLabel lblMontoTotal;
     private javax.swing.JLabel lblNroFactura;
     private javax.swing.JLabel lblPaciente;

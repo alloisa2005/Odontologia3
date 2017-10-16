@@ -210,11 +210,11 @@
                   <Component id="dteFchHasta" min="-2" pref="154" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="lblMontoRecaudado" min="-2" pref="115" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="lblMontoRecaudado" min="-2" pref="60" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="btnVerMontoRecaudado" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="202" max="32767" attributes="0"/>
+                  <EmptySpace pref="140" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -222,15 +222,15 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="2" attributes="0">
-                      <Component id="dteFchHasta" alignment="2" min="-2" pref="42" max="-2" attributes="0"/>
+                      <Component id="dteFchHasta" alignment="2" pref="42" max="32767" attributes="0"/>
                       <Component id="jLabel1" alignment="2" min="-2" pref="27" max="-2" attributes="0"/>
                       <Component id="jLabel3" alignment="2" min="-2" pref="27" max="-2" attributes="0"/>
-                      <Component id="dteFchDesde" alignment="2" min="-2" pref="42" max="-2" attributes="0"/>
+                      <Component id="dteFchDesde" alignment="2" pref="42" max="32767" attributes="0"/>
                       <Component id="jLabel4" alignment="2" min="-2" pref="27" max="-2" attributes="0"/>
-                      <Component id="lblMontoRecaudado" alignment="2" min="-2" pref="27" max="-2" attributes="0"/>
                       <Component id="btnVerMontoRecaudado" alignment="2" max="32767" attributes="0"/>
+                      <Component id="lblMontoRecaudado" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -299,7 +299,7 @@
         <Component class="javax.swing.JLabel" name="lblMontoRecaudado">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Calibri" size="19" style="1"/>
+              <Font name="Calibri" size="20" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="0" green="0" red="ff" type="rgb"/>
