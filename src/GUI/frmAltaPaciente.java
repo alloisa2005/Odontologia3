@@ -8,6 +8,7 @@ package GUI;
 import Controladores.Conexion;
 import IO.Paciente;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -103,6 +104,7 @@ public class frmAltaPaciente extends javax.swing.JDialog {
         jLabel13 = new javax.swing.JLabel();
         txtMail = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Nuevo Paciente");
@@ -132,6 +134,9 @@ public class frmAltaPaciente extends javax.swing.JDialog {
         txtId.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         txtId.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
         txtId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtIdKeyPressed(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtIdKeyTyped(evt);
             }
@@ -251,6 +256,11 @@ public class frmAltaPaciente extends javax.swing.JDialog {
         jLabel11.setFont(new java.awt.Font("Calibri", 0, 15)); // NOI18N
         jLabel11.setText("Dirección");
 
+        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel15.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel15.setText("Enter para validar nro. de cédula");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -301,10 +311,13 @@ public class frmAltaPaciente extends javax.swing.JDialog {
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addComponent(txtMail)))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -329,7 +342,9 @@ public class frmAltaPaciente extends javax.swing.JDialog {
                         .addGap(26, 26, 26)
                         .addComponent(jLabel2)
                         .addGap(7, 7, 7)
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15))
                         .addGap(35, 35, 35)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
@@ -567,6 +582,28 @@ public class frmAltaPaciente extends javax.swing.JDialog {
         } 
     }//GEN-LAST:event_txtIdKeyTyped
 
+    private void txtIdKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyPressed
+        
+        if((evt.getKeyCode() == KeyEvent.VK_ENTER)){
+            
+            if(txtId.getText().length() == 8){                
+                String cedula = txtId.getText();        
+                Paciente pacAux = Conexion.getInstance().getPacientes().unPaciente(cedula);             
+                
+                if(pacAux != null){
+                    JOptionPane.showMessageDialog(this, "Paciente ya existe, valide nro. de cédula ingresado", "Validación de datos", JOptionPane.ERROR_MESSAGE);
+                    txtId.requestFocus();
+                }else{
+                    txtNombre.requestFocus();
+                }
+            }else{
+                JOptionPane.showMessageDialog(this, "Ingrese nro. de cédula a validar", "Validación de datos", JOptionPane.ERROR_MESSAGE);
+                txtId.requestFocus();
+            }
+        }
+        
+    }//GEN-LAST:event_txtIdKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -581,6 +618,7 @@ public class frmAltaPaciente extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
