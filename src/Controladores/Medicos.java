@@ -45,24 +45,7 @@ public class Medicos {
         
         }
         return lista;
-    }
-    
-    
-    public List<Medico> listaDeMedicosActivos() {
-        List<Medico> lista = null;                
-        
-        Conexion.getInstance().getConexion().getTransaction().begin();
-        
-        try {
-            lista = Conexion.getInstance().getConexion().createNativeQuery("SELECT * FROM MEDICO where activo='t' order by id", Medico.class).getResultList();            
-            
-            Conexion.getInstance().getConexion().getTransaction().commit(); 
-        } catch (Exception e) {
-            Conexion.getInstance().getConexion().getTransaction().rollback();       
-        
-        }
-        return lista;
-    }
+    }            
     
     public List<Medico> listaDeMedicosXApellido(String apellido) {
         List<Medico> lista = null;   

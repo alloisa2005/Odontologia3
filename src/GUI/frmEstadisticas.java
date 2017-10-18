@@ -49,12 +49,16 @@ public class frmEstadisticas extends javax.swing.JDialog {
     }
 
     public void CargarComboMedicos() {
-        Iterator<Medico> it = Conexion.getInstance().getMedicos().listaDeMedicosActivos().iterator();
+        Iterator<Medico> it = Conexion.getInstance().getMedicos().listaDeMedicos().iterator();
 
         modeloMedicos.addElement("SELECCIONE MÉDICO");
 
         while (it.hasNext()) {
-            modeloMedicos.addElement(it.next());
+            Medico med = it.next();
+            
+            if(med.isActivo()){
+                modeloMedicos.addElement(it.next());
+            }
         }
         cmbMedicos.setModel(modeloMedicos);
     }

@@ -71,12 +71,16 @@ public class frmAgenda extends javax.swing.JDialog {
     }
     
     public void CargarComboMedicos(){
-        Iterator<Medico> it = Conexion.getInstance().getMedicos().listaDeMedicosActivos().iterator();        
+        Iterator<Medico> it = Conexion.getInstance().getMedicos().listaDeMedicos().iterator();        
         
         modeloMedicos.addElement("SELECCIONE MÉDICO");
         
         while (it.hasNext()) {
-            modeloMedicos.addElement(it.next());            
+            Medico med = it.next();
+            
+            if(med.isActivo()){   // Solo muestro los médicos activos
+                modeloMedicos.addElement(med);            
+            }
         }
         cmbMedicos.setModel(modeloMedicos);
     }
