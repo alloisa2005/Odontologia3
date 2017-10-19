@@ -50,37 +50,35 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
         
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/molar.png")).getImage());
         
-        CargarTablaFacturas(FchIniAux,FchFinAux);
-        
-        CrearGrafica();
+        CargarTablaFacturas(FchIniAux,FchFinAux);                
         
     }
     
-    public void CrearGrafica() throws IOException{
-        
-         JFreeChart grafica = null;         
-         
-         Iterator<Object[]> it = Conexion.getInstance().getGraficas().Valores(2017).iterator();
-         
-         DefaultCategoryDataset resultado = new DefaultCategoryDataset();
-         
-         while (it.hasNext()) {
-             
-            Object[] obj = it.next();  
-            
-            resultado.setValue(Integer.parseInt(obj[0].toString()), obj[1].toString(), " ");
-            //resultado.setValue(Integer.parseInt(), obj[0].toString(), " ");
-        }
-         
-        grafica = ChartFactory.createBarChart3D("Estadísticas de Consultas Por Mes", "Meses", "Consultas", resultado, PlotOrientation.VERTICAL, true, true, false);
-        
-        // //new File(System.getProperty("java.io.tmpdir") + "grafica.png");
-        File archivo = new File("C:/pepe/grafica.png");
-        String path = "C:/pepe/grafica.png";  //System.getProperty("java.io.tmpdir") + "grafica.png";
-        //ChartUtilities.saveChartAsPNG(archivo, grafica, 300, 300);
-        ChartUtilities.saveChartAsPNG(archivo, grafica, 650, 650);
-        
-    }
+//    public void CrearGrafica() throws IOException{
+//        
+//         JFreeChart grafica = null;         
+//         
+//         Iterator<Object[]> it = Conexion.getInstance().getGraficas().Valores(2017).iterator();
+//         
+//         DefaultCategoryDataset resultado = new DefaultCategoryDataset();
+//         
+//         while (it.hasNext()) {
+//             
+//            Object[] obj = it.next();  
+//            
+//            resultado.setValue(Integer.parseInt(obj[0].toString()), obj[1].toString(), " ");
+//            //resultado.setValue(Integer.parseInt(), obj[0].toString(), " ");
+//        }
+//         
+//        grafica = ChartFactory.createBarChart3D("Estadísticas de Consultas Por Mes En El Año", "Meses", "Consultas", resultado, PlotOrientation.VERTICAL, true, true, false);
+//        
+//        // //new File(System.getProperty("java.io.tmpdir") + "grafica.png");
+//        File archivo = new File("C:/pepe/grafica.png");
+//        String path = "C:/pepe/grafica.png";  //System.getProperty("java.io.tmpdir") + "grafica.png";
+//        //ChartUtilities.saveChartAsPNG(archivo, grafica, 300, 300);
+//        ChartUtilities.saveChartAsPNG(archivo, grafica, 650, 650);
+//        
+//    }
      
     public void VaciarTablaFacturas(){
         

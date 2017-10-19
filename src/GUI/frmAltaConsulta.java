@@ -397,13 +397,7 @@ public class frmAltaConsulta extends javax.swing.JDialog {
             con.setDescripcion(txtDescripcion.getText());
             con.setFecha(dteFchConsulta.getDate());
             con.setMonto(mntConsulta);
-            con.setPaga(false);
-            
-//            if(Objects.equals(mntConsulta, mntPago)){
-//                con.setPaga(true);
-//            }else{
-//                con.setPaga(false);
-//            }
+            con.setPaga(false);            
             
             con.setMedico((Medico) cmbMedicos.getSelectedItem());
             
@@ -411,28 +405,8 @@ public class frmAltaConsulta extends javax.swing.JDialog {
             con.setPaciente(pac);
             
             Conexion.getInstance().Guardar(con);
-            Conexion.getInstance().Combinar(con);
-                        
-//            if(!txtPago.getText().equals("0") && !txtPago.getText().equals("")){
-//                
-//                Pago pago = new Pago();
-//                
-//                //pago.setConsulta((List<Consulta>) con);
-//                pago.setFchPago(dteFchConsulta.getDate());
-//                pago.setMonto(Double.parseDouble(txtPago.getText()));                               
-//                Conexion.getInstance().Guardar(pago);
-//                
-//                if(!con.getPagos().contains(pago)){
-//                    con.getPagos().add(pago);
-//                    Conexion.getInstance().Actualizar(con);
-//                }
-//                
-//                Conexion.getInstance().Combinar(pago);
-//                if(!pago.getConsultas().contains(con)){
-//                    pago.getConsultas().add(con);
-//                    Conexion.getInstance().Actualizar(pago);
-//                }
-//            }
+            Conexion.getInstance().Combinar(con);                        
+
             JOptionPane.showMessageDialog(this, "Consulta guardada exitosamente", "Nueva Consulta", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarConsultaActionPerformed
