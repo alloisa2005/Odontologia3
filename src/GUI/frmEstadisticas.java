@@ -8,10 +8,13 @@ package GUI;
 import Controladores.Conexion;
 import IO.Consulta;
 import IO.Medico;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -360,7 +363,12 @@ public class frmEstadisticas extends javax.swing.JDialog {
         String fchIni = df.format(dteFchDesde.getDate());
         String fchFin = df.format(dteFchHasta.getDate());
         
-        frmMontoRecaudado frm = new frmMontoRecaudado(new javax.swing.JDialog(), true, fchIni, fchFin, this);
+        frmMontoRecaudado frm = null;
+        try {
+            frm = new frmMontoRecaudado(new javax.swing.JDialog(), true, fchIni, fchFin, this);
+        } catch (IOException ex) {
+            Logger.getLogger(frmEstadisticas.class.getName()).log(Level.SEVERE, null, ex);
+        }
         frm.toFront();
         frm.setVisible(true);
         

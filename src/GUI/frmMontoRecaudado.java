@@ -11,6 +11,8 @@ import IO.Factura;
 import IO.LineaFactura;
 import IO.Paciente;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
@@ -18,8 +20,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+
 
 /**
  *
@@ -32,7 +38,7 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
     private final String FchFinAux;
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     
-    public frmMontoRecaudado(javax.swing.JDialog parent, boolean modal, String FchIni, String FchFin, JDialog padre) {
+    public frmMontoRecaudado(javax.swing.JDialog parent, boolean modal, String FchIni, String FchFin, JDialog padre) throws IOException {
         super(parent, modal);
         initComponents();
         
@@ -46,18 +52,34 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
         
         CargarTablaFacturas(FchIniAux,FchFinAux);
         
-        //CrearGrafica();
+        CrearGrafica();
         
     }
     
-    public void CrearGrafica(){
-         JFreeChart grafica = null;
+    public void CrearGrafica() throws IOException{
+        
+         JFreeChart grafica = null;         
          
-         Object[] valores =  Conexion.getInstance().getGraficas().Valores(2017);
+         Iterator<Object[]> it = Conexion.getInstance().getGraficas().Valores(2017).iterator();
          
          DefaultCategoryDataset resultado = new DefaultCategoryDataset();
          
-         //Iterator<Object[]> it = valores.
+         while (it.hasNext()) {
+             
+            Object[] obj = it.next();  
+            
+            resultado.setValue(Integer.parseInt(obj[0].toString()), obj[1].toString(), " ");
+            //resultado.setValue(Integer.parseInt(), obj[0].toString(), " ");
+        }
+         
+        grafica = ChartFactory.createBarChart3D("Estadísticas de Consultas Por Mes", "Meses", "Consultas", resultado, PlotOrientation.VERTICAL, true, true, false);
+        
+        // //new File(System.getProperty("java.io.tmpdir") + "grafica.png");
+        File archivo = new File("C:/pepe/grafica.png");
+        String path = "C:/pepe/grafica.png";  //System.getProperty("java.io.tmpdir") + "grafica.png";
+        //ChartUtilities.saveChartAsPNG(archivo, grafica, 300, 300);
+        ChartUtilities.saveChartAsPNG(archivo, grafica, 650, 650);
+        
     }
      
     public void VaciarTablaFacturas(){

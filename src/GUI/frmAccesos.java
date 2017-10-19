@@ -11,6 +11,7 @@ import IO.Usuario;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.SpinnerListModel;
 
 /**
  *
@@ -19,11 +20,11 @@ import javax.swing.JOptionPane;
 public class frmAccesos extends javax.swing.JDialog {
        
     Usuario usuAux;
-    Acceso accesoAux;
+    Acceso accesoAux;    
     
     public frmAccesos(javax.swing.JDialog parent, boolean modal, Usuario usu, JDialog padre) {
         super(parent, modal);
-        initComponents();
+        initComponents();        
         
         usuAux = usu;
         
