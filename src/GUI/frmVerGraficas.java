@@ -25,22 +25,31 @@ import org.jfree.data.category.DefaultCategoryDataset;
 public class frmVerGraficas extends javax.swing.JDialog {
 
     Date fchHoy = new Date();
+    private int opcionFinal;
     
-    public frmVerGraficas(javax.swing.JDialog parent, boolean modal) throws IOException {
+    public frmVerGraficas(javax.swing.JDialog parent, boolean modal, int opcion) throws IOException {
         super(parent, modal);
         initComponents();
+        
+        opcionFinal = opcion;
         
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/molar.png")).getImage());
         
         int anio = fchHoy.getYear() + 1900;
-        CrearGrafica(anio);
+        
+        if(opcionFinal == 1){
+            CrearGraficaConsultas(anio);
+        }else{
+            CrearGraficaMontos(anio);
+        }     
     }
 
-    public void CrearGrafica(int anio) throws IOException{
+    public void CrearGraficaConsultas(int anio) throws IOException{
         
-         JFreeChart grafica = null;         
-         
-         Iterator<Object[]> it = Conexion.getInstance().getGraficas().ConsultasXMes(anio).iterator();
+        JFreeChart grafica = null;                         
+        
+        Iterator<Object[]> it = Conexion.getInstance().getGraficas().ConsultasXMes(anio).iterator();
+        
          
          DefaultCategoryDataset resultado = new DefaultCategoryDataset();
          
@@ -48,13 +57,12 @@ public class frmVerGraficas extends javax.swing.JDialog {
              
             Object[] obj = it.next();  
             
-            resultado.setValue(Integer.parseInt(obj[0].toString()), obj[1].toString(), " ");
-            //resultado.setValue(Integer.parseInt(), obj[0].toString(), " ");
+            resultado.setValue(Integer.parseInt(obj[0].toString()), obj[1].toString(), " ");            
         }
          
         grafica = ChartFactory.createBarChart3D("Estadísticas de Consultas Por Mes En El Año " + String.valueOf(anio), "Meses", "Consultas", resultado, PlotOrientation.VERTICAL, true, true, false);        
         
-        File archivo = new File(System.getProperty("java.io.tmpdir") + "grafica.png");
+        File archivo = new File(System.getProperty("java.io.tmpdir") + "graficaConsultas.png");
         archivo.delete();
         
         //File archivo = new File("C:/pepe/grafica.png");
@@ -62,8 +70,35 @@ public class frmVerGraficas extends javax.swing.JDialog {
         //ChartUtilities.saveChartAsPNG(archivo, grafica, 300, 300);
         ChartUtilities.saveChartAsPNG(archivo, grafica, 1058, 776);
         
-        lblUno.setIcon(new ImageIcon(path));
+        lblUno.setIcon(new ImageIcon(path));        
+    }
+    
+    public void CrearGraficaMontos(int anio) throws IOException{
         
+        JFreeChart grafica = null;                         
+        
+        Iterator<Object[]> it = Conexion.getInstance().getGraficas().MontoXMes(anio).iterator();        
+         
+         DefaultCategoryDataset resultado = new DefaultCategoryDataset();
+         
+         while (it.hasNext()) {
+             
+            Object[] obj = it.next();  
+            
+            resultado.setValue(Double.parseDouble(obj[0].toString()), obj[1].toString(), " ");            
+        }
+         
+        grafica = ChartFactory.createBarChart3D("Estadísticas de Monto Recaudado Por Mes En El Año " + String.valueOf(anio), "Meses", "Monto", resultado, PlotOrientation.VERTICAL, true, true, false);        
+        
+        File archivo = new File(System.getProperty("java.io.tmpdir") + "graficaMontos.png");
+        archivo.delete();
+        
+        //File archivo = new File("C:/pepe/grafica.png");
+        String path = archivo.getPath();  //"C:/pepe/grafica.png";  //System.getProperty("java.io.tmpdir") + "grafica.png";
+        //ChartUtilities.saveChartAsPNG(archivo, grafica, 300, 300);
+        ChartUtilities.saveChartAsPNG(archivo, grafica, 1058, 776);
+        
+        lblUno.setIcon(new ImageIcon(path));        
     }
     
     /**

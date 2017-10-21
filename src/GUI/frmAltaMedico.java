@@ -341,12 +341,18 @@ public class frmAltaMedico extends javax.swing.JDialog {
             sigo = "N";
             JOptionPane.showMessageDialog(this, "Apellido de médico requerido", "Validación de datos", JOptionPane.ERROR_MESSAGE);
             txtApellido.requestFocus();
-        }
+        }                
         
-        if(sigo.equals("S") && dteFchIngreso.getDate().after(FchHoy)){
+        if(sigo.equals("S") && dteFchIngreso.getDate() == null){
             sigo = "N";
-            JOptionPane.showMessageDialog(this, "Fecha de ingreso no puede ser mayor al día de hoy", "Validación de datos", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Fecha de ingreso no puede ser nula", "Validación de datos", JOptionPane.ERROR_MESSAGE);
             dteFchIngreso.requestFocus();
+        }else{
+            if(sigo.equals("S") && dteFchIngreso.getDate().after(FchHoy)){
+                sigo = "N";
+                JOptionPane.showMessageDialog(this, "Fecha de ingreso no puede ser mayor al día de hoy", "Validación de datos", JOptionPane.ERROR_MESSAGE);
+                dteFchIngreso.requestFocus();
+            }
         }
         
         if(sigo.equals("S") && txtDireccion.getText().equals("")){

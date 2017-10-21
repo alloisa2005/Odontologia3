@@ -374,12 +374,18 @@ public class frmAltaConsulta extends javax.swing.JDialog {
             sigo = "N";
             JOptionPane.showMessageDialog(this, "Monto de la Consulta requerido", "Nueva Consulta", JOptionPane.ERROR_MESSAGE);
             txtMonto.requestFocus();
-        }
+        }                
         
-        if(sigo.equals("S") && dteFchConsulta.getDate().after(hoy)){
+        if(sigo.equals("S") && dteFchConsulta.getDate() == null){
             sigo = "N";
-            JOptionPane.showMessageDialog(this, "Fecha de la consulta no puede ser mayor al día de hoy", "Nueva Consulta", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Fecha de la consulta no puede ser nula", "Nueva Consulta", JOptionPane.ERROR_MESSAGE);
             dteFchConsulta.setDate(hoy);
+        }else{
+            if(sigo.equals("S") && dteFchConsulta.getDate().after(hoy)){
+                sigo = "N";
+                JOptionPane.showMessageDialog(this, "Fecha de la consulta no puede ser mayor al día de hoy", "Nueva Consulta", JOptionPane.ERROR_MESSAGE);
+                dteFchConsulta.setDate(hoy);
+            }
         }
         
         if(sigo.equals("S") && cmbMedicos.getSelectedIndex() == 0){

@@ -431,12 +431,18 @@ public class frmAltaPaciente extends javax.swing.JDialog {
             sigo = "N";
             JOptionPane.showMessageDialog(this, "Apellido de paciente requerido", "Validación de datos", JOptionPane.ERROR_MESSAGE);
             txtApellido.requestFocus();
-        }                
+        }                                
         
-        if(sigo.equals("S") && dteFchNacimiento.getDate().after(hoy)){
+        if(sigo.equals("S") && dteFchNacimiento.getDate() == null){
             sigo = "N";
-            JOptionPane.showMessageDialog(this, "Fecha de nacimiento no puede ser mayor al día de hoy", "Validación de datos", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Fecha de nacimiento no puede ser nula", "Validación de datos", JOptionPane.ERROR_MESSAGE);
             dteFchNacimiento.requestFocus();
+        }else{
+            if(sigo.equals("S") && dteFchNacimiento.getDate().after(hoy)){
+                sigo = "N";
+                JOptionPane.showMessageDialog(this, "Fecha de nacimiento no puede ser mayor al día de hoy", "Validación de datos", JOptionPane.ERROR_MESSAGE);
+                dteFchNacimiento.requestFocus();
+            }   
         }
         
         if(sigo.equals("S") && txtDireccion.getText().equals("")){

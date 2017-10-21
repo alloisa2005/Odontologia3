@@ -29,7 +29,8 @@ public class frmEstadisticas extends javax.swing.JDialog {
     Date fchHoy = new Date();
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     Date fchMinimaConsulta = new Date();
-
+    int opcion = 0;   // Opcion para pasar al panel que muestra la grafica
+    
     public frmEstadisticas(javax.swing.JDialog parent, boolean modal) throws ParseException {
         super(parent, modal);
         initComponents();
@@ -257,10 +258,9 @@ public class frmEstadisticas extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(dteFchHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.CENTER, panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                .addComponent(lblMontoRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(btnVerMontoRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(lblMontoRecaudado, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(btnVerMontoRecaudado, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         Grupo1.add(rbtnGraficas);
@@ -277,6 +277,11 @@ public class frmEstadisticas extends javax.swing.JDialog {
         Grupo2.add(rbtnConsultasxMes);
         rbtnConsultasxMes.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
         rbtnConsultasxMes.setText("Consultas médicas por mes");
+        rbtnConsultasxMes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnConsultasxMesActionPerformed(evt);
+            }
+        });
 
         Grupo2.add(rbtnMontoxMes);
         rbtnMontoxMes.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
@@ -452,18 +457,46 @@ public class frmEstadisticas extends javax.swing.JDialog {
 
     private void btnVerMontoRecaudadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerMontoRecaudadoActionPerformed
         
-        String fchIni = df.format(dteFchDesde.getDate());
-        String fchFin = df.format(dteFchHasta.getDate());
+        String sigo = "S";
         
-        frmMontoRecaudado frm = null;
-        try {
-            frm = new frmMontoRecaudado(new javax.swing.JDialog(), true, fchIni, fchFin, this);
-        } catch (IOException ex) {
-            Logger.getLogger(frmEstadisticas.class.getName()).log(Level.SEVERE, null, ex);
+        if(dteFchDesde.getDate() == null){
+            sigo = "N";
+            JOptionPane.showMessageDialog(this, "Fecha desde no puede ser nula", "Error", JOptionPane.ERROR_MESSAGE);
+            dteFchDesde.requestFocus();
+        }else{
+            if(dteFchDesde.getDate().after(dteFchHasta.getDate())){
+                sigo = "N";
+                JOptionPane.showMessageDialog(this, "Fecha desde no puede ser mayor a fecha hasta", "Error", JOptionPane.ERROR_MESSAGE);
+                dteFchDesde.requestFocus();
+            }
         }
-        frm.toFront();
-        frm.setVisible(true);
         
+        if(sigo.equals("S") && dteFchHasta.getDate() == null){
+            sigo = "N";
+            JOptionPane.showMessageDialog(this, "Fecha hasta no puede ser nula", "Error", JOptionPane.ERROR_MESSAGE);
+            dteFchDesde.requestFocus();
+        }else{
+            if(sigo.equals("S") && dteFchHasta.getDate().before(dteFchDesde.getDate())){
+                sigo = "N";
+                JOptionPane.showMessageDialog(this, "Fecha hasta no puede ser menor a fecha desde", "Error", JOptionPane.ERROR_MESSAGE);
+                dteFchHasta.requestFocus();
+            }
+        }                
+        
+        if(sigo.equals("S")){
+            
+            String fchIni = df.format(dteFchDesde.getDate());
+            String fchFin = df.format(dteFchHasta.getDate());
+        
+            frmMontoRecaudado frm = null;
+            try {
+                frm = new frmMontoRecaudado(new javax.swing.JDialog(), true, fchIni, fchFin, this);
+            } catch (IOException ex) {
+                Logger.getLogger(frmEstadisticas.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            frm.toFront();
+            frm.setVisible(true);
+        }
     }//GEN-LAST:event_btnVerMontoRecaudadoActionPerformed
 
     private void rbtnGraficasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnGraficasActionPerformed
@@ -477,15 +510,27 @@ public class frmEstadisticas extends javax.swing.JDialog {
 
     private void btnVerGraficaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerGraficaActionPerformed
         
+        if(rbtnConsultasxMes.isSelected()){
+            opcion = 1;
+        }else{
+            if(rbtnMontoxMes.isSelected()){
+                opcion = 2;
+            }
+        }
+        
         frmVerGraficas frm = null;
         try {
-            frm = new frmVerGraficas(new javax.swing.JDialog(), true);
+            frm = new frmVerGraficas(new javax.swing.JDialog(), true, opcion);
         } catch (IOException ex) {
             Logger.getLogger(frmEstadisticas.class.getName()).log(Level.SEVERE, null, ex);
         }
         frm.toFront();
         frm.setVisible(true);
     }//GEN-LAST:event_btnVerGraficaActionPerformed
+
+    private void rbtnConsultasxMesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnConsultasxMesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtnConsultasxMesActionPerformed
 
     /**
      * @param args the command line arguments
