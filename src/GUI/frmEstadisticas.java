@@ -7,6 +7,7 @@ package GUI;
 
 import Controladores.Conexion;
 import IO.Consulta;
+import IO.Factura;
 import IO.Medico;
 import java.io.IOException;
 import java.text.ParseException;
@@ -42,12 +43,17 @@ public class frmEstadisticas extends javax.swing.JDialog {
         panel3.setVisible(false);
 
         CargarComboMedicos();
-
-        dteFchHasta.setDate(fchHoy);
-        Consulta con = Conexion.getInstance().getConsultas().consultaFchMinima();
-        dteFchDesde.setDate(con.getFecha());
         
-        CalcularMontoCobrado();
+        Consulta con = Conexion.getInstance().getConsultas().consultaFchMinima();
+        
+        if(con == null){
+            dteFchHasta.setDate(fchHoy);
+            dteFchHasta.setDate(fchHoy);            
+        }else{
+            dteFchHasta.setDate(fchHoy);
+            dteFchDesde.setDate(con.getFecha());            
+            CalcularMontoCobrado();
+        }                
         
         fchMinimaConsulta = dteFchDesde.getDate();  // Le asigno el valor del día minimo para asignarselo de nuevo si hay error        
         
@@ -92,8 +98,10 @@ public class frmEstadisticas extends javax.swing.JDialog {
         dteFchDesde = new com.toedter.calendar.JDateChooser();
         dteFchHasta = new com.toedter.calendar.JDateChooser();
         jLabel4 = new javax.swing.JLabel();
-        lblMontoRecaudado = new javax.swing.JLabel();
+        lblMontoEsperado = new javax.swing.JLabel();
         btnVerMontoRecaudado = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        lblMontoRecaudado = new javax.swing.JLabel();
         rbtnGraficas = new javax.swing.JRadioButton();
         panel3 = new javax.swing.JPanel();
         rbtnConsultasxMes = new javax.swing.JRadioButton();
@@ -206,12 +214,12 @@ public class frmEstadisticas extends javax.swing.JDialog {
         });
 
         jLabel4.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
-        jLabel4.setText("Monto ($)");
+        jLabel4.setText("Monto Recaudado($)");
 
-        lblMontoRecaudado.setFont(new java.awt.Font("Calibri", 1, 20)); // NOI18N
-        lblMontoRecaudado.setForeground(new java.awt.Color(255, 0, 0));
-        lblMontoRecaudado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblMontoRecaudado.setText("0.0");
+        lblMontoEsperado.setFont(new java.awt.Font("Calibri", 1, 20)); // NOI18N
+        lblMontoEsperado.setForeground(new java.awt.Color(255, 0, 0));
+        lblMontoEsperado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMontoEsperado.setText("0.0");
 
         btnVerMontoRecaudado.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         btnVerMontoRecaudado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ver32.png"))); // NOI18N
@@ -222,45 +230,63 @@ public class frmEstadisticas extends javax.swing.JDialog {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Calibri", 1, 19)); // NOI18N
+        jLabel5.setText("Monto Esperado ($)");
+
+        lblMontoRecaudado.setFont(new java.awt.Font("Calibri", 1, 20)); // NOI18N
+        lblMontoRecaudado.setForeground(new java.awt.Color(255, 0, 0));
+        lblMontoRecaudado.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblMontoRecaudado.setText("0.0");
+
         javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
         panel2.setLayout(panel2Layout);
         panel2Layout.setHorizontalGroup(
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(dteFchDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(dteFchHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(61, 61, 61)
-                .addComponent(jLabel4)
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(dteFchDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblMontoRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblMontoRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dteFchHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblMontoEsperado, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
                 .addComponent(btnVerMontoRecaudado)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         panel2Layout.setVerticalGroup(
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel2Layout.createSequentialGroup()
-                        .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(dteFchDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(dteFchHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
-            .addComponent(lblMontoRecaudado, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(btnVerMontoRecaudado, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.CENTER, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dteFchDesde, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dteFchHasta, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMontoRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblMontoEsperado, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(16, 16, 16))
+            .addGroup(panel2Layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(btnVerMontoRecaudado, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         Grupo1.add(rbtnGraficas);
@@ -332,9 +358,6 @@ public class frmEstadisticas extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(254, 254, 254)
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(rbtnConsultasXMedico)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(24, 24, 24)
@@ -343,24 +366,24 @@ public class frmEstadisticas extends javax.swing.JDialog {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(rbtnMontoRecaudado)
+                            .addComponent(rbtnGraficas)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(24, 24, 24)
-                                .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(rbtnGraficas))))
-                .addContainerGap(160, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(127, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(158, 158, 158))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(9, 9, 9)
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addGap(34, 34, 34)
                 .addComponent(rbtnConsultasXMedico)
                 .addGap(4, 4, 4)
                 .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -372,10 +395,10 @@ public class frmEstadisticas extends javax.swing.JDialog {
                 .addComponent(rbtnGraficas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(165, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(1162, 784));
+        setSize(new java.awt.Dimension(975, 784));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -407,20 +430,40 @@ public class frmEstadisticas extends javax.swing.JDialog {
                 dteFchDesde.setDate(fchMinimaConsulta);
             } else {
                 CalcularMontoCobrado();
+                CalcularMontoEsperado();
             }
         }
     }//GEN-LAST:event_dteFchDesdePropertyChange
-
+    
+    private void CalcularMontoEsperado(){
+        
+        String fchIni = df.format(dteFchDesde.getDate());
+        String fchFin = df.format(dteFchHasta.getDate());
+        double montoEsperado = 0.0;
+        
+        Iterator<Consulta> it = Conexion.getInstance().getConsultas().consultasEntreFechas(fchIni, fchFin).iterator();
+        
+        while (it.hasNext()) {
+            Consulta next = it.next();
+            
+            montoEsperado += next.getMonto();
+        }
+        
+        lblMontoEsperado.setText(String.valueOf(montoEsperado));
+        lblMontoEsperado.repaint();
+    }
+    
     private void CalcularMontoCobrado() {
         String fchIni = df.format(dteFchDesde.getDate());
         String fchFin = df.format(dteFchHasta.getDate());
         double montoRecaudado = 0.0;
-
-        Iterator<Consulta> it = Conexion.getInstance().getConsultas().consultasEntreFechas(fchIni, fchFin).iterator();
+        
+        Iterator<Factura> it = Conexion.getInstance().getFacturas().facturasEntreFechas(fchIni, fchFin).iterator();
+        
         while (it.hasNext()) {
-            Consulta consulta = it.next();
+            Factura factura = it.next();
 
-            montoRecaudado += consulta.getMonto() - consulta.getMontoAdeudado();
+            montoRecaudado += factura.getMonto();  //consulta.getMonto() - consulta.getMontoAdeudado();
         }
 
         lblMontoRecaudado.setText(String.valueOf(montoRecaudado));
@@ -436,6 +479,7 @@ public class frmEstadisticas extends javax.swing.JDialog {
                     dteFchHasta.setDate(fchHoy);
                 } else {
                     CalcularMontoCobrado();
+                    CalcularMontoEsperado();
                 }
             }
         }
@@ -549,7 +593,9 @@ public class frmEstadisticas extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblMontoEsperado;
     private javax.swing.JLabel lblMontoRecaudado;
     private javax.swing.JPanel panel1;
     private javax.swing.JPanel panel2;

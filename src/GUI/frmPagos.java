@@ -493,7 +493,16 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
             Paciente paciente = (Paciente) tblPacientes.getModel().getValueAt(row, 1);                                     
             pacAux = paciente;
             
-            if(!txtPago.getText().equals("0") && !txtPago.getText().equals("")){
+            Double montoAdeudadoInicial = paciente.getDeuda();
+            Double montoAPagarFactura = 0.0;
+            
+            if(montoAPagar > montoAdeudadoInicial ){
+                montoAPagar = montoAdeudadoInicial;                
+            }
+            
+            montoAPagarFactura = montoAPagar;
+            
+            if(!txtPago.getText().equals("0") && !txtPago.getText().equals("")){                               
                 
                 Iterator<Consulta> it = paciente.getConsultasImpagas().iterator();
                 while (it.hasNext() && montoAPagar > 0) {
@@ -547,7 +556,7 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
                     nroFac = Integer.parseInt(ultFac.getNumero()) + 1;
                 }
                 
-                montoPagadoGlobal = Double.parseDouble(txtPago.getText());
+                montoPagadoGlobal = montoAPagarFactura;  //Double.parseDouble(txtPago.getText());
                 nroFacAux = nroFac;   // Guardo el numero de la factura para la impresión
 
                 Factura fac = new Factura();                      
@@ -577,9 +586,9 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
                 }    
 //            
                 panelPago.setVisible(false);
-        }else{
-            JOptionPane.showMessageDialog(this, "Seleccione un paciente de la lista", "Selección de Paciente", JOptionPane.INFORMATION_MESSAGE);
-        }
+            }else{
+                JOptionPane.showMessageDialog(this, "Seleccione un paciente de la lista", "Selección de Paciente", JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnPago1ActionPerformed
 

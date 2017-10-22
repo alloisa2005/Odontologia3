@@ -6,10 +6,12 @@
 package GUI;
 
 import Controladores.Conexion;
+import IO.Opcion;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -124,7 +126,16 @@ public class frmBaseDeDatos extends javax.swing.JDialog {
 
     private void btnRealizaBUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizaBUpActionPerformed
         
-        Conexion.getInstance().getProcedimientos().realizaBackup();
+        // En la opción con el identificador 2 se parametriza la carpeta donde va a quedar el backup de la base de datos
+        Opcion op = Conexion.getInstance().getOpciones().unaOpcion("2");
+        
+        if(op != null){
+            String dir = op.getValor();  
+        
+            Conexion.getInstance().getProcedimientos().realizaBackup(dir);  // Obtengo el directorio parametrizado y se lo paso como parametro
+        }else{
+            JOptionPane.showMessageDialog(this, "No existe path parametrizado para realizar el BackUp. Darlo de alta bajo el identificador nro. 2", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnRealizaBUpActionPerformed
 
     /**

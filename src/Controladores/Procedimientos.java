@@ -178,11 +178,11 @@ public class Procedimientos {
             return Base64.decode(base64String);
     }   
     
-    public void realizaBackup() {      
+    public void realizaBackup(String dir) {      
         final List<String> comandos = new ArrayList<String>(); 
         
-        Opcion op = Conexion.getInstance().getOpciones().unaOpcion("2");
-        String dir = op.getValor();  //"C:/DentistaBD";  
+//        Opcion op = Conexion.getInstance().getOpciones().unaOpcion("2");
+//        String dir = op.getValor();  //"C:/DentistaBD";  
                  
         comandos.add("C:\\Program Files\\PostgreSQL\\9.5\\bin\\pg_dump.exe");  
                          
