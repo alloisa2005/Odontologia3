@@ -5,6 +5,7 @@
  */
 package Controladores;
 
+import IO.Opcion;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -178,14 +179,15 @@ public class Procedimientos {
     }   
     
     public void realizaBackup() {      
-        final List<String> comandos = new ArrayList<String>();   
-        String dir = "C:/DentistaBD";  
+        final List<String> comandos = new ArrayList<String>(); 
+        
+        Opcion op = Conexion.getInstance().getOpciones().unaOpcion("2");
+        String dir = op.getValor();  //"C:/DentistaBD";  
                  
         comandos.add("C:\\Program Files\\PostgreSQL\\9.5\\bin\\pg_dump.exe");  
                          
         comandos.add("-h");      
-        comandos.add("localhost");
-        //comandos.add("192.168.0.25");
+        comandos.add("localhost");        
         comandos.add("-p");      
         comandos.add("5432");      
         comandos.add("-U");      
@@ -198,7 +200,8 @@ public class Procedimientos {
 
         //comandos.add("C:\\TesteHib4\\Backups do Banco de Dados\\"+JOptionPane.showInputDialog(null,"Digite o nome do Backup")+".backup");   // eu utilizei meu C:\ e D:\ para os testes e gravei o backup com sucesso.  
         //comandos.add("C:\\TesteHib4\\Backups do Banco de Dados\\"+(Character.getNumericValue(recebe)+1)+" "+getDateTime()+".backup");   // eu utilizei meu C:\ e D:\ para os testes e gravei o backup com sucesso.  
-        comandos.add("C:\\DentistaBD\\" + JOptionPane.showInputDialog(null,"Escriba nombre de archivo") + ".backup");   // eu utilizei meu C:\ e D:\ para os testes e gravei o backup com sucesso.  
+        //comandos.add("C:\\DentistaBD\\" + JOptionPane.showInputDialog(null,"Escriba nombre de archivo") + ".backup");   // eu utilizei meu C:\ e D:\ para os testes e gravei o backup com sucesso.  
+        comandos.add(dir + JOptionPane.showInputDialog(null,"Escriba nombre de archivo") + ".backup"); 
         comandos.add("Odontologia3");      
         ProcessBuilder pb = new ProcessBuilder(comandos);      
 

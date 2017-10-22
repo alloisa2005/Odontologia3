@@ -11,6 +11,7 @@
     <class>IO.Factura</class>
     <class>IO.LineaFactura</class>
     <class>IO.Acceso</class>
+    <class>IO.Opcion</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/Odontologia3"/>
       <property name="javax.persistence.jdbc.user" value="postgres"/>

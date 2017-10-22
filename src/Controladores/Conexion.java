@@ -38,6 +38,7 @@ public class Conexion {
         private static final Citas citas = new Citas();
         private static final Facturas facturas = new Facturas();
         private static final Graficas graficas = new Graficas();
+        private static final Opciones opciones = new Opciones();
     }
     
     public EntityManager getConexion(){
@@ -54,6 +55,10 @@ public class Conexion {
     
     public Facturas getFacturas(){
         return ConexionHolder.facturas;
+    }
+    
+    public Opciones getOpciones(){
+        return ConexionHolder.opciones;
     }
     
     public Graficas getGraficas(){

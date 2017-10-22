@@ -30,6 +30,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnOpGenerales" min="-2" pref="216" max="-2" attributes="0"/>
                   <Component id="btnBaseDeDatos" min="-2" pref="216" max="-2" attributes="0"/>
                   <Component id="btnMedicos" min="-2" pref="216" max="-2" attributes="0"/>
                   <Component id="btnUsuarios" min="-2" pref="216" max="-2" attributes="0"/>
@@ -47,7 +48,9 @@
               <Component id="btnMedicos" min="-2" pref="87" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
               <Component id="btnBaseDeDatos" min="-2" pref="87" max="-2" attributes="0"/>
-              <EmptySpace pref="334" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+              <Component id="btnOpGenerales" min="-2" pref="87" max="-2" attributes="0"/>
+              <EmptySpace pref="214" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -61,7 +64,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Imagenes/usuarios32.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Usuarios"/>
+        <Property name="text" type="java.lang.String" value=" Usuarios"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUsuariosActionPerformed"/>
@@ -75,7 +78,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Imagenes/medico32.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="M&#xe9;dicos"/>
+        <Property name="text" type="java.lang.String" value=" M&#xe9;dicos"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMedicosActionPerformed"/>
@@ -89,10 +92,24 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Imagenes/bd32.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Base de Datos"/>
+        <Property name="text" type="java.lang.String" value=" Base de Datos"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBaseDeDatosActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnOpGenerales">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Calibri" size="17" style="1"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagenes/opGenerales32.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value=" Op. Generales"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOpGeneralesActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

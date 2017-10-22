@@ -38,6 +38,7 @@ public class frmOpciones extends javax.swing.JFrame {
         btnUsuarios = new javax.swing.JButton();
         btnMedicos = new javax.swing.JButton();
         btnBaseDeDatos = new javax.swing.JButton();
+        btnOpGenerales = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Opciones de Programa");
@@ -45,7 +46,7 @@ public class frmOpciones extends javax.swing.JFrame {
 
         btnUsuarios.setFont(new java.awt.Font("Calibri", 1, 17)); // NOI18N
         btnUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/usuarios32.png"))); // NOI18N
-        btnUsuarios.setText("Usuarios");
+        btnUsuarios.setText(" Usuarios");
         btnUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUsuariosActionPerformed(evt);
@@ -54,7 +55,7 @@ public class frmOpciones extends javax.swing.JFrame {
 
         btnMedicos.setFont(new java.awt.Font("Calibri", 1, 17)); // NOI18N
         btnMedicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/medico32.png"))); // NOI18N
-        btnMedicos.setText("Médicos");
+        btnMedicos.setText(" Médicos");
         btnMedicos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMedicosActionPerformed(evt);
@@ -63,10 +64,19 @@ public class frmOpciones extends javax.swing.JFrame {
 
         btnBaseDeDatos.setFont(new java.awt.Font("Calibri", 1, 17)); // NOI18N
         btnBaseDeDatos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bd32.png"))); // NOI18N
-        btnBaseDeDatos.setText("Base de Datos");
+        btnBaseDeDatos.setText(" Base de Datos");
         btnBaseDeDatos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBaseDeDatosActionPerformed(evt);
+            }
+        });
+
+        btnOpGenerales.setFont(new java.awt.Font("Calibri", 1, 17)); // NOI18N
+        btnOpGenerales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/opGenerales32.png"))); // NOI18N
+        btnOpGenerales.setText(" Op. Generales");
+        btnOpGenerales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpGeneralesActionPerformed(evt);
             }
         });
 
@@ -77,6 +87,7 @@ public class frmOpciones extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnOpGenerales, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBaseDeDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnMedicos, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -91,7 +102,9 @@ public class frmOpciones extends javax.swing.JFrame {
                 .addComponent(btnMedicos, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33)
                 .addComponent(btnBaseDeDatos, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(334, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
+                .addComponent(btnOpGenerales, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(214, Short.MAX_VALUE))
         );
 
         setSize(new java.awt.Dimension(1284, 794));
@@ -123,6 +136,14 @@ public class frmOpciones extends javax.swing.JFrame {
         frm.setVisible(true);
     }//GEN-LAST:event_btnBaseDeDatosActionPerformed
 
+    private void btnOpGeneralesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpGeneralesActionPerformed
+        
+        frmOpGenerales frm = new frmOpGenerales(new javax.swing.JDialog(), true);
+        frm.toFront();
+        frm.setVisible(true);
+        
+    }//GEN-LAST:event_btnOpGeneralesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -131,6 +152,7 @@ public class frmOpciones extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaseDeDatos;
     private javax.swing.JButton btnMedicos;
+    private javax.swing.JButton btnOpGenerales;
     private javax.swing.JButton btnUsuarios;
     // End of variables declaration//GEN-END:variables
 }

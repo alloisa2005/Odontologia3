@@ -61,7 +61,7 @@ public class frmAltaConsulta extends javax.swing.JDialog {
             Medico med = it.next();
             
             if(med.isActivo()){
-                modeloMedicos.addElement(it.next());            
+                modeloMedicos.addElement(med);            
             }
         }
         cmbMedicos.setModel(modeloMedicos);

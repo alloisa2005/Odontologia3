@@ -9,6 +9,7 @@ import Controladores.Conexion;
 import IO.Consulta;
 import IO.Factura;
 import IO.LineaFactura;
+import IO.Opcion;
 import IO.Paciente;
 import IO.Pago;
 import IO.Usuario;
@@ -537,8 +538,11 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
                 int nroFac = 0;
                 Factura ultFac = Conexion.getInstance().getFacturas().maxFactura();
 
-                if(ultFac == null){
-                    nroFac = 1;
+                if(ultFac == null){   // Si en la tabla de facturas no hay nada, la 1er factura a grabar es la establecida en las opciones bajo el id = 1
+                    String id = "1";
+                    Opcion op = Conexion.getInstance().getOpciones().unaOpcion(id);
+                    
+                    nroFac = Integer.parseInt(op.getValor()) + 1;
                 }else{
                     nroFac = Integer.parseInt(ultFac.getNumero()) + 1;
                 }
