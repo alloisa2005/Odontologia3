@@ -600,10 +600,15 @@ public class frmAltaPaciente extends javax.swing.JDialog {
                     JOptionPane.showMessageDialog(this, "Paciente ya existe, valide nro. de cédula ingresado", "Validación de datos", JOptionPane.ERROR_MESSAGE);
                     txtId.requestFocus();
                 }else{
-                    txtNombre.requestFocus();
+                    if(Conexion.getInstance().getProcedimientos().validarCedula(txtId.getText())){
+                        txtNombre.requestFocus();
+                    }else{
+                        JOptionPane.showMessageDialog(this, "Nro. de cédula incorrecto, favor validar", "Validación de datos", JOptionPane.ERROR_MESSAGE);
+                        txtId.requestFocus();
+                    }
                 }
             }else{
-                JOptionPane.showMessageDialog(this, "Ingrese nro. de cédula a validar", "Validación de datos", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Nro. de cédula debe tener 8 digitos", "Validación de datos", JOptionPane.ERROR_MESSAGE);
                 txtId.requestFocus();
             }
         }
