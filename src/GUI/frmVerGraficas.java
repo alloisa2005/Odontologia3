@@ -62,15 +62,19 @@ public class frmVerGraficas extends javax.swing.JDialog {
          
         grafica = ChartFactory.createBarChart3D("Estadísticas de Consultas Por Mes En El Año " + String.valueOf(anio), "Meses", "Consultas", resultado, PlotOrientation.VERTICAL, true, true, false);        
         
-        File archivo = new File(System.getProperty("java.io.tmpdir") + "graficaConsultas.png");
-        archivo.delete();
+        int correlativo = Conexion.getInstance().getGrafica();
+        File archivo = new File(System.getProperty("java.io.tmpdir") + "graficaConsultas" + (correlativo - 1) + ".png");
+        archivo.delete();                
         
-        //File archivo = new File("C:/pepe/grafica.png");
-        String path = archivo.getPath();  //"C:/pepe/grafica.png";  //System.getProperty("java.io.tmpdir") + "grafica.png";
+        String path = System.getProperty("java.io.tmpdir") + "graficaConsultas" + correlativo + ".png" ;//archivo.getPath();  //"C:/pepe/grafica.png";  //System.getProperty("java.io.tmpdir") + "grafica.png";
         //ChartUtilities.saveChartAsPNG(archivo, grafica, 300, 300);
+        
+        archivo = new File(path);
         ChartUtilities.saveChartAsPNG(archivo, grafica, 1058, 776);
         
         lblUno.setIcon(new ImageIcon(path));        
+        
+        Conexion.getInstance().setGrafica(correlativo + 1);
     }
     
     public void CrearGraficaMontos(int anio) throws IOException{
@@ -90,15 +94,19 @@ public class frmVerGraficas extends javax.swing.JDialog {
          
         grafica = ChartFactory.createBarChart3D("Estadísticas de Monto Recaudado Por Mes En El Año " + String.valueOf(anio), "Meses", "Monto", resultado, PlotOrientation.VERTICAL, true, true, false);        
         
-        File archivo = new File(System.getProperty("java.io.tmpdir") + "graficaMontos.png");
+        int correlativo = Conexion.getInstance().getGrafica();
+        File archivo = new File(System.getProperty("java.io.tmpdir") + "graficaMontos" + (correlativo - 1) + ".png");
         archivo.delete();
         
-        //File archivo = new File("C:/pepe/grafica.png");
-        String path = archivo.getPath();  //"C:/pepe/grafica.png";  //System.getProperty("java.io.tmpdir") + "grafica.png";
+        String path = System.getProperty("java.io.tmpdir") + "graficaConsultas" + correlativo + ".png" ;
+        
+        archivo = new File(path);        
         //ChartUtilities.saveChartAsPNG(archivo, grafica, 300, 300);
         ChartUtilities.saveChartAsPNG(archivo, grafica, 1058, 776);
         
-        lblUno.setIcon(new ImageIcon(path));        
+        lblUno.setIcon(new ImageIcon(path)); 
+        
+        Conexion.getInstance().setGrafica(correlativo + 1);
     }
     
     /**

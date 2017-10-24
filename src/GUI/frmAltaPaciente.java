@@ -581,7 +581,11 @@ public class frmAltaPaciente extends javax.swing.JDialog {
     }//GEN-LAST:event_lblFotoMouseClicked
 
     private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
-       
+        
+        if(txtId.getText().length() == 8){
+            evt.consume();
+        }
+        
         char c = evt.getKeyChar();
         if(!Character.isDigit(c)){
             evt.consume();

@@ -16,6 +16,8 @@ import javax.persistence.Persistence;
  */
 public class Conexion {
     
+    private int grafica = 0; 
+    
     private Conexion() {
     }
     
@@ -39,6 +41,15 @@ public class Conexion {
         private static final Facturas facturas = new Facturas();
         private static final Graficas graficas = new Graficas();
         private static final Opciones opciones = new Opciones();
+        
+    }
+
+    public int getGrafica() {
+        return grafica;
+    }
+
+    public void setGrafica(int grafica) {
+        this.grafica = grafica;
     }
     
     public EntityManager getConexion(){

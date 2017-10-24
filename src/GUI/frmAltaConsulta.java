@@ -412,7 +412,13 @@ public class frmAltaConsulta extends javax.swing.JDialog {
             
             Conexion.getInstance().Guardar(con);
             Conexion.getInstance().Combinar(con);                        
-
+            
+            txtMonto.setText("0");
+            txtTitulo.setText("");
+            dteFchConsulta.setDate(hoy);
+            txtDescripcion.setText("");
+            txtTitulo.requestFocus();
+            
             JOptionPane.showMessageDialog(this, "Consulta guardada exitosamente", "Nueva Consulta", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnGuardarConsultaActionPerformed

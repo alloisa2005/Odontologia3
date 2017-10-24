@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Controladores;
 
 import IO.Medico;
@@ -16,7 +12,8 @@ import java.util.List;
 public class Pacientes {
     
     public Paciente unPaciente(String id) {
-        Paciente paciente = null;                
+        Paciente paciente = null;  
+        
         String query = "SELECT * FROM PACIENTE where id='" + id + "'";
         
         Conexion.getInstance().getConexion().getTransaction().begin();

@@ -118,6 +118,11 @@ public class frmAltaMedico extends javax.swing.JDialog {
 
         txtId.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         txtId.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
+        txtId.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIdKeyTyped(evt);
+            }
+        });
 
         txtNombre.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         txtNombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
@@ -477,6 +482,18 @@ public class frmAltaMedico extends javax.swing.JDialog {
             medicoActivo = false;
         }
     }//GEN-LAST:event_chkActivoActionPerformed
+
+    private void txtIdKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdKeyTyped
+        
+        if(txtId.getText().length() == 8){
+            evt.consume();
+        }
+        
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c)){
+            evt.consume();
+        } 
+    }//GEN-LAST:event_txtIdKeyTyped
 
     /**
      * @param args the command line arguments
