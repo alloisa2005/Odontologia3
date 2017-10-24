@@ -201,6 +201,10 @@ public class Procedimientos {
         //comandos.add("C:\\TesteHib4\\Backups do Banco de Dados\\"+JOptionPane.showInputDialog(null,"Digite o nome do Backup")+".backup");   // eu utilizei meu C:\ e D:\ para os testes e gravei o backup com sucesso.  
         //comandos.add("C:\\TesteHib4\\Backups do Banco de Dados\\"+(Character.getNumericValue(recebe)+1)+" "+getDateTime()+".backup");   // eu utilizei meu C:\ e D:\ para os testes e gravei o backup com sucesso.  
         //comandos.add("C:\\DentistaBD\\" + JOptionPane.showInputDialog(null,"Escriba nombre de archivo") + ".backup");   // eu utilizei meu C:\ e D:\ para os testes e gravei o backup com sucesso.  
+        
+        File directorio = new File(dir); 
+        directorio.mkdir(); 
+
         comandos.add(dir + JOptionPane.showInputDialog(null,"Escriba nombre de archivo") + ".backup"); 
         comandos.add("Odontologia3");      
         ProcessBuilder pb = new ProcessBuilder(comandos);      

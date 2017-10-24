@@ -16,7 +16,7 @@ import javax.persistence.Persistence;
  */
 public class Conexion {
     
-    private int grafica = 0; 
+    private int correlativoGraf = 0; 
     
     private Conexion() {
     }
@@ -44,12 +44,12 @@ public class Conexion {
         
     }
 
-    public int getGrafica() {
-        return grafica;
+    public int getCorrelativoGraf() {
+        return correlativoGraf;
     }
 
-    public void setGrafica(int grafica) {
-        this.grafica = grafica;
+    public void setCorrelativoGraf(int correlativoGraf) {
+        this.correlativoGraf = correlativoGraf;
     }
     
     public EntityManager getConexion(){

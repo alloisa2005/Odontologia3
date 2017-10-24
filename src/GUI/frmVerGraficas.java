@@ -62,7 +62,7 @@ public class frmVerGraficas extends javax.swing.JDialog {
          
         grafica = ChartFactory.createBarChart3D("Estadísticas de Consultas Por Mes En El Año " + String.valueOf(anio), "Meses", "Consultas", resultado, PlotOrientation.VERTICAL, true, true, false);        
         
-        int correlativo = Conexion.getInstance().getGrafica();
+        int correlativo = Conexion.getInstance().getCorrelativoGraf();
         File archivo = new File(System.getProperty("java.io.tmpdir") + "graficaConsultas" + (correlativo - 1) + ".png");
         archivo.delete();                
         
@@ -74,7 +74,7 @@ public class frmVerGraficas extends javax.swing.JDialog {
         
         lblUno.setIcon(new ImageIcon(path));        
         
-        Conexion.getInstance().setGrafica(correlativo + 1);
+        Conexion.getInstance().setCorrelativoGraf(correlativo + 1);
     }
     
     public void CrearGraficaMontos(int anio) throws IOException{
@@ -94,7 +94,7 @@ public class frmVerGraficas extends javax.swing.JDialog {
          
         grafica = ChartFactory.createBarChart3D("Estadísticas de Monto Recaudado Por Mes En El Año " + String.valueOf(anio), "Meses", "Monto", resultado, PlotOrientation.VERTICAL, true, true, false);        
         
-        int correlativo = Conexion.getInstance().getGrafica();
+        int correlativo = Conexion.getInstance().getCorrelativoGraf();
         File archivo = new File(System.getProperty("java.io.tmpdir") + "graficaMontos" + (correlativo - 1) + ".png");
         archivo.delete();
         
@@ -106,7 +106,7 @@ public class frmVerGraficas extends javax.swing.JDialog {
         
         lblUno.setIcon(new ImageIcon(path)); 
         
-        Conexion.getInstance().setGrafica(correlativo + 1);
+        Conexion.getInstance().setCorrelativoGraf(correlativo + 1);
     }
     
     /**
