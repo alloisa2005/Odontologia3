@@ -31,6 +31,7 @@ public class Acceso implements Serializable {
     private boolean reportes;
     private boolean pagos;
     private boolean opciones;
+    private boolean migracion;
     
     public Usuario getUsuario() {
         return usuario;
@@ -94,6 +95,14 @@ public class Acceso implements Serializable {
 
     public void setOpciones(boolean opciones) {
         this.opciones = opciones;
+    }
+
+    public boolean isMigracion() {
+        return migracion;
+    }
+
+    public void setMigracion(boolean migracion) {
+        this.migracion = migracion;
     }
     
     @Override

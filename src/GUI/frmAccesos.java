@@ -42,7 +42,8 @@ public class frmAccesos extends javax.swing.JDialog {
         chkReportes.setSelected(false);
         chkPagos.setSelected(false);
         chkOpciones.setSelected(false);
-            
+        chkMigracion.setSelected(false);
+        
         if(acc != null){
             btnGuardar.setText("Modificar");
             
@@ -53,6 +54,7 @@ public class frmAccesos extends javax.swing.JDialog {
             chkReportes.setSelected(acc.isReportes());
             chkPagos.setSelected(acc.isPagos());
             chkOpciones.setSelected(acc.isOpciones());
+            chkMigracion.setSelected(acc.isMigracion());
         }
         
     }
@@ -78,6 +80,7 @@ public class frmAccesos extends javax.swing.JDialog {
         chkPagos = new javax.swing.JCheckBox();
         chkOpciones = new javax.swing.JCheckBox();
         chkPacientes = new javax.swing.JCheckBox();
+        chkMigracion = new javax.swing.JCheckBox();
         btnGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -151,12 +154,15 @@ public class frmAccesos extends javax.swing.JDialog {
         chkPacientes.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
         chkPacientes.setText(" Pacientes");
 
+        chkMigracion.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
+        chkMigracion.setText(" Migración");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(68, 68, 68)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(chkPacientes, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chkReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -166,12 +172,13 @@ public class frmAccesos extends javax.swing.JDialog {
                     .addComponent(chkPagos, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(chkOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(chkEstadisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(chkAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(86, 86, 86))
+                    .addComponent(chkEstadisticas, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chkOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chkAgenda, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chkMigracion, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,7 +193,8 @@ public class frmAccesos extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chkReportes)
                     .addComponent(chkPagos)
-                    .addComponent(chkOpciones))
+                    .addComponent(chkOpciones)
+                    .addComponent(chkMigracion))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
@@ -251,6 +259,7 @@ public class frmAccesos extends javax.swing.JDialog {
         accAux.setPacientes(chkPacientes.isSelected());
         accAux.setPagos(chkPagos.isSelected());
         accAux.setReportes(chkReportes.isSelected());
+        accAux.setMigracion(chkMigracion.isSelected());
         
         if(accesoAux != null){
             Conexion.getInstance().Actualizar(accAux);
@@ -273,6 +282,7 @@ public class frmAccesos extends javax.swing.JDialog {
     private javax.swing.JCheckBox chkAgenda;
     private javax.swing.JCheckBox chkConsultas;
     private javax.swing.JCheckBox chkEstadisticas;
+    private javax.swing.JCheckBox chkMigracion;
     private javax.swing.JCheckBox chkOpciones;
     private javax.swing.JCheckBox chkPacientes;
     private javax.swing.JCheckBox chkPagos;
