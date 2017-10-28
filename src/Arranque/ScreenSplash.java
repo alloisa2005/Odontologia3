@@ -9,10 +9,7 @@ import GUI.frmLogin;
 import java.awt.*;
 import java.awt.SplashScreen;
 
-/**
- * @web http://www.jc-mouse.net
- * @author Mouse
- */
+
 public final class ScreenSplash extends Thread {
 
     final SplashScreen splash;
@@ -61,7 +58,7 @@ public final class ScreenSplash extends Thread {
             //se actualiza todo
             splash.update();
             try {
-                Thread.sleep(630);
+                Thread.sleep(420);
             } catch (InterruptedException e) {
             }
             for (int i = 2; i < texto.length; i++) {
@@ -83,7 +80,7 @@ public final class ScreenSplash extends Thread {
                 //se actualiza todo
                 splash.update();
                 try {
-                    Thread.sleep(630);
+                    Thread.sleep(420);
                 } catch (InterruptedException e) {
                 }
             }
