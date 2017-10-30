@@ -6,12 +6,16 @@
 package GUI;
 
 import Controladores.Conexion;
+import Controladores.TablaRender;
 import IO.Paciente;
 import IO.Usuario;
+import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -25,7 +29,11 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -38,10 +46,11 @@ public class frmMigracion extends javax.swing.JDialog {
     int cantFilas = 0;
     int registroError = 0;
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    DecimalFormat decf = new DecimalFormat("#.00");
     
     public frmMigracion(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
-        initComponents();
+        initComponents();                
         
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/molar.png")).getImage()); 
         
@@ -53,7 +62,7 @@ public class frmMigracion extends javax.swing.JDialog {
     public void ArmoTablaPacientes(){
         
         //Array de ‘String’ con los titulos de las columnas 
-        String[] columnNames = {"Cédula", "Nombre", "Apellido", "Fch Nacimiento", "Dirección", "Mail", "Teléfono", "Celular"};        
+        String[] columnNames = {"Cédula", "Nombre", "Apellido", "Fch Nacimiento", "Dirección", "Mail", "Teléfono", "Celular", "OK"};        
         DefaultTableModel dm = new DefaultTableModel(columnNames, 0);
         jTablaGenerica.setModel(dm);
     }
@@ -61,7 +70,7 @@ public class frmMigracion extends javax.swing.JDialog {
     public void ArmoTablaMedicos(){
         
         //Array de ‘String’ con los titulos de las columnas 
-        String[] columnNames = {"Cédula", "Nombre", "Apellido", "Teléfono", "Dirección", "Celular", "Fch Ingreso", "Activo (S/N)"};        
+        String[] columnNames = {"Cédula", "Nombre", "Apellido", "Teléfono", "Dirección", "Celular", "Fch Ingreso", "Activo (S/N)", "OK"};        
         DefaultTableModel dm = new DefaultTableModel(columnNames, 0);
         jTablaGenerica.setModel(dm);
     }
@@ -86,6 +95,8 @@ public class frmMigracion extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtCantFilasErr = new javax.swing.JLabel();
+        txtPorcentaje = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Migración de Datos");
@@ -199,6 +210,12 @@ public class frmMigracion extends javax.swing.JDialog {
         txtCantFilasErr.setForeground(new java.awt.Color(255, 0, 0));
         txtCantFilasErr.setText("0");
 
+        txtPorcentaje.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        txtPorcentaje.setText("0");
+
+        jLabel5.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel5.setText("% Correctos:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -212,21 +229,22 @@ public class frmMigracion extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnValidar, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(30, 30, 30)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCantFilas, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCantFilasErr, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(btnCargar, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnValidar, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCantFilas, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCantFilasErr, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtPorcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1))
                 .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
@@ -247,24 +265,28 @@ public class frmMigracion extends javax.swing.JDialog {
                     .addComponent(btnValidar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCantFilasErr, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCantFilasErr, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPorcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(1194, 774));
+        setSize(new java.awt.Dimension(1251, 774));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void rbtnMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnMedicosActionPerformed
+        jTablaGenerica.setDefaultRenderer(Object.class, new TablaRender());
         ArmoTablaMedicos();
     }//GEN-LAST:event_rbtnMedicosActionPerformed
 
     private void rbtnPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnPacientesActionPerformed
+               
         ArmoTablaPacientes();
     }//GEN-LAST:event_rbtnPacientesActionPerformed
 
     private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
-        
+                       
         cantFilas = 0;
         registroError = 0;
         
@@ -285,7 +307,7 @@ public class frmMigracion extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCargarActionPerformed
 
     private void btnValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarActionPerformed
-         int cant = jTablaGenerica.getRowCount() -1;
+        int cant = jTablaGenerica.getRowCount();
          
         for (int i = 0; i < cant; i++) {
             Paciente pac = new Paciente();
@@ -307,18 +329,89 @@ public class frmMigracion extends javax.swing.JDialog {
             
             if(ValidarPaciente(pac)){
                 //Conexion.getInstance().Guardar(pac);
+                jTablaGenerica.getModel().setValueAt("SI", i, 8);
             }else{
                 registroError += 1;
+                jTablaGenerica.getModel().setValueAt("NO", i, 8);
+//                FileNameExtensionFilter filter = new FileNameExtensionFilter(
+//                "Excel", "xls", "xlsx");
+//                jFileChooser1.setFileFilter(filter);
+//                int returnVal = jFileChooser1.showSaveDialog(this);
+//                if (returnVal == JFileChooser.APPROVE_OPTION) {
+//                    this.escribir(jFileChooser1.getSelectedFile().getPath());
+//                }
             }        
         }
+        
+        jTablaGenerica.setDefaultRenderer(Object.class, new TablaRender());
+        
+        Double porcentaje = 100 - (((double)registroError/(double)cant)*100);
+        if(porcentaje <= 35.0){
+            txtPorcentaje.setForeground(Color.red);
+        }
         txtCantFilasErr.setText(String.valueOf(registroError));
+        txtPorcentaje.setText(String.valueOf(decf.format(porcentaje)));
     }//GEN-LAST:event_btnValidarActionPerformed
+    
+    private void escribir(String path) {
+        XSSFWorkbook libro = new XSSFWorkbook();
+        XSSFSheet hoja1 = libro.createSheet("Agenda");
+        //cabecera de la hoja de excel
+        String[] header = new String[]{"Nombre", "Apellido", "Dirección", "Teléfono"};
+
+        //poner negrita a la cabecera
+        CellStyle style = libro.createCellStyle();
+        Font font = libro.createFont();
+        font.setBold(true);
+        style.setFont(font);
+
+        //Armo cabecera
+        XSSFRow rowH = hoja1.createRow(0);
+        for (int i = 0; i < header.length; i++) {
+            XSSFCell cell = rowH.createCell(i);//se crea las celdas para la cabecera, junto con la posición
+            cell.setCellStyle(style); // se añade el style crea anteriormente 
+            cell.setCellValue(header[i]);
+        }
+
+        //generar los datos para el documento
+        for (int i = 0; i < jTablaGenerica.getRowCount(); i++) {
+            XSSFRow row = hoja1.createRow(i + 1);//se crea las filas
+            for (int j = 0; j < jTablaGenerica.getColumnCount(); j++) {
+                XSSFCell cell = row.createCell(j);//se crea las celdas para la contenido, junto con la posición
+                cell.setCellValue(jTablaGenerica.getValueAt(i, j).toString()); //se añade el contenido       
+            }
+        }
+
+        //Guardar archivo
+        File file;
+        file = new File(path);
+        try (FileOutputStream fileOuS = new FileOutputStream(file)) {
+//            if (file.exists()) {// si el archivo existe se elimina
+//                file.delete();
+//                System.out.println("Archivo eliminado");
+//            }
+            libro.write(fileOuS);
+            fileOuS.flush();
+            fileOuS.close();
+            System.out.println("Archivo Creado");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
     
     private boolean ValidarPaciente(Paciente pac){
         boolean ok = true;
         
         if(pac != null){
             if(pac.getId().equals("")){
+                ok = false;
+            }
+            
+            Paciente pacAux = Conexion.getInstance().getPacientes().unPaciente(pac.getId());
+            if(pacAux != null){  // El nro de cedula del paciente ya existe en la base de datos
                 ok = false;
             }
             
@@ -386,12 +479,12 @@ public class frmMigracion extends javax.swing.JDialog {
                     columna++;
                 }
                 
-//                String cedula = String.valueOf(fila[0]);
-//                Date fchNac = df.parse(String.valueOf(fila[0]));
-                
-                mdl.addRow(fila);                
+
+                if(!"".equals(String.valueOf(fila[0]))){  // Si la 1er columna es vacía de la fila no la cargo en el excel
+                    mdl.addRow(fila);
+                }
             }
-            txtCantFilas.setText(String.valueOf(cantFilas-1));  // Resto uno para no incluir en la cantidad la 1er fila ya que son los titulos de las columnas
+            txtCantFilas.setText(String.valueOf(cantFilas));  // Resto uno para no incluir en la cantidad la 1er fila ya que son los titulos de las columnas
         } catch (Exception e) {
             e.getMessage();
         }
@@ -448,6 +541,7 @@ public class frmMigracion extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -456,5 +550,6 @@ public class frmMigracion extends javax.swing.JDialog {
     private javax.swing.JRadioButton rbtnPacientes;
     private javax.swing.JLabel txtCantFilas;
     private javax.swing.JLabel txtCantFilasErr;
+    private javax.swing.JLabel txtPorcentaje;
     // End of variables declaration//GEN-END:variables
 }
