@@ -18,12 +18,14 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
@@ -45,14 +47,19 @@ public class frmMigracion extends javax.swing.JDialog {
 
     int cantFilas = 0;
     int registroError = 0;
+    int registrosOK = 0;
+    Double porcentaje = 0.0;
+    
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     DecimalFormat decf = new DecimalFormat("#.00");
     
     public frmMigracion(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
         initComponents();                
-        
+         
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/molar.png")).getImage()); 
+        
+        jTablaGenerica.setDefaultRenderer(Object.class, new TablaRender());
         
         rbtnPacientes.setSelected(true);
         ArmoTablaPacientes();
@@ -65,6 +72,7 @@ public class frmMigracion extends javax.swing.JDialog {
         String[] columnNames = {"Cédula", "Nombre", "Apellido", "Fch Nacimiento", "Dirección", "Mail", "Teléfono", "Celular", "OK"};        
         DefaultTableModel dm = new DefaultTableModel(columnNames, 0);
         jTablaGenerica.setModel(dm);
+         
     }
     
     public void ArmoTablaMedicos(){
@@ -276,12 +284,12 @@ public class frmMigracion extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rbtnMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnMedicosActionPerformed
-        jTablaGenerica.setDefaultRenderer(Object.class, new TablaRender());
+        
         ArmoTablaMedicos();
     }//GEN-LAST:event_rbtnMedicosActionPerformed
 
     private void rbtnPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnPacientesActionPerformed
-               
+        jTablaGenerica.setDefaultRenderer(Object.class, new TablaRender());      
         ArmoTablaPacientes();
     }//GEN-LAST:event_rbtnPacientesActionPerformed
 
@@ -289,9 +297,11 @@ public class frmMigracion extends javax.swing.JDialog {
                        
         cantFilas = 0;
         registroError = 0;
+        porcentaje = 0.0;
         
         txtCantFilas.setText(String.valueOf(cantFilas));
         txtCantFilasErr.setText(String.valueOf(registroError));
+        txtPorcentaje.setText(String.valueOf(porcentaje));
         
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Excel", "xls", "xlsx");
         jFileChooser1.setFileFilter(filter);
@@ -308,9 +318,13 @@ public class frmMigracion extends javax.swing.JDialog {
 
     private void btnValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarActionPerformed
         int cant = jTablaGenerica.getRowCount();
-         
+        DefaultTableModel modelo = (DefaultTableModel) jTablaGenerica.getModel();
+        ArrayList<Object[]> lista = new ArrayList<Object[]>();
+        
         for (int i = 0; i < cant; i++) {
-            Paciente pac = new Paciente();
+            Paciente pac = new Paciente();            
+            
+            Object[] fila = new Object[9];
             
             String fchStr    = jTablaGenerica.getModel().getValueAt(i, 3).toString();
             
@@ -327,12 +341,20 @@ public class frmMigracion extends javax.swing.JDialog {
             pac.setTelefono(jTablaGenerica.getModel().getValueAt(i, 6).toString());
             pac.setCelular(jTablaGenerica.getModel().getValueAt(i, 7).toString());            
             
+            fila[0] = pac.getId();
+            fila[1] = pac.getNombre();
+            fila[2] = pac.getApellido();       fila[3] = df.format(pac.getFchNac());
+            fila[4] = pac.getDireccion();      fila[5] = pac.getMail();
+            fila[6] = pac.getTelefono();       fila[7] = pac.getCelular();
+            fila[8] = "";
+            
             if(ValidarPaciente(pac)){
-                //Conexion.getInstance().Guardar(pac);
-                jTablaGenerica.getModel().setValueAt("SI", i, 8);
-            }else{
+                Conexion.getInstance().Guardar(pac);
+                registrosOK +=1 ;
+            }else{               
+                lista.add(fila);
+                //jTablaGenerica.getModel().setValueAt("NO", i-registroError, 8);
                 registroError += 1;
-                jTablaGenerica.getModel().setValueAt("NO", i, 8);
 //                FileNameExtensionFilter filter = new FileNameExtensionFilter(
 //                "Excel", "xls", "xlsx");
 //                jFileChooser1.setFileFilter(filter);
@@ -340,10 +362,20 @@ public class frmMigracion extends javax.swing.JDialog {
 //                if (returnVal == JFileChooser.APPROVE_OPTION) {
 //                    this.escribir(jFileChooser1.getSelectedFile().getPath());
 //                }
-            }        
+            }                                     
         }
         
-        jTablaGenerica.setDefaultRenderer(Object.class, new TablaRender());
+        modelo.setRowCount(0);
+        for (int j = 0; j < lista.size(); j++) {
+                
+            modelo.addRow(lista.get(j));
+        }
+            
+//        DefaultTableModel modeloTabla = (DefaultTableModel) jTablaGenerica.getModel();        
+//        modeloTabla.setRowCount(0);
+//        jTablaGenerica.setModel(modelo);
+      
+        JOptionPane.showMessageDialog(this, "Se dieron de alta " + registrosOK + " pacientes", "Alta de Datos", JOptionPane.INFORMATION_MESSAGE);
         
         Double porcentaje = 100 - (((double)registroError/(double)cant)*100);
         if(porcentaje <= 35.0){
@@ -469,7 +501,7 @@ public class frmMigracion extends javax.swing.JDialog {
                 Iterator<Cell> cellIterator = row.cellIterator();
                 Cell cell;
                 //Para cargar la tabla
-                Object[] fila = new Object[8];
+                Object[] fila = new Object[9];
                 int columna = 0;
                 //se recorre cada celda
                 while (cellIterator.hasNext()) {
@@ -481,6 +513,7 @@ public class frmMigracion extends javax.swing.JDialog {
                 
 
                 if(!"".equals(String.valueOf(fila[0]))){  // Si la 1er columna es vacía de la fila no la cargo en el excel
+                   fila[8] = "";
                     mdl.addRow(fila);
                 }
             }
