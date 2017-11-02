@@ -19,6 +19,7 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.text.MessageFormat;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -101,11 +102,11 @@ public class frmPacientes extends javax.swing.JDialog {
         }               
     }
     
-    public void CargarTablaPacienteXId(){
+    public void CargarTablaPacienteXId(String id){
         
         DefaultTableModel modeloTabla = (DefaultTableModel) tblPacientes.getModel();
         
-        Paciente pacAux = Conexion.getInstance().getPacientes().unPaciente(txtIdBuscar.getText());
+        Paciente pacAux = Conexion.getInstance().getPacientes().unPaciente(id);
         
         if(pacAux != null){
             Object[] fila = new Object[5];
@@ -134,6 +135,50 @@ public class frmPacientes extends javax.swing.JDialog {
         }                
     }
     
+    public void CargarTablaPacienteXIdLike(String id){
+        
+        DefaultTableModel modeloTabla = (DefaultTableModel) tblPacientes.getModel();
+        
+        Iterator<Paciente> it = Conexion.getInstance().getPacientes().unPacienteLike(id).iterator();
+        
+        while (it.hasNext()) {
+            Paciente pacAux = it.next();
+            Object[] fila = new Object[5];
+            
+            fila[0] = pacAux.getId();
+            fila[1] = pacAux;   
+            fila[2] = pacAux.getDireccion(); 
+            fila[3] = pacAux.getTelefono();
+            fila[4] = pacAux.getCelular(); 
+            
+            modeloTabla.addRow(fila);
+        }
+//        if(pacAux != null){
+//            Object[] fila = new Object[5];
+//            
+//            fila[0] = pacAux.getId();
+//            fila[1] = pacAux;   
+//            fila[2] = pacAux.getDireccion(); 
+//            fila[3] = pacAux.getTelefono();
+//            fila[4] = pacAux.getCelular(); 
+//            
+//            modeloTabla.addRow(fila);
+//        }else{
+//            
+//            CargarTablaPacientes();
+//            
+//            int resp = JOptionPane.showConfirmDialog(null, "Paciente no existe, desea darlo de alta?", "Buscar Paciente", JOptionPane.YES_NO_OPTION);
+//            if(resp != 1){
+//                //aqui pones lo que quieras hacer si la respuesta es SI 
+//                frmAltaPaciente frm = new frmAltaPaciente(new javax.swing.JDialog(), true, txtIdBuscar.getText(), this);
+//                frm.toFront();
+//                frm.setVisible(true);
+//            }else{
+//                //y aqui va lo contrario si esque la respuesta seria NO
+//                txtIdBuscar.setText("");
+//            }
+//        }                
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -334,18 +379,21 @@ public class frmPacientes extends javax.swing.JDialog {
     }//GEN-LAST:event_btnModificarMedicoActionPerformed
 
     private void txtIdBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdBuscarKeyPressed
-        if((evt.getKeyCode() == KeyEvent.VK_ENTER)){
+        //if((evt.getKeyCode() == KeyEvent.VK_ENTER)){
             
-            if(!txtIdBuscar.getText().equals("")){
-                txtApellidoBuscar.setText("");
-
-                VaciarTabla();
-                CargarTablaPacienteXId();
-            }else{
-                VaciarTabla();
-                CargarTablaPacientes();
-            }
-        }
+            VaciarTabla();
+            CargarTablaPacienteXIdLike(txtIdBuscar.getText()+evt.getKeyChar());
+                
+//            if(!txtIdBuscar.getText().equals("")){
+//                txtApellidoBuscar.setText("");
+//
+//                VaciarTabla();
+//                CargarTablaPacienteXId(txtIdBuscar.getText()+evt.getKeyChar());
+//            }else{
+//                VaciarTabla();
+//                CargarTablaPacientes();
+//            }
+        //}
     }//GEN-LAST:event_txtIdBuscarKeyPressed
 
     public void VaciarTabla(){
@@ -388,14 +436,12 @@ public class frmPacientes extends javax.swing.JDialog {
         char c = evt.getKeyChar();
         if(!Character.isDigit(c)){
             evt.consume();
+        }else{        
+            VaciarTabla();
+            //CargarTablaPacienteXIdLike();
         }
     }//GEN-LAST:event_txtIdBuscarKeyTyped
-    
-    
-    
-    /**
-     * @param args the command line arguments
-     */
+           
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -9,7 +9,7 @@ import Controladores.Conexion;
 import Controladores.TablaRender;
 import IO.Paciente;
 import IO.Usuario;
-import java.awt.Color;
+import java.awt.Color; 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -39,10 +39,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-/**
- *
- * @author User
- */
+
 public class frmMigracion extends javax.swing.JDialog {
 
     int cantFilas = 0;
@@ -59,7 +56,7 @@ public class frmMigracion extends javax.swing.JDialog {
          
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/molar.png")).getImage()); 
         
-        jTablaGenerica.setDefaultRenderer(Object.class, new TablaRender());
+        //jTablaGenerica.setDefaultRenderer(Object.class, new TablaRender());
         
         rbtnPacientes.setSelected(true);
         ArmoTablaPacientes();
@@ -69,7 +66,7 @@ public class frmMigracion extends javax.swing.JDialog {
     public void ArmoTablaPacientes(){
         
         //Array de ‘String’ con los titulos de las columnas 
-        String[] columnNames = {"Cédula", "Nombre", "Apellido", "Fch Nacimiento", "Dirección", "Mail", "Teléfono", "Celular", "OK"};        
+        String[] columnNames = {"Cédula", "Nombre", "Apellido", "Fch Nacimiento", "Dirección", "Mail", "Teléfono", "Celular"};        
         DefaultTableModel dm = new DefaultTableModel(columnNames, 0);
         jTablaGenerica.setModel(dm);
          
@@ -78,7 +75,7 @@ public class frmMigracion extends javax.swing.JDialog {
     public void ArmoTablaMedicos(){
         
         //Array de ‘String’ con los titulos de las columnas 
-        String[] columnNames = {"Cédula", "Nombre", "Apellido", "Teléfono", "Dirección", "Celular", "Fch Ingreso", "Activo (S/N)", "OK"};        
+        String[] columnNames = {"Cédula", "Nombre", "Apellido", "Teléfono", "Dirección", "Celular", "Fch Ingreso", "Activo (S/N)"};        
         DefaultTableModel dm = new DefaultTableModel(columnNames, 0);
         jTablaGenerica.setModel(dm);
     }
@@ -289,7 +286,7 @@ public class frmMigracion extends javax.swing.JDialog {
     }//GEN-LAST:event_rbtnMedicosActionPerformed
 
     private void rbtnPacientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnPacientesActionPerformed
-        jTablaGenerica.setDefaultRenderer(Object.class, new TablaRender());      
+        //jTablaGenerica.setDefaultRenderer(Object.class, new TablaRender());      
         ArmoTablaPacientes();
     }//GEN-LAST:event_rbtnPacientesActionPerformed
 
@@ -317,6 +314,17 @@ public class frmMigracion extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCargarActionPerformed
 
     private void btnValidarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnValidarActionPerformed
+        if(rbtnPacientes.isSelected()){
+            ValidoPacientes();
+        }else{
+            if(rbtnMedicos.isSelected()){
+                
+            }
+        }
+    }//GEN-LAST:event_btnValidarActionPerformed
+    
+    private void ValidoPacientes(){
+        
         int cant = jTablaGenerica.getRowCount();
         DefaultTableModel modelo = (DefaultTableModel) jTablaGenerica.getModel();
         ArrayList<Object[]> lista = new ArrayList<Object[]>();
@@ -324,7 +332,7 @@ public class frmMigracion extends javax.swing.JDialog {
         for (int i = 0; i < cant; i++) {
             Paciente pac = new Paciente();            
             
-            Object[] fila = new Object[9];
+            Object[] fila = new Object[8];
             
             String fchStr    = jTablaGenerica.getModel().getValueAt(i, 3).toString();
             
@@ -345,23 +353,14 @@ public class frmMigracion extends javax.swing.JDialog {
             fila[1] = pac.getNombre();
             fila[2] = pac.getApellido();       fila[3] = df.format(pac.getFchNac());
             fila[4] = pac.getDireccion();      fila[5] = pac.getMail();
-            fila[6] = pac.getTelefono();       fila[7] = pac.getCelular();
-            fila[8] = "";
+            fila[6] = pac.getTelefono();       fila[7] = pac.getCelular();            
             
             if(ValidarPaciente(pac)){
                 Conexion.getInstance().Guardar(pac);
                 registrosOK +=1 ;
             }else{               
                 lista.add(fila);
-                //jTablaGenerica.getModel().setValueAt("NO", i-registroError, 8);
                 registroError += 1;
-//                FileNameExtensionFilter filter = new FileNameExtensionFilter(
-//                "Excel", "xls", "xlsx");
-//                jFileChooser1.setFileFilter(filter);
-//                int returnVal = jFileChooser1.showSaveDialog(this);
-//                if (returnVal == JFileChooser.APPROVE_OPTION) {
-//                    this.escribir(jFileChooser1.getSelectedFile().getPath());
-//                }
             }                                     
         }
         
@@ -369,27 +368,36 @@ public class frmMigracion extends javax.swing.JDialog {
         for (int j = 0; j < lista.size(); j++) {
                 
             modelo.addRow(lista.get(j));
-        }
-            
-//        DefaultTableModel modeloTabla = (DefaultTableModel) jTablaGenerica.getModel();        
-//        modeloTabla.setRowCount(0);
-//        jTablaGenerica.setModel(modelo);
+        }            
       
-        JOptionPane.showMessageDialog(this, "Se dieron de alta " + registrosOK + " pacientes", "Alta de Datos", JOptionPane.INFORMATION_MESSAGE);
+        if(registrosOK > 0){  // Muestro el mensaje si al menos dio de alta un paciente
+            JOptionPane.showMessageDialog(this, "Se dieron de alta " + registrosOK + " pacientes", "Alta de Datos", JOptionPane.INFORMATION_MESSAGE);
+        }
         
         Double porcentaje = 100 - (((double)registroError/(double)cant)*100);
         if(porcentaje <= 35.0){
             txtPorcentaje.setForeground(Color.red);
         }
+        
+        if(porcentaje < 100){  // Si el porcentaje no es 100% quiere decir que hay registros con error y creo el nuevo excel con esos registros
+            FileNameExtensionFilter filter = new FileNameExtensionFilter(
+                "Excel", "xls", "xlsx");
+            jFileChooser1.setFileFilter(filter);
+            int returnVal = jFileChooser1.showSaveDialog(this);
+            if (returnVal == JFileChooser.APPROVE_OPTION) {
+                this.escribir(jFileChooser1.getSelectedFile().getPath());
+            }
+        }
+        
         txtCantFilasErr.setText(String.valueOf(registroError));
-        txtPorcentaje.setText(String.valueOf(decf.format(porcentaje)));
-    }//GEN-LAST:event_btnValidarActionPerformed
+        txtPorcentaje.setText(String.valueOf(decf.format(porcentaje)));    
+    }
     
     private void escribir(String path) {
         XSSFWorkbook libro = new XSSFWorkbook();
         XSSFSheet hoja1 = libro.createSheet("Agenda");
         //cabecera de la hoja de excel
-        String[] header = new String[]{"Nombre", "Apellido", "Dirección", "Teléfono"};
+        String[] header = new String[]{"Cédula", "Nombre", "Apellido", "Fch Nacimiento", "Dirección", "Mail", "Teléfono", "Celular"}; 
 
         //poner negrita a la cabecera
         CellStyle style = libro.createCellStyle();
@@ -511,13 +519,14 @@ public class frmMigracion extends javax.swing.JDialog {
                     columna++;
                 }
                 
-
+                //mdl.addRow(fila);
+                
                 if(!"".equals(String.valueOf(fila[0]))){  // Si la 1er columna es vacía de la fila no la cargo en el excel
-                   fila[8] = "";
+                   //fila[8] = "";
                     mdl.addRow(fila);
                 }
             }
-            txtCantFilas.setText(String.valueOf(cantFilas));  // Resto uno para no incluir en la cantidad la 1er fila ya que son los titulos de las columnas
+            txtCantFilas.setText(String.valueOf(cantFilas-1));  // Resto uno para no incluir en la cantidad la 1er fila ya que son los titulos de las columnas
         } catch (Exception e) {
             e.getMessage();
         }

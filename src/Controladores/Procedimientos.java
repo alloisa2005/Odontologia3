@@ -234,13 +234,14 @@ public class Procedimientos {
         }                                               
     }
     
-    public void RestaurarBD(){
-        JFileChooser open = new JFileChooser(new File("C:/DentistaBD")); 
-        int op = open.showOpenDialog(null); 
+    public void RestaurarBD(String dir, String archivo){
+        //JFileChooser open = new JFileChooser(new File()); 
+        //JFileChooser open = new JFileChooser(new File(dir)); 
+        //int op = open.showOpenDialog(null); 
         
-        if(op == JFileChooser.APPROVE_OPTION){
-           File arq = open.getSelectedFile(); 
-           String nomeDoArquivo = open.getName(arq);
+        //if(op == JFileChooser.APPROVE_OPTION){
+           //File arq = open.getSelectedFile(); 
+           //String nomeDoArquivo = open.getName(arq);
            
            final List<String> comandos = new ArrayList<String>();      
            comandos.add("C:\\Program Files\\PostgreSQL\\9.5\\bin\\pg_restore.exe");
@@ -257,7 +258,8 @@ public class Procedimientos {
            comandos.add("-v");      
              
            //comandos.add("C:\\BOHib3.6.4\\Backups do Banco de Dados\\bkpBolOcor04102012.backup");   // eu utilizei meu C:\ e D:\ para os testes e gravei o backup com sucesso.  
-           comandos.add("C:\\DentistaBD\\" + nomeDoArquivo);
+           //comandos.add("C:\\DentistaBD\\" + nomeDoArquivo);
+           comandos.add(dir /*+ archivo*/);
            ProcessBuilder pb = new ProcessBuilder(comandos);      
            pb.environment().put("PGPASSWORD", "1234");        
            try {      
@@ -284,4 +286,4 @@ public class Procedimientos {
         }    
     }
     
-}
+

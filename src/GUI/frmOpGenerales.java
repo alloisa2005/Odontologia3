@@ -39,6 +39,7 @@ public class frmOpGenerales extends javax.swing.JDialog {
     public void CargarListaOpciones(){
         
         DefaultTableModel modeloOpciones = (DefaultTableModel) tblOpciones.getModel();
+        modeloOpciones.setRowCount(0);        
         
         Iterator<Opcion> it = Conexion.getInstance().getOpciones().ListaOpciones().iterator();
         
@@ -91,7 +92,6 @@ public class frmOpGenerales extends javax.swing.JDialog {
         txtDescripcion = new javax.swing.JTextField();
         txtValor = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
-        btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -205,14 +205,6 @@ public class frmOpGenerales extends javax.swing.JDialog {
             }
         });
 
-        btnModificar.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
-        btnModificar.setText("Modificar");
-        btnModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModificarActionPerformed(evt);
-            }
-        });
-
         btnEliminar.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -241,18 +233,19 @@ public class frmOpGenerales extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txtValor)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel5)
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel6)
-                                .addComponent(jLabel7)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(txtDescripcion))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7))
+                                .addGap(269, 269, 269))
+                            .addComponent(txtDescripcion)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(59, 59, 59)
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(76, 76, 76)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
@@ -298,11 +291,9 @@ public class frmOpGenerales extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtValor, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(60, 60, 60)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -344,6 +335,7 @@ public class frmOpGenerales extends javax.swing.JDialog {
             op.setValor(txtValor.getText());
 
             Conexion.getInstance().Guardar(op);
+            Conexion.getInstance().Combinar(op);
             VaciarTabla();
             CargarListaOpciones();
             
@@ -352,32 +344,29 @@ public class frmOpGenerales extends javax.swing.JDialog {
             txtValor.setText("");
             
         }else{
-            JOptionPane.showMessageDialog(this, "Identificador de opción ya esiste", "Nueva Opción", JOptionPane.ERROR_MESSAGE);
-            txtId.requestFocus();
+            Opcion op = new Opcion();
+            
+            op.setId(txtId.getText());
+            op.setDescripcion(txtDescripcion.getText());
+            op.setValor(txtValor.getText());
+            
+            Conexion.getInstance().Actualizar(op);
+            //onexion.getInstance().Combinar(op);
+            VaciarTabla();
+            CargarListaOpciones();
         }
         
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        
-        Opcion op = new Opcion();
-        
-        op.setId(txtId.getText());
-        op.setDescripcion(txtDescripcion.getText());
-        op.setValor(txtValor.getText());
-        
-        Conexion.getInstance().Actualizar(op);
-    }//GEN-LAST:event_btnModificarActionPerformed
-
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         
-        Opcion op = new Opcion();
+        Conexion.getInstance().getOpciones().eliminarOpcion(txtId.getText());
         
-        op.setId(txtId.getText());
-        op.setDescripcion(txtDescripcion.getText());
-        op.setValor(txtValor.getText());
+        CargarListaOpciones();
         
-        Conexion.getInstance().Eliminar(op);
+        txtId.setText("");
+        txtDescripcion.setText("");
+        txtValor.setText("");
         
     }//GEN-LAST:event_btnEliminarActionPerformed
 
@@ -385,6 +374,7 @@ public class frmOpGenerales extends javax.swing.JDialog {
         
         int row = tblOpciones.getSelectedRow();        
         Opcion op = (Opcion) tblOpciones.getModel().getValueAt(row, 0);
+        Conexion.getInstance().Combinar(op);
         
         txtId.setText(op.getId());
         txtDescripcion.setText(op.getDescripcion());
@@ -424,7 +414,6 @@ public class frmOpGenerales extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
-    private javax.swing.JButton btnModificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

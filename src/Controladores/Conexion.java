@@ -113,7 +113,13 @@ public class Conexion {
         
         getConexion().getTransaction().begin();
         
+        //getConexion().refresh(object);
+        
         try {
+//            if(getConexion().contains(object)){
+//                getConexion().remove(object);
+//            }
+            
             getConexion().remove(object);
             getConexion().getTransaction().commit();
         } catch (Exception e) {

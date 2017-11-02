@@ -29,6 +29,24 @@ public class Pacientes {
         return paciente;
     }
     
+    public List<Paciente> unPacienteLike(String id) {
+        List<Paciente> lista = null; 
+        
+        String query = "SELECT * FROM PACIENTE where id like '" + id + "%'";
+        
+        Conexion.getInstance().getConexion().getTransaction().begin();
+        
+        try {
+            lista = Conexion.getInstance().getConexion().createNativeQuery(query, Paciente.class).getResultList();            
+            
+            Conexion.getInstance().getConexion().getTransaction().commit(); 
+        } catch (Exception e) {
+            Conexion.getInstance().getConexion().getTransaction().rollback();       
+        
+        }
+        return lista;
+    }
+    
     public List<Paciente> listaDePacientes() {
         List<Paciente> lista = null;                
         

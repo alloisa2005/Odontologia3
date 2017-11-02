@@ -7,11 +7,16 @@ package GUI;
 
 import Controladores.Conexion;
 import IO.Opcion;
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -120,8 +125,27 @@ public class frmBaseDeDatos extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRestauraBUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestauraBUpActionPerformed
-
-        Conexion.getInstance().getProcedimientos().RestaurarBD();
+        
+        Opcion op = Conexion.getInstance().getOpciones().unaOpcion("2");
+        
+        JFileChooser jFileChooser1 =  new JFileChooser();
+        
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("BackUp", "backup");
+        jFileChooser1.setFileFilter(filter);
+        
+        int returnVal = jFileChooser1.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
+            File archivo = jFileChooser1.getSelectedFile();
+            String nomeDoArquivo = jFileChooser1.getName(archivo);
+            Conexion.getInstance().getProcedimientos().RestaurarBD(jFileChooser1.getSelectedFile().getPath(), nomeDoArquivo);
+        }
+//        if(op != null){
+//            String dir = op.getValor(); 
+//            
+//            Conexion.getInstance().getProcedimientos().RestaurarBD(jFileChooser1.getSelectedFile().getPath());
+//        }else{
+//            JOptionPane.showMessageDialog(this, "No existe path parametrizado para realizar el BackUp. Darlo de alta bajo el identificador nro. 2", "Error", JOptionPane.ERROR_MESSAGE);
+//        }        
     }//GEN-LAST:event_btnRestauraBUpActionPerformed
 
     private void btnRealizaBUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRealizaBUpActionPerformed

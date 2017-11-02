@@ -44,8 +44,9 @@ public final class ScreenSplash extends Thread {
             g.setColor(new Color(219, 200, 135));//color de fondo
             g.fillRect(253, 253, 280, 12);//para tapar texto anterior
             g.setColor(Color.black);//color de texto 
-            g.setFont(new Font("Arial",Font.BOLD+Font.ITALIC,14));
+            g.setFont(new Font("Arial",Font.BOLD+Font.ITALIC,14));            
             g.drawString("Conectando con la base de datos...", 253, 263);
+            
 //            g.setColor(Color.green);//color de barra de progeso
 //            g.fillRect(204, 308, (307 / texto.length), 12);//la barra de progreso
 //            //se pinta una linea segmentada encima de la barra verde

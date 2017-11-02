@@ -33,6 +33,22 @@ public class Opciones {
         return opcion;
     }
     
+    public void eliminarOpcion(String id){
+        
+        String query = "delete from opcion where id='" + id +"'";
+        
+        Conexion.getInstance().getConexion().getTransaction().begin();
+        
+        try {
+            Conexion.getInstance().getConexion().createNativeQuery(query).executeUpdate();            
+            
+            Conexion.getInstance().getConexion().getTransaction().commit(); 
+        } catch (Exception e) {
+            Conexion.getInstance().getConexion().getTransaction().rollback();       
+        
+        }
+    }
+    
     public List<Opcion> ListaOpciones() {
         
         List<Opcion> lista = null;                

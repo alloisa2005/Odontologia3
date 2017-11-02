@@ -9,6 +9,7 @@ import Controladores.Conexion;
 import IO.Usuario;
 import java.awt.Event;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,6 +28,8 @@ public class frmLogin extends javax.swing.JDialog {
         int ancho = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
         int alto = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
         this.setBounds((ancho / 2) - (this.getWidth() / 2), (alto / 2) - (this.getHeight() / 2), 550, 550);
+        
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/molar.png")).getImage());
         
         Conexion.getInstance().getConexion();
     }
@@ -181,11 +184,12 @@ public class frmLogin extends javax.swing.JDialog {
             frmPrincipal frm = new frmPrincipal(usu);
             frm.toFront();
             frm.setVisible(true);
-        }else{
+        }else{            
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrecta.", "Login", JOptionPane.ERROR_MESSAGE);
             txtUsuario.setText("");
             txtContrasena.setText("");
             txtUsuario.requestFocus();
+            
         }        
         
 
