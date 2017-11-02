@@ -8,8 +8,22 @@ package GUI;
 import Controladores.Conexion;
 import IO.Consulta;
 import IO.Medico;
+import IO.Paciente;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.print.PageFormat;
+import java.awt.print.Paper;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -18,9 +32,12 @@ import javax.swing.JOptionPane;
  *
  * @author User
  */
-public class frmReportes extends javax.swing.JDialog {
+public class frmReportes extends javax.swing.JDialog implements Printable {
 
-    DefaultComboBoxModel modeloMedicos = new DefaultComboBoxModel();
+    DefaultComboBoxModel modeloMedicos = new DefaultComboBoxModel();    
+    Paciente pacImprimir = null;
+    Date fchHoy = new Date();
+    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
     
     public frmReportes(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
@@ -29,6 +46,7 @@ public class frmReportes extends javax.swing.JDialog {
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/molar.png")).getImage()); 
         
         panel1.setVisible(false);
+        panel2.setVisible(false);
         rbtnConsultasXMedico.setSelected(false);
         CargarComboMedicos();
     }
@@ -57,15 +75,22 @@ public class frmReportes extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Grupo1 = new javax.swing.ButtonGroup();
         rbtnConsultasXMedico = new javax.swing.JRadioButton();
         panel1 = new javax.swing.JPanel();
         cmbMedicos = new javax.swing.JComboBox<>();
         btnVerConsultasXMedico = new javax.swing.JButton();
+        rbtnDeudaXPaciente = new javax.swing.JRadioButton();
+        panel2 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        txtIdImprimir = new javax.swing.JTextField();
+        btnImprimir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Reportes");
         setResizable(false);
 
+        Grupo1.add(rbtnConsultasXMedico);
         rbtnConsultasXMedico.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
         rbtnConsultasXMedico.setText("Consultas por Médico");
         rbtnConsultasXMedico.addActionListener(new java.awt.event.ActionListener() {
@@ -107,10 +132,74 @@ public class frmReportes extends javax.swing.JDialog {
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
                 .addGap(0, 11, Short.MAX_VALUE)
-                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbMedicos, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnVerConsultasXMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panel1Layout.createSequentialGroup()
+                        .addGap(2, 2, 2)
+                        .addComponent(btnVerConsultasXMedico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cmbMedicos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
+        );
+
+        Grupo1.add(rbtnDeudaXPaciente);
+        rbtnDeudaXPaciente.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
+        rbtnDeudaXPaciente.setText(" Deuda por paciente");
+        rbtnDeudaXPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rbtnDeudaXPacienteActionPerformed(evt);
+            }
+        });
+
+        panel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
+
+        jLabel2.setFont(new java.awt.Font("Calibri", 0, 15)); // NOI18N
+        jLabel2.setText("Cédula");
+
+        txtIdImprimir.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        txtIdImprimir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
+        txtIdImprimir.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtIdImprimirKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIdImprimirKeyTyped(evt);
+            }
+        });
+
+        btnImprimir.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/imprimir.png"))); // NOI18N
+        btnImprimir.setText(" Impimir");
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnImprimirActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
+        panel2.setLayout(panel2Layout);
+        panel2Layout.setHorizontalGroup(
+            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addComponent(txtIdImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))))
+        );
+        panel2Layout.setVerticalGroup(
+            panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtIdImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -121,9 +210,12 @@ public class frmReportes extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(rbtnConsultasXMedico)
+                    .addComponent(rbtnDeudaXPaciente)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
-                        .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(745, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -133,7 +225,11 @@ public class frmReportes extends javax.swing.JDialog {
                 .addComponent(rbtnConsultasXMedico)
                 .addGap(4, 4, 4)
                 .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(492, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(rbtnDeudaXPaciente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(324, Short.MAX_VALUE))
         );
 
         setSize(new java.awt.Dimension(1256, 723));
@@ -141,13 +237,36 @@ public class frmReportes extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void rbtnConsultasXMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnConsultasXMedicoActionPerformed
+        
         panel1.setVisible(true);
+        panel2.setVisible(false);
     }//GEN-LAST:event_rbtnConsultasXMedicoActionPerformed
 
     private void cmbMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMedicosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbMedicosActionPerformed
 
+    public void Imprimo(){           
+           
+           PrinterJob job = PrinterJob.getPrinterJob();
+           Paper hoja = new Paper();
+           hoja.setImageableArea(0, 0, 595, 841);
+           hoja.setSize(595, 841);
+           try {
+              // Diálogo para elegir el formato de impresión
+              PageFormat pageFormat = new PageFormat();
+              pageFormat.setPaper(hoja);
+              
+             // job.setPrintable(new ImpFact(listaConsultas,paciete), pageFormat);
+              job.setPrintable(this, pageFormat);
+              //pageFormat = job.pageDialog(pageFormat);
+              if (job.printDialog()) {
+                  job.print();
+              }
+           } catch (Exception e) {
+           }    
+    }
+    
     private void btnVerConsultasXMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerConsultasXMedicoActionPerformed
 
         if(cmbMedicos.getSelectedIndex() != 0){
@@ -172,52 +291,171 @@ public class frmReportes extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnVerConsultasXMedicoActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(frmReportes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(frmReportes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(frmReportes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(frmReportes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the dialog */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                frmReportes dialog = new frmReportes(new javax.swing.JFrame(), true);
-//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-//                    @Override
-//                    public void windowClosing(java.awt.event.WindowEvent e) {
-//                        System.exit(0);
-//                    }
-//                });
-//                dialog.setVisible(true);
-//            }
-//        });
-//    }
+    private void rbtnDeudaXPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnDeudaXPacienteActionPerformed
+        
+        panel1.setVisible(false);
+        panel2.setVisible(true);
+        txtIdImprimir.requestFocus();
+    }//GEN-LAST:event_rbtnDeudaXPacienteActionPerformed
 
+    private void txtIdImprimirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdImprimirKeyPressed
+
+        
+    }//GEN-LAST:event_txtIdImprimirKeyPressed
+
+    private void txtIdImprimirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdImprimirKeyTyped
+
+        if(txtIdImprimir.getText().length() == 8){
+            evt.consume();
+        }
+
+        char c = evt.getKeyChar();
+        if(!Character.isDigit(c)){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtIdImprimirKeyTyped
+
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        pacImprimir = Conexion.getInstance().getPacientes().unPaciente(txtIdImprimir.getText());
+        
+        if(pacImprimir == null){
+            JOptionPane.showMessageDialog(this, "Nro. de cédula no existe en el sistema", "Buscar Paciente", JOptionPane.ERROR_MESSAGE);
+            txtIdImprimir.requestFocus();
+        }else{
+            if(pacImprimir.getDeuda() == 0){
+                JOptionPane.showMessageDialog(this, "Paciente " + pacImprimir + " no tiene deuda", "Buscar Paciente", JOptionPane.ERROR_MESSAGE);
+                txtIdImprimir.requestFocus();
+            }else{
+                Imprimo();
+            }
+        }
+    }//GEN-LAST:event_btnImprimirActionPerformed
+
+    public String DevuelvoMes(int nroMes){
+        String mes = "";
+        
+        switch(nroMes){
+            case 0:  mes = "Enero"; break;
+            case 1:  mes = "Febrero";  break;
+            case 2:  mes = "Marzo";  break;
+            case 3:  mes = "Abril";  break;
+            case 4:  mes = "Mayo";  break;
+            case 5:  mes = "Junio";  break;
+            case 6:  mes = "Julio";  break;
+            case 7:  mes = "Agosto";  break;
+            case 8:  mes = "Setiembre";  break;
+            case 9:  mes = "Octubre";  break;
+            case 10: mes = "Noviembre";  break;
+            case 11: mes = "Diciembre";  break;
+        }
+        
+        return mes;
+    }
+    
+  
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup Grupo1;
+    private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnVerConsultasXMedico;
     private javax.swing.JComboBox<String> cmbMedicos;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel panel1;
+    private javax.swing.JPanel panel2;
     private javax.swing.JRadioButton rbtnConsultasXMedico;
+    private javax.swing.JRadioButton rbtnDeudaXPaciente;
+    private javax.swing.JTextField txtIdImprimir;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public int print(Graphics g, PageFormat pageFormat, int pageIndex) throws PrinterException {
+//        throw new UnsupportedOperationException("Not supported yet."); 
+        
+        int x;
+        String s;
+        
+        if(pageIndex == 0){
+            
+            try {
+               Image img = ImageIO.read(new File("src/Imagenes/listadoDeuda.png").toURI().toURL());
+                g.drawImage(img, 5, 5, 590, 410, null);
+            } catch (Exception ex) {
+            }
+            
+            // Fecha (Dia)
+            g.setFont(new Font("Calibri", Font.BOLD, 11));            
+            s = String.valueOf(fchHoy.getDate());
+            g.drawString(s, 418, 20);
+            
+            // Fecha (Mes)
+            g.setFont(new Font("Calibri", Font.BOLD, 11));   
+            int mes = fchHoy.getMonth();
+            s = DevuelvoMes(mes);
+            //s = String.valueOf();
+            g.drawString(s, 465, 20);
+            
+            // Fecha (Anio)
+            g.setFont(new Font("Calibri", Font.BOLD, 11));               
+            s = String.valueOf(fchHoy.getYear()+ 1900);    // el getYear me devuelve en int el año atual menos 1900, por eso le sumo 1900
+            //s = String.valueOf();
+            g.drawString(s, 544, 20); 
+            
+            // Nombre y Apellido de paciente
+            g.setFont(new Font("Calibri", Font.BOLD, 11)); 
+            g.setColor(Color.red);
+            s = pacImprimir.toString();
+            //s = String.valueOf();
+            g.drawString(s, 150, 74);
+            
+            // Cédula del paciente
+            g.setFont(new Font("Calibri", Font.BOLD, 11));  
+            g.setColor(Color.red);
+            s = pacImprimir.getId();
+            //s = String.valueOf();
+            g.drawString(s, 400, 74); 
+            
+            int cantidad = 0;
+            double montoTotal = 0.0;
+            
+            Iterator<Consulta> it = pacImprimir.getConsultasImpagas().iterator();
+            while (it.hasNext()) {
+                Consulta consulta = it.next();
+                cantidad += 1;
+                
+                double montoAdeudado = consulta.getMontoAdeudado();
+                montoTotal += montoAdeudado;
+                
+                g.setFont(new Font("Calibri", Font.BOLD, 11));  
+                g.setColor(Color.black);
+                s = df.format(consulta.getFecha()).toString() + " - " + consulta.getTitulo();
+                //s = String.valueOf();
+                g.drawString(s, 48, 115+(cantidad*19));
+                
+                // Monto Consulta
+                g.setFont(new Font("Calibri", Font.BOLD, 11));  
+                g.setColor(Color.black);
+                s = String.valueOf(consulta.getMonto());
+                //s = String.valueOf();
+                g.drawString(s, 432, 115+(cantidad*19));
+                
+                // Monto Adeudado por Consulta
+                g.setFont(new Font("Calibri", Font.BOLD, 11));  
+                g.setColor(Color.black);
+                s = String.valueOf(montoAdeudado);
+                //s = String.valueOf();
+                g.drawString(s, 503, 115+(cantidad*19));
+            }
+            
+            // Monto Adeudado por Consulta
+            g.setFont(new Font("Calibri", Font.BOLD, 11));  
+            g.setColor(Color.black);
+            s = String.valueOf(montoTotal);
+            //s = String.valueOf();
+            g.drawString(s, 503, 384);
+                
+            return PAGE_EXISTS;
+        }else{
+            return NO_SUCH_PAGE;
+        }
+    }
 }

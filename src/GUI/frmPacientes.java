@@ -379,21 +379,21 @@ public class frmPacientes extends javax.swing.JDialog {
     }//GEN-LAST:event_btnModificarMedicoActionPerformed
 
     private void txtIdBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdBuscarKeyPressed
-        //if((evt.getKeyCode() == KeyEvent.VK_ENTER)){
+        if((evt.getKeyCode() == KeyEvent.VK_ENTER)){
             
             VaciarTabla();
-            CargarTablaPacienteXIdLike(txtIdBuscar.getText()+evt.getKeyChar());
+            CargarTablaPacienteXIdLike(txtIdBuscar.getText()); // +evt.getKeyChar()
                 
-//            if(!txtIdBuscar.getText().equals("")){
-//                txtApellidoBuscar.setText("");
-//
-//                VaciarTabla();
-//                CargarTablaPacienteXId(txtIdBuscar.getText()+evt.getKeyChar());
-//            }else{
-//                VaciarTabla();
-//                CargarTablaPacientes();
-//            }
-        //}
+            if(!txtIdBuscar.getText().equals("")){
+                txtApellidoBuscar.setText("");
+
+                VaciarTabla();
+                CargarTablaPacienteXId(txtIdBuscar.getText());
+            }else{
+                VaciarTabla();
+                CargarTablaPacientes();
+            }
+        }
     }//GEN-LAST:event_txtIdBuscarKeyPressed
 
     public void VaciarTabla(){
@@ -435,10 +435,7 @@ public class frmPacientes extends javax.swing.JDialog {
         
         char c = evt.getKeyChar();
         if(!Character.isDigit(c)){
-            evt.consume();
-        }else{        
-            VaciarTabla();
-            //CargarTablaPacienteXIdLike();
+            evt.consume();        
         }
     }//GEN-LAST:event_txtIdBuscarKeyTyped
            

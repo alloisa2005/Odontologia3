@@ -5,6 +5,7 @@
  */
 package Controladores;
 
+import IO.Consulta;
 import IO.Medico;
 import java.util.List;
 
@@ -56,6 +57,24 @@ public class Medicos {
         
         try {
             lista = Conexion.getInstance().getConexion().createNativeQuery(query, Medico.class).getResultList();            
+            
+            Conexion.getInstance().getConexion().getTransaction().commit(); 
+        } catch (Exception e) {
+            Conexion.getInstance().getConexion().getTransaction().rollback();       
+        
+        }
+        return lista;
+    }
+    
+    public List<Consulta> listaDeConsultasXMedico(String idMedico) {
+        List<Consulta> lista = null;   
+        
+        String query = "SELECT * FROM CONSULTA where medico_id = '" + idMedico + "' order by id,fecha";
+        
+        Conexion.getInstance().getConexion().getTransaction().begin();
+        
+        try {
+            lista = Conexion.getInstance().getConexion().createNativeQuery(query, Consulta.class).getResultList();            
             
             Conexion.getInstance().getConexion().getTransaction().commit(); 
         } catch (Exception e) {

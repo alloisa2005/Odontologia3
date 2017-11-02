@@ -41,9 +41,9 @@ public class frmConsultasXMedico extends javax.swing.JDialog {
     }
     
     public void CargarTablaConsultas(){
-        DefaultTableModel modeloTabla = (DefaultTableModel) tblConsultas.getModel();
+        DefaultTableModel modeloTabla = (DefaultTableModel) tblConsultas.getModel();        
         
-        Iterator<Consulta> it = medico.getConsultas().iterator();
+        Iterator<Consulta> it = Conexion.getInstance().getMedicos().listaDeConsultasXMedico(medico.getId()).iterator();  
         
         while (it.hasNext()) {
             

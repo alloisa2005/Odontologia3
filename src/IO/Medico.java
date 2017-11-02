@@ -128,8 +128,8 @@ public class Medico implements Serializable {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
-    }            
-
+    }                
+    
     public List<Consulta> getConsultas() {
         return consultas;
     }

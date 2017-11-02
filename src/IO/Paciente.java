@@ -16,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 
@@ -122,8 +123,8 @@ public class Paciente implements Serializable {
     
     public void setFoto(byte[] foto) {
         this.foto = foto;
-    }
-
+    }    
+    
     public List<Consulta> getConsultas() {
         return consultas;
     }
@@ -165,7 +166,7 @@ public class Paciente implements Serializable {
         while (it.hasNext()) {
             Consulta next = it.next();
              
-            deuda = deuda + (next.getMonto() - next.getMontoPagado());            
+            deuda += (next.getMonto() - next.getMontoPagado());            
         }
         return deuda;
     }                
