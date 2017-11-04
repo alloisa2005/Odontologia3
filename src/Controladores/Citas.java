@@ -15,11 +15,11 @@ import java.util.List;
  */
 public class Citas {
     
-    public List<Cita> listaDeCitasXFecha(Date fecha, String medicoCedula) {
+    public List<Cita> listaDeCitasXFecha(String fecha, String medicoCedula) {
         List<Cita> lista = null;                
         
         Conexion.getInstance().getConexion().getTransaction().begin();
-        String query = "SELECT * FROM CITA where fecha='" + fecha + "' and medico_id='" + medicoCedula + "' order by fecha,hora,minuto";
+        String query = "SELECT * FROM CITA where fecha='" + fecha + "' and medico_id='" + medicoCedula + "' order by hora,minuto";
         try {
             lista = Conexion.getInstance().getConexion().createNativeQuery(query, Cita.class).getResultList();            
             
@@ -46,5 +46,21 @@ public class Citas {
         
         }
         return cita;
+    }
+    
+    public void eliminarCita(String id){
+        
+        String query = "delete from cita where id='" + id +"'";
+        
+        Conexion.getInstance().getConexion().getTransaction().begin();
+        
+        try {
+            Conexion.getInstance().getConexion().createNativeQuery(query).executeUpdate();            
+            
+            Conexion.getInstance().getConexion().getTransaction().commit(); 
+        } catch (Exception e) {
+            Conexion.getInstance().getConexion().getTransaction().rollback();       
+        
+        }
     }
 }

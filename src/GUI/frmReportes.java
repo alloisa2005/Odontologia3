@@ -316,19 +316,31 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
     }//GEN-LAST:event_txtIdImprimirKeyTyped
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-        pacImprimir = Conexion.getInstance().getPacientes().unPaciente(txtIdImprimir.getText());
         
-        if(pacImprimir == null){
-            JOptionPane.showMessageDialog(this, "Nro. de cédula no existe en el sistema", "Buscar Paciente", JOptionPane.ERROR_MESSAGE);
+        if(txtIdImprimir.getText().equals("") || txtIdImprimir.getText().equals("0")){
+            JOptionPane.showMessageDialog(this, "Nro. de cédula nula", "Buscar Paciente", JOptionPane.ERROR_MESSAGE);
+            txtIdImprimir.setText("");
             txtIdImprimir.requestFocus();
         }else{
-            if(pacImprimir.getDeuda() == 0){
-                JOptionPane.showMessageDialog(this, "Paciente " + pacImprimir + " no tiene deuda", "Buscar Paciente", JOptionPane.ERROR_MESSAGE);
+            if(!Conexion.getInstance().getProcedimientos().validarCedula(txtIdImprimir.getText())){  // Si el nro de cedula no es valida
+                JOptionPane.showMessageDialog(this, "Nro. de cédula incorrecto, valide por favor", "Buscar Paciente", JOptionPane.ERROR_MESSAGE);
                 txtIdImprimir.requestFocus();
             }else{
-                Imprimo();
+                pacImprimir = Conexion.getInstance().getPacientes().unPaciente(txtIdImprimir.getText());
+
+                if(pacImprimir == null){
+                    JOptionPane.showMessageDialog(this, "Nro. de cédula no existe en el sistema", "Buscar Paciente", JOptionPane.ERROR_MESSAGE);
+                    txtIdImprimir.requestFocus();
+                }else{
+                    if(pacImprimir.getDeuda() == 0){
+                        JOptionPane.showMessageDialog(this, "Paciente " + pacImprimir + " no tiene deuda", "Buscar Paciente", JOptionPane.ERROR_MESSAGE);
+                        txtIdImprimir.requestFocus();
+                    }else{
+                        Imprimo();
+                    }
+                }
             }
-        }
+        }                
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     public String DevuelvoMes(int nroMes){
@@ -427,23 +439,23 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
                 
                 g.setFont(new Font("Calibri", Font.BOLD, 11));  
                 g.setColor(Color.black);
-                s = df.format(consulta.getFecha()).toString() + " - " + consulta.getTitulo();
+                s = df.format(consulta.getFecha()) + " - " + consulta.getTitulo();
                 //s = String.valueOf();
-                g.drawString(s, 48, 115+(cantidad*19));
+                g.drawString(s, 48, 116+(cantidad*19));
                 
                 // Monto Consulta
                 g.setFont(new Font("Calibri", Font.BOLD, 11));  
                 g.setColor(Color.black);
                 s = String.valueOf(consulta.getMonto());
                 //s = String.valueOf();
-                g.drawString(s, 432, 115+(cantidad*19));
+                g.drawString(s, 432, 116+(cantidad*19));
                 
                 // Monto Adeudado por Consulta
                 g.setFont(new Font("Calibri", Font.BOLD, 11));  
                 g.setColor(Color.black);
                 s = String.valueOf(montoAdeudado);
                 //s = String.valueOf();
-                g.drawString(s, 503, 115+(cantidad*19));
+                g.drawString(s, 503, 116+(cantidad*19));
             }
             
             // Monto Adeudado por Consulta

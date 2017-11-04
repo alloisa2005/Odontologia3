@@ -391,7 +391,9 @@ public class frmAgenda extends javax.swing.JDialog {
                 c.setHora(cmbHora.getSelectedItem().toString());
                 c.setMinuto(cmbMinuto.getSelectedItem().toString());
 
-                Conexion.getInstance().Guardar(c);        
+                Conexion.getInstance().Guardar(c);   
+                
+                Conexion.getInstance().Combinar(medico);
 
                 CitasXFecha(medico, dteFechaCita.getDate());
                 
@@ -458,9 +460,9 @@ public class frmAgenda extends javax.swing.JDialog {
        
         if(lstCitas.getSelectedIndex() != -1){
             Cita cita = (Cita) modeloCitas.getElementAt(lstCitas.getSelectedIndex());
-            Medico medico = (Medico) cmbMedicos.getSelectedItem();
+            Medico medico = (Medico) cmbMedicos.getSelectedItem();            
             
-            Conexion.getInstance().Eliminar(cita);
+            Conexion.getInstance().getCitas().eliminarCita(String.valueOf(cita.getId()));
             
             JOptionPane.showMessageDialog(this, "Cita eliminada con éxito", "Eliminar Cita", JOptionPane.INFORMATION_MESSAGE);                        
             
@@ -493,25 +495,18 @@ public class frmAgenda extends javax.swing.JDialog {
     public void CitasXFecha(Medico medico, Date fch){                               
         
         modeloCitas.clear();
-        Conexion.getInstance().Combinar(medico);
+        String fchStr = df.format(fch);
         
-        Iterator<Cita> it = medico.getCitas().iterator();                
+        Iterator<Cita> it = Conexion.getInstance().getCitas().listaDeCitasXFecha(fchStr, medico.getId()).iterator(); //medico.getCitas().iterator();                
 
         while (it.hasNext()) {
             Cita next = it.next();            
-
-            if(next.getFecha().equals(df.format(fch))){
-                modeloCitas.addElement(next);
-            }
+            modeloCitas.addElement(next);            //            
         }
 
         lstCitas.setModel(modeloCitas);
         
-    }
-    
-    /**
-     * @param args the command line arguments
-     */
+    }        
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
