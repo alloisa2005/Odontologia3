@@ -63,6 +63,22 @@ public class Pacientes {
         return lista;
     }
     
+    public List<Paciente> listaDePacientesCumpleanos(String fch) {
+        List<Paciente> lista = null;                
+        
+        Conexion.getInstance().getConexion().getTransaction().begin();
+        
+        try {
+            lista = Conexion.getInstance().getConexion().createNativeQuery("SELECT * FROM PACIENTE where fchnac='" + fch + "' order by id", Paciente.class).getResultList();            
+            
+            Conexion.getInstance().getConexion().getTransaction().commit(); 
+        } catch (Exception e) {
+            Conexion.getInstance().getConexion().getTransaction().rollback();       
+        
+        }
+        return lista;
+    }
+    
     public List<Paciente> listaDePacientesXApellido(String apellido) {
         List<Paciente> lista = null;   
         

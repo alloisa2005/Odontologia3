@@ -7,10 +7,14 @@ package GUI;
 
 import Controladores.Conexion;
 import IO.Acceso;
+import IO.Paciente;
 import IO.Usuario;
 
 import java.awt.Image;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -23,6 +27,9 @@ public class frmPrincipal extends javax.swing.JFrame {
 
     private Usuario usu;
     private byte[] fotoPerfil;
+    Date fchHoy = new Date();
+    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    //String cantStr = "0";
     
     public frmPrincipal(Usuario usuAux) {
         initComponents();
@@ -45,10 +52,27 @@ public class frmPrincipal extends javax.swing.JFrame {
         
         inhabilitoBotones();  // Cuando carga el panel deshabilito todos los botones y habilito de acuerdo a los accesos del usuario
         
-        accesoUsuarios();        
+        accesoUsuarios();                
         
+        //cantStr = String.valueOf(PacientesCumpleanos(fchHoy));  // Veo que  pacientes cumplen años el dia de hoy
+        //btnCumpleanos.setText(cantStr);
     }
     
+    private int PacientesCumpleanos(Date fch){
+        
+        int cantidad = 0;
+        
+        String fchStr = df.format(fch);
+        
+        Iterator<Paciente> it = Conexion.getInstance().getPacientes().listaDePacientesCumpleanos(fchStr).iterator();
+        
+        while (it.hasNext()) {
+            Object next = it.next();
+            cantidad += 1;
+        }
+        return cantidad;
+    }
+            
     private void inhabilitoBotones(){
         
         btnAgenda.setEnabled(false);
