@@ -11,7 +11,11 @@ import IO.Medico;
 import IO.Paciente;
 import IO.Usuario;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.net.URL;
 import java.util.Iterator;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -138,6 +142,7 @@ public class frmConsultasMedicas extends javax.swing.JDialog {
         jLabel14 = new javax.swing.JLabel();
         txtApellidoBuscar = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
+        btnAyuda = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Menu de Pacientes");
@@ -167,7 +172,9 @@ public class frmConsultasMedicas extends javax.swing.JDialog {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         tblPacientes.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
@@ -230,6 +237,14 @@ public class frmConsultasMedicas extends javax.swing.JDialog {
         jLabel15.setForeground(new java.awt.Color(255, 0, 0));
         jLabel15.setText("Enter para filtrar pacientes");
 
+        btnAyuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ayuda64.png"))); // NOI18N
+        btnAyuda.setContentAreaFilled(false);
+        btnAyuda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAyudaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -239,7 +254,7 @@ public class frmConsultasMedicas extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnHistorial, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnNuevaConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -258,14 +273,18 @@ public class frmConsultasMedicas extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(243, 243, 243)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAyuda, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(13, 13, 13)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnAyuda, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(jLabel14))
@@ -280,9 +299,8 @@ public class frmConsultasMedicas extends javax.swing.JDialog {
                         .addComponent(btnNuevaConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnHistorial, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 397, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
+                        .addContainerGap(410, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1)))
         );
 
         setSize(new java.awt.Dimension(1174, 786));
@@ -371,12 +389,33 @@ public class frmConsultasMedicas extends javax.swing.JDialog {
         evt.setKeyChar(c);
     }//GEN-LAST:event_txtApellidoBuscarKeyTyped
 
-    /**
-     * @param args the command line arguments
-     */
+    private void btnAyudaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAyudaActionPerformed
+
+        cargarAyuda();
+    }//GEN-LAST:event_btnAyudaActionPerformed
+
+    private void cargarAyuda(){
+        try {
+                // Carga el fichero de ayuda
+                File fichero = new File("src/help/help.hs");
+                URL hsURL = fichero.toURI().toURL();
+
+                // Crea el HelpSet y el HelpBroker
+                HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+                HelpBroker hb = helpset.createHelpBroker();                
+                
+//                // Pone ayuda a item de menu al pulsar F1. mntmIndice es el JMenuitem
+                hb.enableHelpOnButton(btnAyuda, "consultas", helpset);
+                hb.enableHelpKey(this, "ventana_principal", helpset);
+
+        } catch (Exception e) {
+//                logger.error("Error al cargar la ayuda: " + e);
+        }
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAyuda;
     private javax.swing.JButton btnHistorial;
     private javax.swing.JButton btnNuevaConsulta;
     private javax.swing.JLabel jLabel1;

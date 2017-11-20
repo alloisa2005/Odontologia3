@@ -326,36 +326,66 @@ public class frmOpGenerales extends javax.swing.JDialog {
                         
         Opcion opcion = Conexion.getInstance().getOpciones().unaOpcion(txtId.getText());
         
-        if(opcion == null){
+        String sigo = "S";
             
-            Opcion op = new Opcion();
-            
-            op.setId(txtId.getText());
-            op.setDescripcion(txtDescripcion.getText());
-            op.setValor(txtValor.getText());
-
-            Conexion.getInstance().Guardar(op);
-            Conexion.getInstance().Combinar(op);
-            VaciarTabla();
-            CargarListaOpciones();
-            
-            txtId.setText("");
-            txtDescripcion.setText("");
-            txtValor.setText("");
-            
-        }else{
-            Opcion op = new Opcion();
-            
-            op.setId(txtId.getText());
-            op.setDescripcion(txtDescripcion.getText());
-            op.setValor(txtValor.getText());
-            
-            Conexion.getInstance().Actualizar(op);
-            //onexion.getInstance().Combinar(op);
-            VaciarTabla();
-            CargarListaOpciones();
+        if(sigo.equals("S") && txtId.getText().equals("")){
+            sigo = "N";
+            JOptionPane.showMessageDialog(this, "Identificador de opción requerido", "Validación de datos", JOptionPane.ERROR_MESSAGE);
+            txtId.requestFocus();
         }
+
+        if(sigo.equals("S") && txtDescripcion.getText().equals("")){
+            sigo = "N";
+            JOptionPane.showMessageDialog(this, "Descripción de opción requerida", "Validación de datos", JOptionPane.ERROR_MESSAGE);
+            txtDescripcion.requestFocus();
+        }
+
+        if(sigo.equals("S") && txtValor.getText().equals("")){
+            sigo = "N";
+            JOptionPane.showMessageDialog(this, "Valor de opción requerido", "Validación de datos", JOptionPane.ERROR_MESSAGE);
+            txtValor.requestFocus();
+        }
+            
+        if(sigo.equals("S")){            
         
+            if(opcion == null){                                                
+
+                Opcion op = new Opcion();
+
+                op.setId(txtId.getText());
+                op.setDescripcion(txtDescripcion.getText());
+                op.setValor(txtValor.getText());
+
+                Conexion.getInstance().Guardar(op);
+                Conexion.getInstance().Combinar(op);
+                VaciarTabla();
+                CargarListaOpciones();
+                
+                JOptionPane.showMessageDialog(this, "Opción ingresada exitosamente", "Ingreso de datos", JOptionPane.INFORMATION_MESSAGE);
+                
+                txtId.setText("");
+                txtDescripcion.setText("");
+                txtValor.setText("");
+                
+                txtBuscarOpcion.requestFocus();
+
+            }else{
+                Opcion op = new Opcion();
+
+                op.setId(txtId.getText());
+                op.setDescripcion(txtDescripcion.getText());
+                op.setValor(txtValor.getText());
+
+                Conexion.getInstance().Actualizar(op);
+                
+                JOptionPane.showMessageDialog(this, "Opción modificada exitosamente", "Modificación de datos", JOptionPane.INFORMATION_MESSAGE);
+                
+                VaciarTabla();
+                CargarListaOpciones();
+                
+                txtBuscarOpcion.requestFocus();
+            }
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed

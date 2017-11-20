@@ -24,7 +24,7 @@ import javax.persistence.Temporal;
  * @author User
  */
 @Entity
-public class Consulta implements Serializable {
+public class Consulta implements Serializable, Comparable<Consulta> {
 
     @OneToMany(mappedBy = "consulta")
     private List<LineaFactura> lineaFacturas;
@@ -177,6 +177,11 @@ public class Consulta implements Serializable {
     @Override
     public String toString() {
         return id.toString();
+    }
+
+    @Override
+    public int compareTo(Consulta o) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

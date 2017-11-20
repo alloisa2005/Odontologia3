@@ -113,6 +113,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         );
 
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 15)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
         jLabel2.setText("Id");
 
         txtId.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
@@ -135,9 +136,11 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         });
 
         jLabel4.setFont(new java.awt.Font("Calibri", 0, 15)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 0, 0));
         jLabel4.setText("Fecha Nacimiento");
 
         jLabel5.setFont(new java.awt.Font("Calibri", 0, 15)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 0, 0));
         jLabel5.setText("Nombre");
 
         dteFchNacimiento.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
@@ -153,6 +156,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         });
 
         jLabel7.setFont(new java.awt.Font("Calibri", 0, 15)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 0, 0));
         jLabel7.setText("Apellido");
 
         txtTelefono.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
@@ -164,6 +168,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         });
 
         jLabel8.setFont(new java.awt.Font("Calibri", 0, 15)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 0, 0));
         jLabel8.setText("Dirección");
 
         txtCelular.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
@@ -209,6 +214,7 @@ public class frmAltaUsuario extends javax.swing.JDialog {
         jLabel12.setText("Teléfono");
 
         jLabel13.setFont(new java.awt.Font("Calibri", 0, 15)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 0, 0));
         jLabel13.setText("Contraseña");
 
         txtContrasenia.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N

@@ -5,6 +5,7 @@
  */
 package IO;
 
+import Controladores.Conexion;
 import java.awt.Image;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -133,7 +134,35 @@ public class Medico implements Serializable {
     public List<Consulta> getConsultas() {
         return consultas;
     }
-
+    
+    public Double getMontoEsperadoXMedico(){
+        
+        Double monto = 0.0;
+        
+        Iterator<Consulta> it = this.getConsultas().iterator();
+        
+        while (it.hasNext()) {
+            Consulta con = it.next();
+            monto += con.getMonto();
+        }
+        
+        return monto;
+    }
+    
+    public Double getMontoRecaudadoXMedico(){
+        
+        Double monto = 0.0;
+        
+        Iterator<Consulta> it = this.getConsultas().iterator();
+        
+        while (it.hasNext()) {
+            Consulta con = it.next();
+            monto += con.getMontoPagado();
+        }
+        
+        return monto;
+    }
+    
     public void setConsultas(List<Consulta> consultas) {
         this.consultas = consultas;
     }    

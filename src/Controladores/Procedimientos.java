@@ -36,6 +36,7 @@ import org.postgresql.util.Base64;
  */
 public class Procedimientos {
     
+    
     public boolean validarCedula(String cedula){        
         
         //  3.113.736-1

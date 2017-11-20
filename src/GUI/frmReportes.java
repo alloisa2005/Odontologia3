@@ -13,13 +13,16 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
+import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -27,6 +30,10 @@ import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.hibernate.mapping.Collection;
+import javax.help.HelpBroker;
+import javax.help.HelpSet;
 
 /**
  *
@@ -48,9 +55,58 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
         panel1.setVisible(false);
         panel2.setVisible(false);
         rbtnConsultasXMedico.setSelected(false);
+        
         CargarComboMedicos();
     }
+    
+    private void cargarAyuda(){
+        try {
+                // Carga el fichero de ayuda
+                File fichero = new File("src/help/help.hs");
+                URL hsURL = fichero.toURI().toURL();
 
+                // Crea el HelpSet y el HelpBroker
+                HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+                HelpBroker hb = helpset.createHelpBroker();                
+                
+//                // Pone ayuda a item de menu al pulsar F1. mntmIndice es el JMenuitem
+                hb.enableHelpOnButton(jButton1, "pacientes", helpset);
+                hb.enableHelpKey(this, "ventana_principal", helpset);
+
+        } catch (Exception e) {
+//                logger.error("Error al cargar la ayuda: " + e);
+        }
+    }
+    
+    public void VaciarTabla(){
+        
+        DefaultTableModel modeloTabla = (DefaultTableModel) tblPacientes.getModel();
+        
+        modeloTabla.setRowCount(0);
+    }
+    
+    public void CargarTablaPacientes(){
+        
+        DefaultTableModel modeloTabla = (DefaultTableModel) tblPacientes.getModel();
+        
+        Iterator<Paciente> it = Conexion.getInstance().getPacientes().listaDePacientes().iterator();
+        
+        while (it.hasNext()) {
+            Object[] fila = new Object[5];
+            
+            Paciente pacAux = it.next();
+            
+            fila[0] = pacAux.getId();
+            fila[1] = pacAux;   
+            fila[2] = pacAux.getDireccion(); 
+            fila[3] = pacAux.getTelefono();
+            fila[4] = pacAux.getDeuda();            
+            
+            modeloTabla.addRow(fila);
+        }
+        
+    }
+    
     public void CargarComboMedicos() {
         Iterator<Medico> it = Conexion.getInstance().getMedicos().listaDeMedicos().iterator();
 
@@ -83,8 +139,14 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
         rbtnDeudaXPaciente = new javax.swing.JRadioButton();
         panel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        txtIdImprimir = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        txtCedulaBuscar = new javax.swing.JTextField();
         btnImprimir = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblPacientes = new javax.swing.JTable();
+        txtApellidoBuscar = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Reportes");
@@ -154,14 +216,19 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 15)); // NOI18N
         jLabel2.setText("Cédula");
 
-        txtIdImprimir.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
-        txtIdImprimir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
-        txtIdImprimir.addKeyListener(new java.awt.event.KeyAdapter() {
+        jLabel15.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel15.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel15.setText("Enter para filtrar pacientes");
+
+        txtCedulaBuscar.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        txtCedulaBuscar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
+        txtCedulaBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txtIdImprimirKeyPressed(evt);
+                txtCedulaBuscarKeyPressed(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtIdImprimirKeyTyped(evt);
+                txtCedulaBuscarKeyTyped(evt);
             }
         });
 
@@ -174,33 +241,82 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
             }
         });
 
+        tblPacientes.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        tblPacientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Cédula", "Nombre y Apellido", "Dirección", "Teléfono", "Deuda ($)"
+            }
+        ));
+        tblPacientes.setRowHeight(23);
+        tblPacientes.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(tblPacientes);
+
+        txtApellidoBuscar.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        txtApellidoBuscar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
+        txtApellidoBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtApellidoBuscarKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoBuscarKeyTyped(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Calibri", 0, 15)); // NOI18N
+        jLabel3.setText("Apellido");
+
         javax.swing.GroupLayout panel2Layout = new javax.swing.GroupLayout(panel2);
         panel2.setLayout(panel2Layout);
         panel2Layout.setHorizontalGroup(
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel2Layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jScrollPane1)
+                    .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+            .addGroup(panel2Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
                 .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCedulaBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(59, 59, 59)
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(panel2Layout.createSequentialGroup()
-                        .addComponent(txtIdImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))))
+                        .addComponent(txtApellidoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel15)))
+                .addGap(20, 347, Short.MAX_VALUE))
         );
         panel2Layout.setVerticalGroup(
             panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel2)
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtIdImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCedulaBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                    .addComponent(txtApellidoBuscar)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnImprimir, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -209,27 +325,35 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rbtnConsultasXMedico)
-                    .addComponent(rbtnDeudaXPaciente)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(panel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(745, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rbtnDeudaXPaciente)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(181, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(rbtnConsultasXMedico)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1)
+                        .addGap(307, 307, 307))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(74, 74, 74)
-                .addComponent(rbtnConsultasXMedico)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbtnConsultasXMedico)
+                    .addComponent(jButton1))
                 .addGap(4, 4, 4)
                 .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(rbtnDeudaXPaciente)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(324, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         setSize(new java.awt.Dimension(1256, 723));
@@ -265,7 +389,7 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
               }
            } catch (Exception e) {
            }    
-    }
+    }       
     
     private void btnVerConsultasXMedicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerConsultasXMedicoActionPerformed
 
@@ -294,18 +418,79 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
     private void rbtnDeudaXPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbtnDeudaXPacienteActionPerformed
         
         panel1.setVisible(false);
-        panel2.setVisible(true);
-        txtIdImprimir.requestFocus();
+        panel2.setVisible(true);        
+        
+        txtCedulaBuscar.setText("");
+        txtApellidoBuscar.setText("");
+        VaciarTabla();
+        CargarTablaPacientes();
+        
+        txtCedulaBuscar.requestFocus();
     }//GEN-LAST:event_rbtnDeudaXPacienteActionPerformed
 
-    private void txtIdImprimirKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdImprimirKeyPressed
-
+    public void CargarTablaPacienteXIdLike(String id){
         
-    }//GEN-LAST:event_txtIdImprimirKeyPressed
+        DefaultTableModel modeloTabla = (DefaultTableModel) tblPacientes.getModel();
+        
+        Iterator<Paciente> it = Conexion.getInstance().getPacientes().unPacienteLike(id).iterator();
+        
+        while (it.hasNext()) {
+            Paciente pacAux = it.next();
+            Object[] fila = new Object[5];
+            
+            fila[0] = pacAux.getId();
+            fila[1] = pacAux;   
+            fila[2] = pacAux.getDireccion(); 
+            fila[3] = pacAux.getTelefono();
+            fila[4] = pacAux.getDeuda();
+            
+            modeloTabla.addRow(fila);
+        }               
+    }
+    
+    public void CargarTablaPacienteXId(String id){
+        
+        DefaultTableModel modeloTabla = (DefaultTableModel) tblPacientes.getModel();
+        
+        Paciente pacAux = Conexion.getInstance().getPacientes().unPaciente(id);
+        
+        if(pacAux != null){
+            Object[] fila = new Object[5];
+            
+            fila[0] = pacAux.getId();
+            fila[1] = pacAux;   
+            fila[2] = pacAux.getDireccion(); 
+            fila[3] = pacAux.getTelefono();
+            fila[4] = pacAux.getDeuda();
+            
+            modeloTabla.addRow(fila);
+        }else{
+            
+            CargarTablaPacientes();                        
+        }                
+    }
+    
+    private void txtCedulaBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaBuscarKeyPressed
 
-    private void txtIdImprimirKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdImprimirKeyTyped
+        if((evt.getKeyCode() == KeyEvent.VK_ENTER)){
+            
+            VaciarTabla();
+                           
+            if(!txtCedulaBuscar.getText().equals("")){
+                txtApellidoBuscar.setText("");
 
-        if(txtIdImprimir.getText().length() == 8){
+                VaciarTabla();
+                CargarTablaPacienteXId(txtCedulaBuscar.getText());
+            }else{
+                VaciarTabla();
+                CargarTablaPacientes();
+            }
+        }
+    }//GEN-LAST:event_txtCedulaBuscarKeyPressed
+
+    private void txtCedulaBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaBuscarKeyTyped
+
+        if(txtCedulaBuscar.getText().length() == 8){
             evt.consume();
         }
 
@@ -313,35 +498,79 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
         if(!Character.isDigit(c)){
             evt.consume();
         }
-    }//GEN-LAST:event_txtIdImprimirKeyTyped
+    }//GEN-LAST:event_txtCedulaBuscarKeyTyped
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         
-        if(txtIdImprimir.getText().equals("") || txtIdImprimir.getText().equals("0")){
-            JOptionPane.showMessageDialog(this, "Nro. de cédula nula", "Buscar Paciente", JOptionPane.ERROR_MESSAGE);
-            txtIdImprimir.setText("");
-            txtIdImprimir.requestFocus();
+        if(tblPacientes.getSelectedRowCount() > 0){
+            
+            int row = tblPacientes.getSelectedRow();                        
+            pacImprimir = (Paciente) tblPacientes.getModel().getValueAt(row, 1); 
+            Imprimo();
+            
         }else{
-            if(!Conexion.getInstance().getProcedimientos().validarCedula(txtIdImprimir.getText())){  // Si el nro de cedula no es valida
-                JOptionPane.showMessageDialog(this, "Nro. de cédula incorrecto, valide por favor", "Buscar Paciente", JOptionPane.ERROR_MESSAGE);
-                txtIdImprimir.requestFocus();
-            }else{
-                pacImprimir = Conexion.getInstance().getPacientes().unPaciente(txtIdImprimir.getText());
-
-                if(pacImprimir == null){
-                    JOptionPane.showMessageDialog(this, "Nro. de cédula no existe en el sistema", "Buscar Paciente", JOptionPane.ERROR_MESSAGE);
-                    txtIdImprimir.requestFocus();
-                }else{
-                    if(pacImprimir.getDeuda() == 0){
-                        JOptionPane.showMessageDialog(this, "Paciente " + pacImprimir + " no tiene deuda", "Buscar Paciente", JOptionPane.ERROR_MESSAGE);
-                        txtIdImprimir.requestFocus();
-                    }else{
-                        Imprimo();
-                    }
-                }
-            }
-        }                
+            JOptionPane.showMessageDialog(this, "Seleccione un paciente de la lista", "Selección de Paciente", JOptionPane.INFORMATION_MESSAGE);
+        }                       
     }//GEN-LAST:event_btnImprimirActionPerformed
+
+    private void txtApellidoBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoBuscarKeyPressed
+        
+        if((evt.getKeyCode() == KeyEvent.VK_ENTER)){
+            
+            if(!txtApellidoBuscar.getText().equals("")){                
+                
+                VaciarTabla();
+                CargarTablaPacienteXApellido();
+            }else{
+                VaciarTabla();
+                CargarTablaPacientes();
+            }
+        }
+    }//GEN-LAST:event_txtApellidoBuscarKeyPressed
+
+    public void CargarTablaPacienteXApellido(){
+        
+        DefaultTableModel modeloTabla = (DefaultTableModel) tblPacientes.getModel();                
+        
+        Iterator<Paciente> it = Conexion.getInstance().getPacientes().listaDePacientesXApellido(txtApellidoBuscar.getText()).iterator();
+        
+        if(it.hasNext()){
+            while (it.hasNext()) {
+                Paciente pacAux = it.next();
+
+                Object[] fila = new Object[5];
+
+                fila[0] = pacAux.getId();
+                fila[1] = pacAux;   
+                fila[2] = pacAux.getDireccion(); 
+                fila[3] = pacAux.getTelefono();
+                fila[4] = pacAux.getDeuda();
+
+                modeloTabla.addRow(fila);
+            }
+        }else{
+//            VaciarTabla();
+//            CargarTablaPacientes();
+//            JOptionPane.showMessageDialog(this, "No existen resutados para la búsqueda", "Buscar Paciente", JOptionPane.INFORMATION_MESSAGE);
+        }               
+    }
+    
+    private void txtApellidoBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoBuscarKeyTyped
+        char c = evt.getKeyChar();
+        if(Character.isDigit(c)){
+            evt.consume();
+        }
+
+        c = evt.getKeyChar();
+        String cad = ("" + c).toUpperCase();
+        c = cad.charAt(0);
+        evt.setKeyChar(c);
+    }//GEN-LAST:event_txtApellidoBuscarKeyTyped
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       
+        cargarAyuda();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public String DevuelvoMes(int nroMes){
         String mes = "";
@@ -371,12 +600,18 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
     private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnVerConsultasXMedico;
     private javax.swing.JComboBox<String> cmbMedicos;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panel1;
     private javax.swing.JPanel panel2;
     private javax.swing.JRadioButton rbtnConsultasXMedico;
     private javax.swing.JRadioButton rbtnDeudaXPaciente;
-    private javax.swing.JTextField txtIdImprimir;
+    private javax.swing.JTable tblPacientes;
+    private javax.swing.JTextField txtApellidoBuscar;
+    private javax.swing.JTextField txtCedulaBuscar;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -428,6 +663,9 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
             
             int cantidad = 0;
             double montoTotal = 0.0;
+            
+            //List<Consulta> listaAux = pacImprimir.getConsultasImpagas();
+            //Collections.sort(listaAux);
             
             Iterator<Consulta> it = pacImprimir.getConsultasImpagas().iterator();
             while (it.hasNext()) {

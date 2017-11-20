@@ -9,6 +9,8 @@ import Controladores.Conexion;
 import IO.Consulta;
 import IO.Medico;
 import com.itextpdf.text.pdf.hyphenation.TernaryTree;
+import java.awt.Color;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import javax.swing.table.DefaultTableModel;
@@ -21,6 +23,7 @@ public class frmConsultasXMedico extends javax.swing.JDialog {
 
     private final Medico medico;
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    DecimalFormat decF = new DecimalFormat("#.00");
     
     public frmConsultasXMedico(javax.swing.JDialog parent, boolean modal, Medico med) {
         super(parent, modal);
@@ -31,6 +34,22 @@ public class frmConsultasXMedico extends javax.swing.JDialog {
         
         VaciarTabla();
         CargarTablaConsultas();
+        
+        Conexion.getInstance().Combinar(medico);        
+        
+        Double montoEsperado = medico.getMontoEsperadoXMedico();
+        lblMontoEsperado.setText(decF.format(montoEsperado));
+        
+        Double montoCobrado = medico.getMontoRecaudadoXMedico();
+        lblMontoCobrado.setText(decF.format(montoCobrado));
+        
+        Double porcentaje = (montoCobrado/montoEsperado)*100;
+        lblPorcentaje.setText(decF.format(porcentaje));
+        
+        if(porcentaje <= 50){
+            lblPorcentaje.setForeground(Color.red);
+        }
+        
     }
     
     public void VaciarTabla(){
@@ -73,6 +92,12 @@ public class frmConsultasXMedico extends javax.swing.JDialog {
         lblNomAp = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblConsultas = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        lblMontoEsperado = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblMontoCobrado = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        lblPorcentaje = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Agenda de Médico");
@@ -127,16 +152,51 @@ public class frmConsultasXMedico extends javax.swing.JDialog {
         tblConsultas.setRowHeight(23);
         jScrollPane1.setViewportView(tblConsultas);
 
+        jLabel2.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
+        jLabel2.setText("Monto Consultas ($):");
+
+        lblMontoEsperado.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
+        lblMontoEsperado.setForeground(new java.awt.Color(255, 0, 0));
+        lblMontoEsperado.setText("montoEsperado");
+
+        jLabel3.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
+        jLabel3.setText("Monto Cobrado ($):");
+
+        lblMontoCobrado.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
+        lblMontoCobrado.setForeground(new java.awt.Color(255, 0, 0));
+        lblMontoCobrado.setText("montoEsperado");
+
+        jLabel4.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
+        jLabel4.setText("% Efectividad:");
+
+        lblPorcentaje.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
+        lblPorcentaje.setText("%%");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblMontoEsperado)
+                        .addGap(81, 81, 81)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblMontoCobrado)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblPorcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(63, 63, 63))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,11 +204,19 @@ public class frmConsultasXMedico extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMontoEsperado, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMontoCobrado, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPorcentaje, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(1128, 745));
+        setSize(new java.awt.Dimension(1128, 727));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -159,9 +227,15 @@ public class frmConsultasXMedico extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblMontoCobrado;
+    private javax.swing.JLabel lblMontoEsperado;
     private javax.swing.JLabel lblNomAp;
+    private javax.swing.JLabel lblPorcentaje;
     private javax.swing.JTable tblConsultas;
     // End of variables declaration//GEN-END:variables
 }

@@ -401,23 +401,25 @@ public class frmAltaPaciente extends javax.swing.JDialog {
             txtId.requestFocus();
         }
         
-        if(txtId.getText().equals("")){
+        if(sigo.equals("S") && txtId.getText().equals("")){
             sigo = "N";
             JOptionPane.showMessageDialog(this, "Nro. de cédula requerido", "Validación de datos", JOptionPane.ERROR_MESSAGE);
             txtId.requestFocus();
         }                
         
-        if(txtId.getText().length() != 8){   // Si el largo de la cedula ingresada no es de 8 caracteres, lo considero error
+        if(sigo.equals("S") && txtId.getText().length() != 8){   // Si el largo de la cedula ingresada no es de 8 caracteres, lo considero error
             sigo = "N";
             JOptionPane.showMessageDialog(this, "Nro. de cédula debe ser de 8 digitos", "Validación de datos", JOptionPane.ERROR_MESSAGE);
             txtId.requestFocus();
         }
         
-        boolean validoCedula = Conexion.getInstance().getProcedimientos().validarCedula(cedula);
-        if(!validoCedula){
-            sigo = "N";
-            JOptionPane.showMessageDialog(this, "Nro. de cédula incorrecto, verifique por favor", "Validación de datos", JOptionPane.ERROR_MESSAGE);
-            txtId.requestFocus();
+        if(sigo.equals("S")){
+            boolean validoCedula = Conexion.getInstance().getProcedimientos().validarCedula(cedula);
+            if(!validoCedula){
+                sigo = "N";
+                JOptionPane.showMessageDialog(this, "Nro. de cédula incorrecto, verifique por favor", "Validación de datos", JOptionPane.ERROR_MESSAGE);
+                txtId.requestFocus();
+            }
         }
         
         if(sigo.equals("S") && txtNombre.getText().equals("")){

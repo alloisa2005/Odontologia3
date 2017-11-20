@@ -108,7 +108,7 @@ public class frmModificacionPaciente extends javax.swing.JDialog {
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Nuevo Paciente");
+        setTitle("Modificar datos de Paciente");
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 255));

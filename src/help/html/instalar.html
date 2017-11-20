@@ -1,0 +1,37 @@
+<html>
+<head>
+	<title>Parametrización Inicial</title>
+</head>
+<body>
+	<font size=45 ><center>Parametrización Inicial</center></font> 
+	<br>		
+	<left>Antes de comenzar a utilizar el software (por 1era vez) se deben tener las siguientes consideraciones:</left>
+	<br>
+	<ul>
+	<li>Ejecución de scripts</li>
+		<br>
+		<ul>
+			<li><b>Ingreso de usuario generico para la utilización por 1era vez del sisema.</b></li>	
+			<br>			
+			<left>INSERT INTO public.usuario(id, apellido, celular, contrasenia, direccion, nombre, telefono, fch_nac) VALUES ('admin', 'ADMIN', '', '123456', 'DIR PRUEBA','ADMIN', '', '01/01/1970');</left>
+			<br>
+			<br>
+			<left>INSERT INTO public.acceso(agenda, consultas, estadisticas, opciones, pacientes, pagos, reportes, usuario_id, migracion) VALUES (true, true, true, true, true, true, true, 'admin',true);</left>
+		</ul>
+	<br>
+	<br>
+	<li>Cargar opciones generales</li>	
+		<br>
+		<ul>
+			<li><b>Ingreso de opción general donde se establece el nro. inicial de factura (si es necesario), se ingresa el nro. 111111 a modo de ejemplo.</b></li>	
+			<br>			
+			<left>INSERT INTO public.opcion(id, descripcion, valor) VALUES ('1', 'Nro. Factura Inicial', '111111');</left>
+			<br>	
+			<br>			
+			<li><b>Ingreso de opción general donde se establece la ruta donde se generará el archivo backup de la base de datos (a modo de ejemplo se crea la ruta "E:\BackUps\").</b></li>	
+			<br>
+			<left>INSERT INTO public.opcion(id, descripcion, valor) VALUES ('2', 'Path BackUp', 'E:\BackUps\'); </left>
+		</ul>
+	</ul>
+</body>
+</html>

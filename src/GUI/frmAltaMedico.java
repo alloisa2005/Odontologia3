@@ -114,6 +114,7 @@ public class frmAltaMedico extends javax.swing.JDialog {
         );
 
         jLabel2.setFont(new java.awt.Font("Calibri", 0, 15)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
         jLabel2.setText("Cédula");
 
         txtId.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
@@ -144,6 +145,7 @@ public class frmAltaMedico extends javax.swing.JDialog {
         jLabel4.setText("Fecha Ingreso");
 
         jLabel5.setFont(new java.awt.Font("Calibri", 0, 15)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 0, 0));
         jLabel5.setText("Nombre");
 
         dteFchIngreso.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
@@ -159,6 +161,7 @@ public class frmAltaMedico extends javax.swing.JDialog {
         });
 
         jLabel7.setFont(new java.awt.Font("Calibri", 0, 15)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 0, 0));
         jLabel7.setText("Apellido");
 
         txtTelefono.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
@@ -170,6 +173,7 @@ public class frmAltaMedico extends javax.swing.JDialog {
         });
 
         jLabel8.setFont(new java.awt.Font("Calibri", 0, 15)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 0, 0));
         jLabel8.setText("Dirección");
 
         txtCelular.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
