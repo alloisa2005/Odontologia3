@@ -66,14 +66,15 @@ public class frmConsultasXMedico extends javax.swing.JDialog {
         
         while (it.hasNext()) {
             
-            Object[] fila = new Object[3];
+            Object[] fila = new Object[5];
             Consulta conAux = it.next();
             Conexion.getInstance().Combinar(conAux);
             
             fila[0] = conAux;
             fila[1] = df.format(conAux.getFecha());
             fila[2] = conAux.getTitulo();
-            
+            fila[3] = conAux.getMonto();
+            fila[4] = conAux.getMontoPagado();
             modeloTabla.addRow(fila);
         }
     }
@@ -138,11 +139,11 @@ public class frmConsultasXMedico extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Nro Consulta", "Fecha", "Titulo"
+                "Nro Consulta", "Fecha", "Titulo", "Monto Consulta", "Monto Pagado"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -164,7 +165,7 @@ public class frmConsultasXMedico extends javax.swing.JDialog {
 
         lblMontoCobrado.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
         lblMontoCobrado.setForeground(new java.awt.Color(255, 0, 0));
-        lblMontoCobrado.setText("montoEsperado");
+        lblMontoCobrado.setText("montoCobrado");
 
         jLabel4.setFont(new java.awt.Font("Calibri", 1, 22)); // NOI18N
         jLabel4.setText("% Efectividad:");

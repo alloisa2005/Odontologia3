@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package GUI;
 
 import Controladores.Conexion;
@@ -16,10 +12,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author User
- */
+
 public class frmAltaConsulta extends javax.swing.JDialog {
 
     Date hoy = new Date();    
@@ -154,7 +147,7 @@ public class frmAltaConsulta extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblEdad, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                .addComponent(lblEdad, javax.swing.GroupLayout.DEFAULT_SIZE, 22, Short.MAX_VALUE)
                 .addGap(43, 43, 43))
         );
         jPanel1Layout.setVerticalGroup(
@@ -283,7 +276,7 @@ public class frmAltaConsulta extends javax.swing.JDialog {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(0, 22, Short.MAX_VALUE))))
+                        .addGap(0, 13, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -304,7 +297,7 @@ public class frmAltaConsulta extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(16, 16, 16)
+                .addGap(27, 27, 27)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -316,20 +309,13 @@ public class frmAltaConsulta extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
-        setSize(new java.awt.Dimension(1303, 813));
+        setSize(new java.awt.Dimension(1294, 813));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void dteFchConsultaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_dteFchConsultaPropertyChange
 
-//        String FchNac = df.format(dteFchNacimiento.getDate());
-//        String FchHoy = df.format(hoy);
-//
-//        if(evt.getPropertyName().equals("date")){
-//            int anios = Conexion.getInstance().getProcedimientos().CalcularEdad(FchNac, FchHoy);
-//
-//            txtEdad.setText(String.valueOf(anios));
-//        }
+
     }//GEN-LAST:event_dteFchConsultaPropertyChange
 
     private void txtTituloKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTituloKeyTyped
@@ -393,7 +379,16 @@ public class frmAltaConsulta extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Seleccione Médico", "Nueva Consulta", JOptionPane.ERROR_MESSAGE);
         }
         
-        Double mntConsulta = Double.parseDouble(txtMonto.getText());        
+        Double mntConsulta = Double.parseDouble(txtMonto.getText()); 
+        
+        if (mntConsulta > 3000){  // A modo de validación se pregunta si el importe es superior a $3000 por si se escribió por error el monto
+            int confirmo = JOptionPane.showConfirmDialog(rootPane, "¿Monto de la consulta es correcto?","Validación",JOptionPane.YES_NO_OPTION);
+
+            sigo = "N";
+            if (JOptionPane.YES_OPTION == confirmo){
+                sigo = "S";
+            } 
+        }                
         
         if(sigo.equals("S")){
             //Guardo la consulta médica
@@ -412,6 +407,7 @@ public class frmAltaConsulta extends javax.swing.JDialog {
             
             Conexion.getInstance().Guardar(con);
             Conexion.getInstance().Combinar(con);                        
+            Conexion.getInstance().Combinar(pac); 
             
             txtMonto.setText("0");
             txtTitulo.setText("");
@@ -431,11 +427,9 @@ public class frmAltaConsulta extends javax.swing.JDialog {
     }//GEN-LAST:event_txtDescripcionKeyTyped
 
     private void cmbMedicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMedicosActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_cmbMedicosActionPerformed
-
-    
-    
+       
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardarConsulta;

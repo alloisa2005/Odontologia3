@@ -371,6 +371,8 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
         
         if((evt.getKeyCode() == KeyEvent.VK_ENTER)){
             
+            VaciarTablaLineaFactura();
+                    
             if(!txtNroFactura.getText().equals("")){
                 //txtNroFactura.setText("");
 
@@ -379,6 +381,7 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
             }else{
                 VaciarTablaFacturas();
                 CargarTablaFacturas(FchIniAux, FchFinAux);
+                
             }
         }
     }//GEN-LAST:event_txtNroFacturaKeyPressed
@@ -413,10 +416,18 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
         
         Conexion.getInstance().Combinar(fac);
         
+        VaciarTablaLineaFactura();
         CargarLineasFacturas(fac);
         
     }//GEN-LAST:event_tblFacturasMouseClicked
 
+    public void VaciarTablaLineaFactura(){
+        
+        DefaultTableModel modeloTabla = (DefaultTableModel) tblDetalleFactura.getModel();
+        
+        modeloTabla.setRowCount(0);
+    }
+    
     private void btnVerFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerFacturaActionPerformed
         
         if(tblFacturas.getSelectedRowCount() > -1){
@@ -445,6 +456,8 @@ public class frmMontoRecaudado extends javax.swing.JDialog {
             frmVerConsulta frm = new frmVerConsulta(new javax.swing.JDialog(), true, consulta);
             frm.toFront();
             frm.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione una consulta de la lista", "Selección de Paciente", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnVerConsultaActionPerformed
 

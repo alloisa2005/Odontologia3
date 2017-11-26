@@ -470,10 +470,13 @@ public class frmAltaPaciente extends javax.swing.JDialog {
             pac.setFchNac(dteFchNacimiento.getDate());            
             pac.setFoto(fotoPerfil);
             pac.setMail(txtMail.getText());
+            pac.setActivo(true);
             
             Conexion.getInstance().Guardar(pac);
             
             JOptionPane.showMessageDialog(this, "Paciente dado de alta exitosamente", "Nuevo Médico", JOptionPane.INFORMATION_MESSAGE);
+            
+            Conexion.getInstance().Combinar(pac);
             
             LimpiarCampos();
             

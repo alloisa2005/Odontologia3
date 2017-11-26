@@ -348,6 +348,7 @@ public class frmMigracion extends javax.swing.JDialog {
             pac.setMail(jTablaGenerica.getModel().getValueAt(i, 5).toString());
             pac.setTelefono(jTablaGenerica.getModel().getValueAt(i, 6).toString());
             pac.setCelular(jTablaGenerica.getModel().getValueAt(i, 7).toString());            
+            pac.setActivo(true);
             
             fila[0] = pac.getId();
             fila[1] = pac.getNombre();

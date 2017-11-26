@@ -45,7 +45,8 @@ public class frmAltaMedico extends javax.swing.JDialog {
         
         txtId.setText(idMedico);                       
         
-        txtId.requestFocus();                
+        txtId.requestFocus();
+                        
         this.padre = padre;
     }
     

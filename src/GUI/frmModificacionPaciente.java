@@ -421,6 +421,7 @@ public class frmModificacionPaciente extends javax.swing.JDialog {
             pac.setFchNac(dteFchNacimiento.getDate());            
             pac.setFoto(fotoPerfil);
             pac.setMail(txtMail.getText());
+            pac.setActivo(true);
             
             Conexion.getInstance().Actualizar(pac);
             

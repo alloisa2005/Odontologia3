@@ -216,6 +216,9 @@ public class frmMedicos extends javax.swing.JDialog {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txtIdBuscarKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtIdBuscarKeyTyped(evt);
+            }
         });
 
         jLabel14.setFont(new java.awt.Font("Calibri", 0, 15)); // NOI18N
@@ -364,6 +367,12 @@ public class frmMedicos extends javax.swing.JDialog {
         c = cad.charAt(0);
         evt.setKeyChar(c);
     }//GEN-LAST:event_txtApellidoBuscarKeyTyped
+
+    private void txtIdBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtIdBuscarKeyTyped
+        if(txtIdBuscar.getText().length() == 8){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtIdBuscarKeyTyped
 
     /**
      * @param args the command line arguments

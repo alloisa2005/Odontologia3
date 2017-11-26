@@ -59,6 +59,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnModificarMedico" min="-2" max="-2" attributes="0"/>
                           <Component id="btnNuevoMedico" alignment="1" min="-2" pref="211" max="-2" attributes="0"/>
+                          <Component id="btnInactivarPaciente" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -91,6 +92,8 @@
                       <Component id="btnNuevoMedico" min="-2" pref="61" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Component id="btnModificarMedico" min="-2" pref="61" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                      <Component id="btnInactivarPaciente" min="-2" pref="61" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane1" pref="520" max="32767" attributes="0"/>
@@ -267,6 +270,20 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAyudaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnInactivarPaciente">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Calibri" size="18" style="1"/>
+        </Property>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/Imagenes/persona32.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Inactivar Paciente"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInactivarPacienteActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -138,7 +138,9 @@ public class frmHistorialConsultas extends javax.swing.JDialog {
         
         DefaultTableModel modeloTabla = (DefaultTableModel) tblConsultas.getModel();
         
-        Iterator<Consulta> it = Conexion.getInstance().getPacientes().unPaciente(lblId.getText()).getConsultas().iterator();
+        //Iterator<Consulta> it = Conexion.getInstance().getPacientes().unPaciente(lblId.getText()).getConsultas().iterator();
+        String id = lblId.getText();
+        Iterator<Consulta> it = Conexion.getInstance().getConsultas().listaDeConsultasOrdenadasXPaciente(id).iterator();
         
         if(it.hasNext()){
             while (it.hasNext()) {

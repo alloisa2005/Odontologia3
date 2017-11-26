@@ -8,10 +8,7 @@ package Controladores;
 import IO.Factura;
 import java.util.List;
 
-/**
- *
- * @author User
- */
+
 public class Facturas {
     
     public Factura maxFactura() {

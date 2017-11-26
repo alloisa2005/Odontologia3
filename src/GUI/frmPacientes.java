@@ -180,6 +180,7 @@ public class frmPacientes extends javax.swing.JDialog {
         txtApellidoBuscar = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         btnAyuda = new javax.swing.JButton();
+        btnInactivarPaciente = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Menu de Pacientes");
@@ -283,6 +284,15 @@ public class frmPacientes extends javax.swing.JDialog {
             }
         });
 
+        btnInactivarPaciente.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        btnInactivarPaciente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/persona32.png"))); // NOI18N
+        btnInactivarPaciente.setText("Inactivar Paciente");
+        btnInactivarPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInactivarPacienteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -312,7 +322,8 @@ public class frmPacientes extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnModificarMedico)
-                            .addComponent(btnNuevoMedico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnNuevoMedico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnInactivarPaciente))))
                 .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
@@ -337,6 +348,8 @@ public class frmPacientes extends javax.swing.JDialog {
                         .addComponent(btnNuevoMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24)
                         .addComponent(btnModificarMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(btnInactivarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE))
                 .addContainerGap())
@@ -435,6 +448,26 @@ public class frmPacientes extends javax.swing.JDialog {
                               
         cargarAyuda();
     }//GEN-LAST:event_btnAyudaActionPerformed
+
+    private void btnInactivarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInactivarPacienteActionPerformed
+        if(tblPacientes.getSelectedRowCount() > 0){
+            
+            int row = tblPacientes.getSelectedRow();                        
+            Paciente paciente = (Paciente) tblPacientes.getModel().getValueAt(row, 1);             
+            
+            Double deuda = paciente.getDeuda();
+            JOptionPane.showMessageDialog(this, "Paciente posse deuda por $ " + deuda , "Selección de Paciente", JOptionPane.INFORMATION_MESSAGE);    
+            
+//            paciente.setActivo(false);
+//            Conexion.getInstance().Actualizar(paciente);
+//            Conexion.getInstance().Combinar(paciente);
+//            
+//            VaciarTabla();
+//            CargarTablaPacientes();
+        }else{
+            JOptionPane.showMessageDialog(this, "Seleccione un paciente de la lista", "Selección de Paciente", JOptionPane.INFORMATION_MESSAGE);
+        }   
+    }//GEN-LAST:event_btnInactivarPacienteActionPerformed
            
     private void cargarAyuda(){
         try {
@@ -457,6 +490,7 @@ public class frmPacientes extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAyuda;
+    private javax.swing.JButton btnInactivarPaciente;
     private javax.swing.JButton btnModificarMedico;
     private javax.swing.JButton btnNuevoMedico;
     private javax.swing.JLabel jLabel1;

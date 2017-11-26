@@ -44,6 +44,7 @@ public class Paciente implements Serializable {
     private Date fchNac;
     private byte[] foto;
     private String mail;
+    private boolean activo;
     
     public String getId() {
         return id;
@@ -124,6 +125,14 @@ public class Paciente implements Serializable {
     public void setFoto(byte[] foto) {
         this.foto = foto;
     }    
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
     
     public List<Consulta> getConsultas() {
         return consultas;

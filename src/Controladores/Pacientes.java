@@ -1,7 +1,6 @@
 
 package Controladores;
 
-import IO.Medico;
 import IO.Paciente;
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class Pacientes {
     public Paciente unPaciente(String id) {
         Paciente paciente = null;  
         
-        String query = "SELECT * FROM PACIENTE where id='" + id + "'";
+        String query = "SELECT * FROM PACIENTE where id='" + id + "' and activo = 't'";
         
         Conexion.getInstance().getConexion().getTransaction().begin();
         
@@ -53,7 +52,23 @@ public class Pacientes {
         Conexion.getInstance().getConexion().getTransaction().begin();
         
         try {
-            lista = Conexion.getInstance().getConexion().createNativeQuery("SELECT * FROM PACIENTE order by id", Paciente.class).getResultList();            
+            lista = Conexion.getInstance().getConexion().createNativeQuery("SELECT * FROM PACIENTE where activo='t' order by id", Paciente.class).getResultList();            
+            
+            Conexion.getInstance().getConexion().getTransaction().commit(); 
+        } catch (Exception e) {
+            Conexion.getInstance().getConexion().getTransaction().rollback();       
+        
+        }
+        return lista;
+    }
+    
+    public List<Paciente> listaDePacientesInactivos() {
+        List<Paciente> lista = null;                
+        
+        Conexion.getInstance().getConexion().getTransaction().begin();
+        
+        try {
+            lista = Conexion.getInstance().getConexion().createNativeQuery("SELECT * FROM PACIENTE where activo='f' order by id", Paciente.class).getResultList();            
             
             Conexion.getInstance().getConexion().getTransaction().commit(); 
         } catch (Exception e) {

@@ -59,24 +59,24 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
         CargarComboMedicos();
     }
     
-    private void cargarAyuda(){
-        try {
-                // Carga el fichero de ayuda
-                File fichero = new File("src/help/help.hs");
-                URL hsURL = fichero.toURI().toURL();
-
-                // Crea el HelpSet y el HelpBroker
-                HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
-                HelpBroker hb = helpset.createHelpBroker();                
-                
-//                // Pone ayuda a item de menu al pulsar F1. mntmIndice es el JMenuitem
-                hb.enableHelpOnButton(jButton1, "pacientes", helpset);
-                hb.enableHelpKey(this, "ventana_principal", helpset);
-
-        } catch (Exception e) {
-//                logger.error("Error al cargar la ayuda: " + e);
-        }
-    }
+//    private void cargarAyuda(){
+//        try {
+//                // Carga el fichero de ayuda
+//                File fichero = new File("src/help/help.hs");
+//                URL hsURL = fichero.toURI().toURL();
+//
+//                // Crea el HelpSet y el HelpBroker
+//                HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
+//                HelpBroker hb = helpset.createHelpBroker();                
+//                
+////                // Pone ayuda a item de menu al pulsar F1. mntmIndice es el JMenuitem
+//                hb.enableHelpOnButton(jButton1, "pacientes", helpset);
+//                hb.enableHelpKey(this, "ventana_principal", helpset);
+//
+//        } catch (Exception e) {
+////                logger.error("Error al cargar la ayuda: " + e);
+//        }
+//    }
     
     public void VaciarTabla(){
         
@@ -146,7 +146,6 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
         tblPacientes = new javax.swing.JTable();
         txtApellidoBuscar = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Reportes");
@@ -311,13 +310,6 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
                 .addContainerGap())
         );
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -336,17 +328,13 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
                         .addContainerGap(181, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(rbtnConsultasXMedico)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(307, 307, 307))))
+                        .addGap(307, 1001, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(74, 74, 74)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(rbtnConsultasXMedico)
-                    .addComponent(jButton1))
+                .addComponent(rbtnConsultasXMedico)
                 .addGap(4, 4, 4)
                 .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
@@ -567,11 +555,6 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
         evt.setKeyChar(c);
     }//GEN-LAST:event_txtApellidoBuscarKeyTyped
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       
-        cargarAyuda();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
     public String DevuelvoMes(int nroMes){
         String mes = "";
         
@@ -600,7 +583,6 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
     private javax.swing.JButton btnImprimir;
     private javax.swing.JButton btnVerConsultasXMedico;
     private javax.swing.JComboBox<String> cmbMedicos;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

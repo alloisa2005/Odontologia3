@@ -46,6 +46,42 @@ public class Consultas {
         return lista;
     }
     
+    public List<Consulta> listaDeConsultasOrdenadasXPaciente(String id) {
+        List<Consulta> lista = null;                
+        
+        String query="select * from consulta where paciente_id='" + id + "' order by fecha asc, id";
+        
+        Conexion.getInstance().getConexion().getTransaction().begin();
+        
+        try {
+            lista = Conexion.getInstance().getConexion().createNativeQuery(query, Consulta.class).getResultList();            
+            
+            Conexion.getInstance().getConexion().getTransaction().commit(); 
+        } catch (Exception e) {
+            Conexion.getInstance().getConexion().getTransaction().rollback();       
+        
+        }
+        return lista;
+    }
+    
+    public List<Consulta> listaDeConsultasOrdenadas(String id) {
+        List<Consulta> lista = null;                
+        
+        String query="select *  from consulta order by fecha asc, id";
+        
+        Conexion.getInstance().getConexion().getTransaction().begin();
+        
+        try {
+            lista = Conexion.getInstance().getConexion().createNativeQuery(query, Consulta.class).getResultList();            
+            
+            Conexion.getInstance().getConexion().getTransaction().commit(); 
+        } catch (Exception e) {
+            Conexion.getInstance().getConexion().getTransaction().rollback();       
+        
+        }
+        return lista;
+    }
+    
     public List<Consulta> listaDeConsultasPagas() {
         List<Consulta> lista = null;                
         String query = "SELECT * FROM CONSULTA where paga='t' order by id ";
@@ -133,3 +169,6 @@ public class Consultas {
         return lista;
     }
 }
+
+
+// SELECT * FROM datoscuotas order by fechadatcuot asc limit 1
