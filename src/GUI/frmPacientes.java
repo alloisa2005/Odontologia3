@@ -6,29 +6,19 @@
 package GUI;
 
 import Controladores.Conexion;
-import Controladores.Usuarios;
-import IO.Medico;
+import IO.Opcion;
 import IO.Paciente;
-import IO.Usuario;
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
-import java.awt.print.PageFormat;
-import java.awt.print.Paper;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-import java.awt.print.PrinterJob;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
-import java.text.MessageFormat;
 import java.util.Iterator;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -43,6 +33,8 @@ public class frmPacientes extends javax.swing.JDialog {
         initComponents();   
         
         setIconImage(new ImageIcon(getClass().getResource("/Imagenes/molar.png")).getImage()); 
+        
+        btnInactivarPaciente.setEnabled(false);   // Lo dejo inactivo por ahora ya que para este pgm no tiene mucho sentido inactivar un paciente
         
         CargarTablaPacientes();        
         
@@ -472,19 +464,24 @@ public class frmPacientes extends javax.swing.JDialog {
     private void cargarAyuda(){
         try {
                 // Carga el fichero de ayuda
-                File fichero = new File("src/help/help.hs");
-                URL hsURL = fichero.toURI().toURL();
-
+                    
+                String id = "5";
+                Opcion op = Conexion.getInstance().getOpciones().unaOpcion(id);
+                String rutaImagen = op.getValor();
+                
+                File fichero = new File(rutaImagen);
+                //File fichero = new File("src/help/help.hs");
+                URL hsURL = fichero.toURI().toURL();                
+                
                 // Crea el HelpSet y el HelpBroker
                 HelpSet helpset = new HelpSet(getClass().getClassLoader(), hsURL);
                 HelpBroker hb = helpset.createHelpBroker();                
                 
-//                // Pone ayuda a item de menu al pulsar F1. mntmIndice es el JMenuitem
+                // Pone ayuda a item de menu al pulsar F1. mntmIndice es el JMenuitem
                 hb.enableHelpOnButton(btnAyuda, "pacientes", helpset);
                 hb.enableHelpKey(this, "ventana_principal", helpset);
 
         } catch (Exception e) {
-//                logger.error("Error al cargar la ayuda: " + e);
         }
     }
 

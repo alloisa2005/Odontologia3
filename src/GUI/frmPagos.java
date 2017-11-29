@@ -12,12 +12,9 @@ import IO.LineaFactura;
 import IO.Opcion;
 import IO.Paciente;
 import IO.Pago;
-import IO.Usuario;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.print.PageFormat;
@@ -26,13 +23,11 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import javax.imageio.ImageIO;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -670,11 +665,21 @@ public class frmPagos extends javax.swing.JDialog  implements Printable{
 //            g2d.scale(0.65, 0.65); //Reducción de la impresión al 75%
 //            tblPacientes.printAll(g);
             
+            String id = "3";
+            Opcion op = Conexion.getInstance().getOpciones().unaOpcion(id);
+            String rutaImagen = op.getValor();
+            
             try {
-               Image img = ImageIO.read(new File("src/Imagenes/factura.png").toURI().toURL());
+               Image img = ImageIO.read(new File(rutaImagen).toURI().toURL());
                 g.drawImage(img, 5, 5, 590, 410, null);
             } catch (Exception ex) {
             }
+            
+//            try {
+//               Image img = ImageIO.read(new File("src/Imagenes/factura.png").toURI().toURL());
+//                g.drawImage(img, 5, 5, 590, 410, null);
+//            } catch (Exception ex) {
+//            }
             
             // Fecha (Dia)
             g.setFont(new Font("Calibri", Font.BOLD, 11));            

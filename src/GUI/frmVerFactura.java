@@ -5,8 +5,6 @@
  */
 package GUI;
 
-import Controladores.Conexion;
-import IO.Consulta;
 import IO.Factura;
 import IO.LineaFactura;
 import java.awt.Color;
@@ -22,7 +20,6 @@ import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;

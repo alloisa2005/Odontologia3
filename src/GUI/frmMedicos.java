@@ -6,9 +6,7 @@
 package GUI;
 
 import Controladores.Conexion;
-import Controladores.Usuarios;
 import IO.Medico;
-import IO.Usuario;
 import java.awt.event.KeyEvent;
 import java.util.Iterator;
 import javax.swing.JOptionPane;

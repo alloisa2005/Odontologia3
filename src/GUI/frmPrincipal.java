@@ -9,7 +9,6 @@ import Controladores.Conexion;
 import IO.Acceso;
 import IO.Paciente;
 import IO.Usuario;
-
 import java.awt.Image;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -8,6 +8,7 @@ package GUI;
 import Controladores.Conexion;
 import IO.Consulta;
 import IO.Medico;
+import IO.Opcion;
 import IO.Paciente;
 import java.awt.Color;
 import java.awt.Font;
@@ -20,20 +21,14 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.File;
-import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.hibernate.mapping.Collection;
-import javax.help.HelpBroker;
-import javax.help.HelpSet;
 
 /**
  *
@@ -45,6 +40,7 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
     Paciente pacImprimir = null;
     Date fchHoy = new Date();
     SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+    String rutaListado;
     
     public frmReportes(javax.swing.JDialog parent, boolean modal) {
         super(parent, modal);
@@ -317,18 +313,14 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(rbtnDeudaXPaciente)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(rbtnDeudaXPaciente)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(181, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(rbtnConsultasXMedico)
-                        .addGap(307, 1001, Short.MAX_VALUE))))
+                            .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(rbtnConsultasXMedico))
+                .addContainerGap(181, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -453,8 +445,9 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
             
             modeloTabla.addRow(fila);
         }else{
-            
-            CargarTablaPacientes();                        
+            JOptionPane.showMessageDialog(this, "No existe paciente con ese nro. de cédula", "Paciente", JOptionPane.INFORMATION_MESSAGE);
+            CargarTablaPacientes(); 
+            txtCedulaBuscar.setText("");
         }                
     }
     
@@ -490,15 +483,25 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
         
-        if(tblPacientes.getSelectedRowCount() > 0){
+        String id = "4";
+        Opcion op = Conexion.getInstance().getOpciones().unaOpcion(id);        
             
-            int row = tblPacientes.getSelectedRow();                        
-            pacImprimir = (Paciente) tblPacientes.getModel().getValueAt(row, 1); 
-            Imprimo();
-            
+        if(op == null){
+            JOptionPane.showMessageDialog(this, "No se encuentra parametrizada ruta para el listado bajo el id. 4", "Error", JOptionPane.ERROR_MESSAGE);
         }else{
-            JOptionPane.showMessageDialog(this, "Seleccione un paciente de la lista", "Selección de Paciente", JOptionPane.INFORMATION_MESSAGE);
-        }                       
+            
+            rutaListado = op.getValor();
+            
+            if(tblPacientes.getSelectedRowCount() > 0){
+
+                int row = tblPacientes.getSelectedRow();                        
+                pacImprimir = (Paciente) tblPacientes.getModel().getValueAt(row, 1); 
+                Imprimo();
+
+            }else{
+                JOptionPane.showMessageDialog(this, "Seleccione un paciente de la lista", "Selección de Paciente", JOptionPane.INFORMATION_MESSAGE);
+            }  
+        }
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void txtApellidoBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoBuscarKeyPressed
@@ -537,9 +540,8 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
                 modeloTabla.addRow(fila);
             }
         }else{
-//            VaciarTabla();
-//            CargarTablaPacientes();
-//            JOptionPane.showMessageDialog(this, "No existen resutados para la búsqueda", "Buscar Paciente", JOptionPane.INFORMATION_MESSAGE);
+            VaciarTabla();
+            CargarTablaPacientes();
         }               
     }
     
@@ -603,13 +605,19 @@ public class frmReportes extends javax.swing.JDialog implements Printable {
         int x;
         String s;
         
-        if(pageIndex == 0){
+        if(pageIndex == 0){                        
             
             try {
-               Image img = ImageIO.read(new File("src/Imagenes/listadoDeuda.png").toURI().toURL());
+               Image img = ImageIO.read(new File(rutaListado).toURI().toURL());
                 g.drawImage(img, 5, 5, 590, 410, null);
             } catch (Exception ex) {
             }
+            
+//            try {
+//               Image img = ImageIO.read(new File("src/Imagenes/listadoDeuda.png").toURI().toURL());
+//                g.drawImage(img, 5, 5, 590, 410, null);
+//            } catch (Exception ex) {
+//            }
             
             // Fecha (Dia)
             g.setFont(new Font("Calibri", Font.BOLD, 11));            

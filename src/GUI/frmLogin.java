@@ -7,12 +7,7 @@ package GUI;
 
 import Controladores.Conexion;
 import IO.Usuario;
-import java.awt.Event;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.net.URL;
-import javax.help.HelpBroker;
-import javax.help.HelpSet;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 

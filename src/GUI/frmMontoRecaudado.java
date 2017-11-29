@@ -9,22 +9,14 @@ import Controladores.Conexion;
 import IO.Consulta;
 import IO.Factura;
 import IO.LineaFactura;
-import IO.Paciente;
 import java.awt.event.KeyEvent;
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
-import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
 
 
 /**

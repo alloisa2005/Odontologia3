@@ -6,10 +6,8 @@
 package GUI;
 
 import Controladores.Conexion;
-import Controladores.Usuarios;
-import IO.Medico;
+import IO.Opcion;
 import IO.Paciente;
-import IO.Usuario;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.net.URL;
@@ -397,7 +395,12 @@ public class frmConsultasMedicas extends javax.swing.JDialog {
     private void cargarAyuda(){
         try {
                 // Carga el fichero de ayuda
-                File fichero = new File("src/help/help.hs");
+                String id = "5";
+                Opcion op = Conexion.getInstance().getOpciones().unaOpcion(id);
+                String rutaImagen = op.getValor();
+                
+                File fichero = new File(rutaImagen);
+                //File fichero = new File("src/help/help.hs");
                 URL hsURL = fichero.toURI().toURL();
 
                 // Crea el HelpSet y el HelpBroker

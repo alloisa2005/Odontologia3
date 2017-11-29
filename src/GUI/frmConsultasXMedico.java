@@ -8,11 +8,11 @@ package GUI;
 import Controladores.Conexion;
 import IO.Consulta;
 import IO.Medico;
-import com.itextpdf.text.pdf.hyphenation.TernaryTree;
 import java.awt.Color;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -29,6 +29,8 @@ public class frmConsultasXMedico extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.medico = med;
+        
+        setIconImage(new ImageIcon(getClass().getResource("/Imagenes/molar.png")).getImage());
         
         lblNomAp.setText(med.toString());
         
@@ -101,7 +103,7 @@ public class frmConsultasXMedico extends javax.swing.JDialog {
         lblPorcentaje = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Agenda de Médico");
+        setTitle("Consultas por Médico");
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 255));
